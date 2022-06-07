@@ -1,0 +1,31 @@
+{
+  "name": "monchi",
+  "version": "1.0.0",
+  "description": "Backend side for Monchi development",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zevreo/monchi.git"
+  },
+  "author": "IDYGS91",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zevreo/monchi/issues"
+  },
+  "homepage": "https://github.com/Zevreo/monchi#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "concurrently": "^7.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.5"
+  }
+}
