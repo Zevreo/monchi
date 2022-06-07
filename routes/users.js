@@ -35,7 +35,7 @@ router.route('/').post((req, res) => {
 });
 
 //GET ById
-router.get('/:id', (req, res) => {
+router.route('/:id').get((req, res) => {
     User.findById(req.params.id).select("-Password")
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: '+err));
