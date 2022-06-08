@@ -1,16 +1,17 @@
 const router = require('express').Router();
 let User = require('../models/users.model');
 const bcrypt = require('bcryptjs');
+const auth = require('../middleware/auth');
 
-//GET All
-router.route('/').get((req, res) =>{
-    User.find()
+//GET All auth
+router.get('/', auth, (req, res) =>{
+    User.find().select("-Password")
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: '+err));
 });
 
 //POST Add user
-router.route('/').post((req, res) => {
+router.post('/', (req, res) => {
     const FirstName = req.body.FirstName;
     const LastName = req.body.LastName;
     const EmailAddress = req.body.EmailAddress;
@@ -34,14 +35,22 @@ router.route('/').post((req, res) => {
     .catch(err => res.status(400).json('Error: '+err));
 });
 
-//GET ById
-router.route('/:id').get((req, res) => {
+//GET ById auth
+router.get('/:id', auth, (req, res) => {
     User.findById(req.params.id).select("-Password")
-    .then(users => res.json(users))
+    .then(users => {
+        if(req.params.id == res.locals.id || res.locals.Role == "Administrator") {
+            res.json(users)
+        }
+        else{
+            return res.status(401).json('No tienes permiso para hacer eso');
+        }
+    })
     .catch(err => res.status(400).json('Error: '+err));
 });
 
 //POST Auth Test
+/*
 router.post('/auth', (req, res) =>{
     const { EmailAddress, Password } = req.body;
     if( !EmailAddress || !Password ) {
@@ -57,9 +66,10 @@ router.post('/auth', (req, res) =>{
         })
     })
 });
+*/
 
-//PUT Update ById
-router.route('/:id').put((req, res) => {
+//PUT Update ById auth
+router.put('/:id', auth, (req, res) => {
     User.findById(req.params.id)
     .then(user => {
         user.FirstName = (req.body.FirstName ? req.body.FirstName : user.FirstName);
@@ -80,8 +90,8 @@ router.route('/:id').put((req, res) => {
     .catch(err => res.status(400).json('Error: '+err));
 })
 
-//DELETE ById
-router.route('/:id').delete((req, res) => {
+//DELETE ById auth
+router.delete('/:id', auth, (req, res) => {
     User.findByIdAndDelete(req.params.id)
     .then(() => res.json('Usuario eliminado'))
     .catch(err => res.status(400).json('Error: '+err));
