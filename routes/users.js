@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 
 //GET All auth
 router.get('/', auth, (req, res) =>{
-    User.find().select("-Password")
+    User.find().select(["-Password", "-DefaultCoin", "-PhoneNumber", "-BirthDate"])
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: '+err));
 });
@@ -36,16 +36,23 @@ router.post('/', (req, res) => {
 });
 
 //GET ById auth
-router.get('/:id', auth, (req, res) => {
-    User.findById(req.params.id).select("-Password")
+router.get('/me/:id', auth, (req, res) => {
+    User.findById(req.params.id)
     .then(users => {
-        if(req.params.id == res.locals.id || res.locals.Role == "Administrator") {
+        if(req.params.id == res.locals.id) {
             res.json(users)
         }
         else{
             return res.status(401).json('No tienes permiso para hacer eso');
         }
     })
+    .catch(err => res.status(400).json('Error: '+err));
+});
+
+//GET ById auth
+router.get('/:id', auth, (req, res) => {
+    User.findById(req.params.id).select(["-Password", "-DefaultCoin", "-PhoneNumber", "-EmailAddress", "-Role", "-updatedAt"])
+    .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: '+err));
 });
 
