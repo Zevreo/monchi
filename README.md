@@ -14,3 +14,5 @@
 *npm start*
 ## Para iniciar solo el servidor
 *nodemon server.js*
+## Para actualizar el Repos de Azure
+*git push --mirror https://IDYGS91-MonChi@dev.azure.com/IDYGS91-MonChi/IDYGS91-MonChi/_git/IDYGS91-MonChi*
