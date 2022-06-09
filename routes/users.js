@@ -72,29 +72,39 @@ router.post('/auth', (req, res) =>{
 router.put('/:id', auth, (req, res) => {
     User.findById(req.params.id)
     .then(user => {
-        user.FirstName = (req.body.FirstName ? req.body.FirstName : user.FirstName);
-        user.LastName = (req.body.LastName ? req.body.LastName : user.LastName);
-        user.EmailAddress = (req.body.EmailAddress ? req.body.EmailAddress : user.EmailAddress);
-        user.BirthDate = (req.body.BirthDate ? req.body.BirthDate : user.BirthDate);
-        user.Password = (req.body.Password ? bcrypt.hashSync(req.body.Password) : user.Password);
-        user.Country = (req.body.Country ? req.body.Country : user.Country);
-        user.PhoneNumber = (req.body.PhoneNumber ? req.body.PhoneNumber : user.PhoneNumber);
-        user.DefaultCoin = (req.body.DefaultCoin ? req.body.DefaultCoin : user.DefaultCoin);
-        user.Role = (req.body.Role ? req.body.Role : user.Role);
-        user.Status = (req.body.Status ? req.body.Status : user.Status);
-
-        user.save()
-        .then(() => res.json('Usuario actualizado'))
-        .catch(err => res.status(400).json('Error: '+err));
+        if(req.params.id == res.locals.id || res.locals.Role == "Administrator"){
+            user.FirstName = (req.body.FirstName ? req.body.FirstName : user.FirstName);
+            user.LastName = (req.body.LastName ? req.body.LastName : user.LastName);
+            user.EmailAddress = (req.body.EmailAddress ? req.body.EmailAddress : user.EmailAddress);
+            user.BirthDate = (req.body.BirthDate ? req.body.BirthDate : user.BirthDate);
+            user.Password = (req.body.Password ? bcrypt.hashSync(req.body.Password) : user.Password);
+            user.Country = (req.body.Country ? req.body.Country : user.Country);
+            user.PhoneNumber = (req.body.PhoneNumber ? req.body.PhoneNumber : user.PhoneNumber);
+            user.DefaultCoin = (req.body.DefaultCoin ? req.body.DefaultCoin : user.DefaultCoin);
+            user.Role = (req.body.Role ? req.body.Role : user.Role);
+            user.Status = (req.body.Status ? req.body.Status : user.Status);
+    
+            user.save()
+            .then(() => res.json('Usuario actualizado'))
+            .catch(err => res.status(400).json('Error: '+err));
+        }
+        else{
+            return res.status(401).json('No tienes permiso para hacer eso');
+        }
     })
     .catch(err => res.status(400).json('Error: '+err));
 })
 
 //DELETE ById auth
 router.delete('/:id', auth, (req, res) => {
-    User.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Usuario eliminado'))
-    .catch(err => res.status(400).json('Error: '+err));
+    if(req.params.id == res.locals.id || res.locals.Role == "Administrator"){
+        User.findByIdAndDelete(req.params.id)
+        .then(() => {res.json('Usuario eliminado')})
+        .catch(err => res.status(400).json('Error: '+err));
+    }
+    else{
+        return res.status(401).json('No tienes permiso para hacer eso');
+    }
 });
 
 module.exports = router;
