@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const nameSchema = new Schema({
-    String: 
-    {type: String, required: true }
+const productPropertiesSchema = new Schema({
+    ProductId: 
+    {type: String, required: true },
+    PropertyName:
+    {type: String, required: true},
+    PropertyType:
+    {type: String, required: true}
 }, {
     timestamps: true
 });
 
-const Name = mongoose.model('Name', nameSchema);
+const ProductProperties = mongoose.model('ProductProperties', productPropertiesSchema);
 
-module.exports = Name;
+module.exports = ProductProperties;
