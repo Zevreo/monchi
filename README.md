@@ -1,7 +1,6 @@
 # MonChi
 ## Documentación útil
 ```
-> https://angular.io/tutorial
 > https://www.npmjs.com/package/mongoose
 > TEST
 > 
