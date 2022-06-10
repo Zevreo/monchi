@@ -4,7 +4,7 @@
   "description": "Backend side for Monchi development",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently \"node server.js\" \"cd client && npm start\""
+    "start": "concurrently \"nodemon server.js\" \"cd client && npm start\""
   },
   "repository": {
     "type": "git",

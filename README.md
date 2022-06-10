@@ -2,13 +2,12 @@
 ## Documentación útil
 ```
 > https://www.npmjs.com/package/mongoose
-> TEST
+> https://reactjs.org/docs/getting-started.html
 > 
 ```
 ## Configuración inicial
 1. *npm i* en la raíz del proyecto para instalar las dependecias del servidor.
-2. *npm install -g @angular/cli* para instalar el CLI de Angular.
-3. *cd client* y *npm i* para descargar los modulos de Angular.
+2. *cd client && npm install* para instalar React.
 ## Para iniciar completo
 *npm start*
 ## Para iniciar solo el servidor
