@@ -1,0 +1,119 @@
+.site-wrapper {
+    padding-top: 76px;
+}
+.hero-page-title .text-center {
+    margin-top: 55px;
+}
+
+.side-menu { 
+    padding: 0;  
+}
+.nav-stacked {
+    overflow-y: scroll;
+    top: 76px;
+    height: 86%;
+    max-height: 690px;
+    width: 216px;
+    position: fixed;
+    background-color: #131418;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.side-menu .nav>li>a {
+    padding: 7px 15px;
+    width: 100%;  
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+.side-menu .nav>li>a:hover {
+    background-color: rgba(255,255,255,0.09);
+    color: #fff; 
+} 
+.side-menu .nav>li>a {
+    color: #ccc;
+}
+
+.doc-box { 
+    background: #fff; 
+    padding: 15px 25px; 
+    margin-bottom: 16px;
+}
+
+.doc-box h3 {  
+    margin: 5px 0;
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+}
+
+.doc-box-text {  
+    padding: 5px 20px; 
+} 
+ 
+
+::-webkit-scrollbar
+{
+  width: 12px;  /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.docs-pre {
+    display: block;
+    padding-top: 10px;
+    padding-left: 5px;
+    margin: 0;
+    font-size: 13px;
+    line-height: 0.1;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+}
+
+ul {
+    list-style: none;
+}
+.list li {
+    line-height: 1.8;
+}
+.list span {
+    margin-right: 10px;
+}
+
+.show-grid [class^=col-] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #eee;
+    background-color: rgba(0,0,0,.05); 
+    border: 1px solid rgba(0,0,0,.09);
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+.lh2 {
+    line-height: 3;
+}
+#grid {
+    padding-bottom: 0
+}
+/*--- Header Menu Hover Color ---*/
+.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, 
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>li>a:hover,
+.mg-col a:hover,
+.dropdown-menu>li>a:hover {
+    color: #fff;
+}
