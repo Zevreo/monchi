@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import 'react-devtools';
 
 //Redux
@@ -20,11 +20,9 @@ export class App extends Component {
       <Router>
         <Provider store={store}>
           <Navigation/>
-          <Switch>
-            <Route path="/login" exact>
-              <Login/>
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/login" element={<Login />}/>
+          </Routes>
         </Provider>
       </Router>
     );
