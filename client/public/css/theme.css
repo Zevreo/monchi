@@ -1302,20 +1302,19 @@ nav.navbar {
     text-align: left;
     width: 100%;
     max-width: 800px;
-    margin: 40px auto;
+    margin: 10px auto;
     position: relative;
 }
 #search-modal form {
     margin-right: 25px;
 }
 #search-modal input {
-    height: 100px;
+    height: 45px;
     width: 100%;
     border: none;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 300;
     line-height: 1.8;
-    padding: 15px;
 }
 
 /* Secondary Header */
@@ -4099,7 +4098,7 @@ ul {
     position: relative;
 	display: table-cell;
 	vertical-align: middle;
-    padding-top: 40px;
+    height: 100vh;
 }
 .login-form {
     max-width: 350px;
@@ -4125,6 +4124,7 @@ ul {
     margin: 3px 0px 10px 0;
     border-radius: 2px;
 }
+#search .dark input,
 #login .dark input,
 #login .dark select,
 #login .dark textarea,

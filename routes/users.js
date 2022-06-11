@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
     const Password = bcrypt.hashSync(req.body.Password);
     const Country = req.body.Country;
     const PhoneNumber = req.body.PhoneNumber;
-    const DefaultCoin = "MXN";
+    const DefaultCoin = req.body.DefaultCoin;
     const Role = "User";
     const Status = "Active";
     
