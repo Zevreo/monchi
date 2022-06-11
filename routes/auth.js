@@ -12,10 +12,10 @@ router.post('/', (req, res) =>{
     }
     User.findOne({ EmailAddress })
     .then(user => {
-        if(!user) return res.status(400).json({msg: 'No se encontro el usuario'});
+        if(!user) return res.status(400).json({msg: 'No se encontró el usuario'});
         bcrypt.compare(Password, user.Password)
         .then(isMatch => {
-            if(!isMatch) return res.status(400).json({msg: 'Contrasena incorrecta'});
+            if(!isMatch) return res.status(400).json({msg: 'Contraseña incorrecta'});
             jwt.sign(
                 { id: user.id, Role: user.Role },
                 config.jwtSecret,

@@ -28,6 +28,9 @@ export class Login extends Component {
     if (isAuthenticated === true) {
       window.location = '/welcome';
     }
+    if (this.state.msg !== null) {
+
+    }
   }
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -42,37 +45,50 @@ export class Login extends Component {
     this.props.login(cliente);
   }
   render() {
-    return (
-      <section id="login" class="bg-grey-1">
-        <div class="login-container">
-          <div class="container text-center">
-            <div class="col-md-12">
-              <h3 class="mb5">Inicia sesión</h3>
-              <p class="subheading">Bienvenido a Monchi</p>
-              <div class="login-form pt30 pb30">
-                <form onSubmit={this.onSubmit}>
-                  <input class="form-email bg-white" type="text" placeholder="Email Address" name='EmailAddress' onChange={this.onChange} required />
-                  <p className="help-block text-danger"></p>
-                  <input class="form-password bg-white" type="password" placeholder="Password" name='Password' onChange={this.onChange} required />
-                  <p className="help-block text-danger"></p>
-                  <input class="btn btn-sm btn-login" type="submit" value="Login" />
-                </form>
-              </div>
-              <p>¿No tienes una cuenta? <a href="/register">Registrate</a></p>
-              <p class="terms">Al iniciar sesión accedes a nuestros <a href="#">Terminos de Servicio</a> y <a href="#">Política de Privacidad</a>.</p>
+    const errorMessage = (
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <div class="alert alert-danger fade in">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="ion-ios-close-empty"></i></button>
+              <i class="icon-genius"></i><strong>{this.state.msg}</strong>
             </div>
           </div>
         </div>
-      </section>
-    );
+        )
+        return (
+        <div>
+          <section id="login" class="bg-grey-1">
+            <div class="login-container">
+              { this.state.msg !== null ? errorMessage : '' }
+              <div class="container text-center">
+                <div class="col-md-12">
+                  <h3 class="mb5">Inicia sesión</h3>
+                  <p class="subheading">Bienvenido a Monchi</p>
+                  <div class="login-form pt30 pb30">
+                    <form onSubmit={this.onSubmit}>
+                      <input class="form-email bg-white" type="text" placeholder="Email Address" name='EmailAddress' onChange={this.onChange} required />
+                      <p className="help-block text-danger"></p>
+                      <input class="form-password bg-white" type="password" placeholder="Password" name='Password' onChange={this.onChange} required />
+                      <p className="help-block text-danger"></p>
+                      <input class="btn btn-sm btn-login" type="submit" value="Login" />
+                    </form>
+                  </div>
+                  <p>¿No tienes una cuenta? <a href="/register">Registrate</a></p>
+                  <p class="terms">Al iniciar sesión accedes a nuestros <a href="#">Terminos de Servicio</a> y <a href="#">Política de Privacidad</a>.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        );
   }
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  error: state.error
+          isAuthenticated: state.auth.isAuthenticated,
+        error: state.error
 });
-export default connect(
-  mapStateToProps,
-  { login, clearErrors }
-)(Login);
+        export default connect(
+        mapStateToProps,
+        {login, clearErrors}
+        )(Login);
