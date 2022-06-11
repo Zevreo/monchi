@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 //Components
 import Navigation from './components/navigation';
 import Login from './components/login';
+import Register from './components/register';
 
 export class App extends Component {
   componentDidMount() {
@@ -22,6 +23,9 @@ export class App extends Component {
           <Navigation/>
           <Routes>
             <Route path="/login" element={<Login />}/>
+          </Routes>
+          <Routes>
+            <Route path="/register" element={<Register />}/>
           </Routes>
         </Provider>
       </Router>

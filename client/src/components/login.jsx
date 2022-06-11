@@ -25,7 +25,7 @@ export class Login extends Component {
         this.setState({ msg: null });
       }
     }
-    if(isAuthenticated===true){
+    if (isAuthenticated === true) {
       window.location = '/welcome';
     }
   }
@@ -43,59 +43,27 @@ export class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <div id="contact" >
-          <div className="container" style={{ height: "100%" }}>
-            <div className="col-md-12">
-              <div className="row">
-                <div className="title" style={{ textAlign: "center" }}>
-                  <h2>Login</h2>
-                </div>
+      <section id="login" class="bg-grey-1">
+        <div class="login-container">
+          <div class="container text-center">
+            <div class="col-md-12">
+              <h3 class="mb5">Inicia sesión</h3>
+              <p class="subheading">Bienvenido a Monchi</p>
+              <div class="login-form pt30 pb30">
                 <form onSubmit={this.onSubmit}>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="form-group">
-                        <input
-                          type="text" className="form-control" placeholder="Correo" required
-                          name='EmailAddress' onChange={this.onChange}
-                          style={{ textAlign: "center", width: "50%", marginLeft: "auto", marginRight: "auto" }}
-                        />
-                        <p className="help-block text-danger"></p>
-                      </div>
-                    </div>
-                    <div className="col-md-12">
-                      <div className="form-group">
-                        <input type="password" className="form-control" placeholder="Contraseña" required
-                          name='Password' onChange={this.onChange}
-                          style={{ textAlign: "center", width: "50%", marginLeft: "auto", marginRight: "auto" }}
-                        />
-                        <p className="help-block text-danger"></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="success"></div>
-                  <div id="col-md-12" style={{ textAlign: "center" }}>
-                    <div id="col-md-6" style={{ textAlign: "center" }}>
-                      <a>
-                        <button type="submit" className="btn btn-custom btn-lg">
-                          Ingresar
-                      </button></a>
-                    </div>
-                    <p>¿No tiene una cuenta, por que no unirse?</p>
-                    <div id="col-md-6" style={{ textAlign: "center" }}>
-                      <a href="/registro">
-                        <button type="button" className="btn btn-custom btn-lg">
-                          Registrarse
-                        </button>
-                      </a>
-                    </div>
-                  </div>
+                  <input class="form-email bg-white" type="text" placeholder="Email Address" name='EmailAddress' onChange={this.onChange} required />
+                  <p className="help-block text-danger"></p>
+                  <input class="form-password bg-white" type="password" placeholder="Password" name='Password' onChange={this.onChange} required />
+                  <p className="help-block text-danger"></p>
+                  <input class="btn btn-sm btn-login" type="submit" value="Login" />
                 </form>
               </div>
+              <p>¿No tienes una cuenta? <a href="/register">Registrate</a></p>
+              <p class="terms">Al iniciar sesión accedes a nuestros <a href="#">Terminos de Servicio</a> y <a href="#">Política de Privacidad</a>.</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 }
