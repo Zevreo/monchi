@@ -86,9 +86,12 @@ export class Registro extends Component {
         return (
             <section id="sign-up" class="bg-grey-1">
                 <div class="sign-up-container">
-                    <div class="container text-center">
-                        <div class="col-md-12">
-                            <h3 class="mb5">Create your account</h3>
+                    <div class="container text-center ">
+                        <div class="mb5">
+
+                        </div>
+                        <div class="col-md-12 ">
+                            <h3 class="">Create your account</h3>
                             <p class="subheading">Welcome to Purefive</p>
                             <div class="login-form pt30 pb30">
                                 <form onSubmit={this.onSubmit}>
