@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import Logout from "./logout";
 
 export class Navigation extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     cart: '',
     id: ''
@@ -13,15 +16,23 @@ export class Navigation extends Component {
   };
   render() {
     const { isAuthenticated } = this.props.auth;
+    const { user } = this.props.auth;
     const ownerLinks = (
-      <li><a href="/myStores">Tus tiendas</a></li>
+      <li><a href="/myStores">Volerme vendedor</a></li>
     )
+    if ( isAuthenticated && user.Role == 'Owner'){
+      const ownerLinks = (
+        <li><a href="/myStores">Tus tiendas</a></li>
+      )
+    }
+    
     const authLinks = (
       <ul class="nav navbar-nav menu-right">
         <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="/perfil">Perfil</a></li>
+            <li><a href="/perfil">Ver perfil</a></li>
             <li><a href="#">Carrito de compras</a></li>
+            { ownerLinks }
             <Logout />
           </ul>
         </li>
