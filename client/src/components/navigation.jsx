@@ -5,7 +5,7 @@ import Logout from "./logout";
 
 export class Navigation extends Component {
   state = {
-    cart: 0
+    cart: ''
   };
   static propTypes = {
     auth: PropTypes.object.isRequired
@@ -63,8 +63,8 @@ export class Navigation extends Component {
                   <span class="icon-bar middle-bar"></span>
                   <span class="icon-bar bottom-bar"></span>
                 </button>
-                <a class="navbar-brand logo-light" href="/welcome"><img src="/Monchi-Logo.png" alt="#" /></a>
-                <a class="navbar-brand logo-dark" href="/welcome"><img src="/Monchi-Logo.png" alt="#" /></a>
+                <a class="navbar-brand logo-light" href="/"><img src="/Monchi-Logo.png" alt="#" /></a>
+                <a class="navbar-brand logo-dark" href="/"><img src="/Monchi-Logo.png" alt="#" /></a>
               </div>
             </div>
             <div id="navbar" class="navbar-collapse collapse">

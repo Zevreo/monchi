@@ -26,7 +26,7 @@ export class Login extends Component {
       }
     }
     if (isAuthenticated === true) {
-      window.location = '/welcome';
+      window.location = '/';
     }
     if (this.state.msg !== null) {
 

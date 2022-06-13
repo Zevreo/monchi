@@ -25,13 +25,13 @@ export class App extends Component {
         <Provider store={store}>
           <Navigation/>
           <Routes>
+            <Route path="/" element={<Welcome />} exact/>
+          </Routes>
+          <Routes>
             <Route path="/login" element={<Login />}/>
           </Routes>
           <Routes>
             <Route path="/register" element={<Register />}/>
-          </Routes>
-          <Routes>
-            <Route path="/welcome" element={<Welcome />}/>
           </Routes>
           <Routes>
             <Route path="/perfil" element={<Perfil />}/>
