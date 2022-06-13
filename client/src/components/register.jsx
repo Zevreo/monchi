@@ -86,10 +86,13 @@ export class Registro extends Component {
         return (
             <section id="sign-up" class="bg-grey-1">
                 <div class="sign-up-container">
-                    <div class="container text-center">
-                        <div class="col-md-12">
-                            <h3 class="mb5">Crea tu cuenta</h3>
-                            <p class="subheading">Bienvenido a Monchi</p>
+                    <div class="container text-center ">
+                        <div class="mb5">
+
+                        </div>
+                        <div class="col-md-12 ">
+                            <h3 class="">Create your account</h3>
+                            <p class="subheading">Welcome to Purefive</p>
                             <div class="login-form pt30 pb30">
                                 <form onSubmit={this.onSubmit}>
                                     <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.FirstName} onChange={this.onChangeFirstName} required />

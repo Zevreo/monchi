@@ -32,6 +32,7 @@
  28. Colors
 
 /*---------- GLOBAL STYLES ----------*/
+
 html {
     overflow-y: scroll;
     -webkit-backface-visibility: hidden;
@@ -121,9 +122,10 @@ a.highlight:hover {
 	height: 70%;
 }
 .page-hero-parallax {
-	position: fixed;
+	
+    top: 0;
 	width: 100%;
-	height: 45%;
+	height: 30rem;
 }
 @media (max-width:992px) {
     .hero-fullscreen {
@@ -3099,7 +3101,7 @@ ul {
     margin-bottom: 0px!important
 }
 .mb5 {
-    margin-bottom: 5px!important
+    margin-bottom: 8rem!important
 }
 .mb10 {
     margin-bottom: 10px!important
@@ -5257,7 +5259,6 @@ h4.fitness-label {
     width: 100%;
     position: relative;
     list-style: none;
-    opacity: 0;
 }
 .container-fluid ul.portfolioContainer {
     margin: 0;
