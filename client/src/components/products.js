@@ -1,13 +1,8 @@
-import "./index.css";
-
 export default function Product(props) {
     const {id, imageUrl, name, description, price} = props
 
     return (
-        <div
-            key={id}
-            className={"product"}
-        >
+        <div key={id} class="product">
             <img
                 src={imageUrl}
                 alt={`Image of ${name}`}
