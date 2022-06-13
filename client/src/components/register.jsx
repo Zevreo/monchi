@@ -141,12 +141,12 @@ export class Registro extends Component {
                                     </select>
                                     <p className="help-block text-danger"></p>
                                     <div class="actions">
-                                        <p class="dark-grey">By creating an account, you agree to the <a href="#">Terms of Service</a>.</p>
+                                        <p class="dark-grey">Al crear una cuenta accedes a nuestros <a href="#">Terminos de Servicio</a>.</p>
                                     </div>
                                     <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
                                 </form>
                             </div>
-                            <p>Or <a href="#">login</a> usign an existing account</p>
+                            <p>O <a href="/login">inicia sesión</a> usando una cuenta existente</p>
                         </div>
                     </div>
                 </div>
