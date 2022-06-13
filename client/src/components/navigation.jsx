@@ -5,13 +5,17 @@ import Logout from "./logout";
 
 export class Navigation extends Component {
   state = {
-    cart: ''
+    cart: '',
+    id: ''
   };
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
   render() {
     const { isAuthenticated } = this.props.auth;
+    const ownerLinks = (
+      <li><a href="/myStores">Tus tiendas</a></li>
+    )
     const authLinks = (
       <ul class="nav navbar-nav menu-right">
         <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
