@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import 'react-devtools';
 
@@ -12,7 +13,6 @@ import Navigation from './components/navigation';
 import Login from './components/login';
 import Register from './components/register';
 import Welcome from './components/welcome';
-import Footer from './components/footer';
 
 export class App extends Component {
   componentDidMount() {
@@ -32,11 +32,15 @@ export class App extends Component {
           <Routes>
             <Route path="/welcome" element={<Welcome />}/>
           </Routes>
-          <Footer/>
         </Provider>
       </Router>
     );
   };
 };
+
+// debugger; // TO INSPECT THE PAGE BEFORE 1ST RENDER
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
 
 export default App;
