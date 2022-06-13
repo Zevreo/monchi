@@ -86,60 +86,61 @@ export class Registro extends Component {
         return (
             <section id="sign-up" class="bg-grey-1">
                 <div class="sign-up-container">
-                    <div class="container text-center ">
-                        <div class="mb5">
-
-                        </div>
-                        <div class="col-md-12 ">
-                            <h3 class="">Create your account</h3>
-                            <p class="subheading">Welcome to Purefive</p>
-                            <div class="login-form pt30 pb30">
-                                <form onSubmit={this.onSubmit}>
-                                    <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.FirstName} onChange={this.onChangeFirstName} required />
-                                    <p className="help-block text-danger"></p>
-                                    <input class="sign-up-last-name bg-white" type="text" placeholder="Apellidos" value={this.state.LastName} onChange={this.onChangeLastName} required />
-                                    <p className="help-block text-danger"></p>
-                                    <input class="sign-up-email bg-white" type="text" placeholder="Correo Electrónico" value={this.state.EmailAddress} onChange={this.onChangeEmailAddress} required />
-                                    <p className="help-block text-danger"></p>
-                                    <input class="sign-up-password bg-white" type="password" placeholder="Contraseña" value={this.state.Password} onChange={this.onChangePassword} required />
-                                    <p className="help-block text-danger"></p>
-                                    <input class="bg-white" type="date" placeholder="Fecha de nacimiento" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
-                                    <p className="help-block text-danger"></p>
-                                    <input class="bg-white" type="tel" placeholder="Teléfono" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
-                                    <p className="help-block text-danger"></p>
-                                    <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
-                                        <option default disabled value=''>Seleccione su pais</option>
-                                        <option value='Estados Unidos de América'>Estados Unidos de América</option>
-                                        <option value='Europa'>Europa</option>
-                                        <option value='Inglaterra'>Inglaterra</option>
-                                        <option value='India'>India</option>
-                                        <option value='Australia'>Australia</option>
-                                        <option value='Canada'>Canada</option>
-                                        <option value='Singapur'>Singapur</option>
-                                        <option value='Suiza'>Suiza</option>
-                                        <option value='Malasia'>Malasia</option>
-                                        <option value='Japón'>Japón</option>
-                                        <option value='China'>China</option>
-                                        <option value='México'>México</option>
-                                        <option value='Other'>Otro</option>
-                                    </select>
-                                    <p className="help-block text-danger"></p>
-                                    <select class="bg-white" type="text" placeholder="Moneda" value={this.state.DefaultCoin} onChange={this.onChangeDefaultCoin} required>
-                                        <option default disabled value=''>Seleccione su moneda preferida</option>
-                                        <option value='USD'>Dólar estadounidense</option>
-                                        <option value='EUR'>Euro</option>
-                                        <option value='GBP'>Libra esterlina</option>
-                                        <option value='INR'>Rupia</option>
-                                        <option value='AUD'>Dólar australiano</option>
-                                        <option value='CAD'>Dólar canadiense</option>
-                                        <option value='SGD'>Dólar de Singapur</option>
-                                        <option value='CHF'>Franco suizo</option>
-                                        <option value='MYR'>Ringgit</option>
-                                        <option value='JPY'>Yen</option>
-                                        <option value='CNY'>Yuan</option>
-                                        <option value='MNX'>Peso mexicano</option>
-                                    </select>
-                                    <p className="help-block text-danger"></p>
+                    <div class="container text-center">
+                        <div class="col-md-12">
+                            <h3 class="mb5">Cree su cuenta</h3>
+                            <p class="subheading">Bienvenido a Monchi</p>
+                            <div class="sign-up-form pt30 pb30">
+                                <form class="row" onSubmit={this.onSubmit}>
+                                    <div class="col-md-6">
+                                        <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.FirstName} onChange={this.onChangeFirstName} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="sign-up-last-name bg-white" type="text" placeholder="Apellidos" value={this.state.LastName} onChange={this.onChangeLastName} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="sign-up-email bg-white" type="text" placeholder="Correo Electrónico" value={this.state.EmailAddress} onChange={this.onChangeEmailAddress} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="sign-up-password bg-white" type="password" placeholder="Contraseña" value={this.state.Password} onChange={this.onChangePassword} required />
+                                        <p className="help-block text-danger"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="bg-white" type="date" placeholder="Fecha de nacimiento" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="bg-white" type="tel" placeholder="Teléfono" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
+                                        <p className="help-block text-danger"></p>
+                                        <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
+                                            <option default disabled value=''>Seleccione su pais</option>
+                                            <option value='Estados Unidos de América'>Estados Unidos de América</option>
+                                            <option value='Europa'>Europa</option>
+                                            <option value='Inglaterra'>Inglaterra</option>
+                                            <option value='India'>India</option>
+                                            <option value='Australia'>Australia</option>
+                                            <option value='Canada'>Canada</option>
+                                            <option value='Singapur'>Singapur</option>
+                                            <option value='Suiza'>Suiza</option>
+                                            <option value='Malasia'>Malasia</option>
+                                            <option value='Japón'>Japón</option>
+                                            <option value='China'>China</option>
+                                            <option value='México'>México</option>
+                                            <option value='Other'>Otro</option>
+                                        </select>
+                                        <p className="help-block text-danger"></p>
+                                        <select class="bg-white" type="text" placeholder="Moneda" value={this.state.DefaultCoin} onChange={this.onChangeDefaultCoin} required>
+                                            <option default disabled value=''>Seleccione su moneda preferida</option>
+                                            <option value='USD'>Dólar estadounidense</option>
+                                            <option value='EUR'>Euro</option>
+                                            <option value='GBP'>Libra esterlina</option>
+                                            <option value='INR'>Rupia</option>
+                                            <option value='AUD'>Dólar australiano</option>
+                                            <option value='CAD'>Dólar canadiense</option>
+                                            <option value='SGD'>Dólar de Singapur</option>
+                                            <option value='CHF'>Franco suizo</option>
+                                            <option value='MYR'>Ringgit</option>
+                                            <option value='JPY'>Yen</option>
+                                            <option value='CNY'>Yuan</option>
+                                            <option value='MNX'>Peso mexicano</option>
+                                        </select>
+                                        <p className="help-block text-danger"></p>
+                                    </div>
                                     <div class="actions">
                                         <p class="dark-grey">Al crear una cuenta accedes a nuestros <a href="#">Terminos de Servicio</a>.</p>
                                     </div>

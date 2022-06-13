@@ -12,6 +12,7 @@ import Navigation from './components/navigation';
 import Login from './components/login';
 import Register from './components/register';
 import Welcome from './components/welcome';
+import Footer from './components/footer';
 
 export class App extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ export class App extends Component {
           <Routes>
             <Route path="/welcome" element={<Welcome />}/>
           </Routes>
+          <Footer/>
         </Provider>
       </Router>
     );

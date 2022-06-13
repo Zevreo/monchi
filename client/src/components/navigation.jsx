@@ -31,7 +31,7 @@ export class Navigation extends Component {
     )
     return (
       <div>
-        <nav class="navbar navbar-default dark">
+        <nav class="navbar navbar-default dark fixed-top">
           <div class="container">
             <div class="navbar-header">
               <div class="container">
