@@ -95,17 +95,9 @@ export class Registro extends Component {
                                     <div class="col-md-6">
                                         <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.FirstName} onChange={this.onChangeFirstName} required />
                                         <p className="help-block text-danger"></p>
-                                        <input class="sign-up-last-name bg-white" type="text" placeholder="Apellidos" value={this.state.LastName} onChange={this.onChangeLastName} required />
-                                        <p className="help-block text-danger"></p>
                                         <input class="sign-up-email bg-white" type="text" placeholder="Correo Electrónico" value={this.state.EmailAddress} onChange={this.onChangeEmailAddress} required />
                                         <p className="help-block text-danger"></p>
-                                        <input class="sign-up-password bg-white" type="password" placeholder="Contraseña" value={this.state.Password} onChange={this.onChangePassword} required />
-                                        <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div class="col-md-6">
                                         <input class="bg-white" type="date" placeholder="Fecha de nacimiento" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
-                                        <p className="help-block text-danger"></p>
-                                        <input class="bg-white" type="tel" placeholder="Teléfono" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
                                         <p className="help-block text-danger"></p>
                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
                                             <option default disabled value=''>Seleccione su pais</option>
@@ -123,6 +115,14 @@ export class Registro extends Component {
                                             <option value='México'>México</option>
                                             <option value='Other'>Otro</option>
                                         </select>
+                                        <p className="help-block text-danger"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="sign-up-last-name bg-white" type="text" placeholder="Apellidos" value={this.state.LastName} onChange={this.onChangeLastName} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="sign-up-password bg-white" type="password" placeholder="Contraseña" value={this.state.Password} onChange={this.onChangePassword} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="bg-white" type="tel" placeholder="Teléfono" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
                                         <p className="help-block text-danger"></p>
                                         <select class="bg-white" type="text" placeholder="Moneda" value={this.state.DefaultCoin} onChange={this.onChangeDefaultCoin} required>
                                             <option default disabled value=''>Seleccione su moneda preferida</option>

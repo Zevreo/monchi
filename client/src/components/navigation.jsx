@@ -13,25 +13,47 @@ export class Navigation extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     const authLinks = (
-      <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
-        <ul class="dropdown-menu">
-          <li><a href="/perfil">Perfil</a></li>
-          <li><a href="#">Carrito de compras</a></li>
-          <Logout />
-        </ul>
-      </li>
+      <ul class="nav navbar-nav menu-right">
+        <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Perfil</a></li>
+            <li><a href="#">Carrito de compras</a></li>
+            <Logout />
+          </ul>
+        </li>
+        <li class="header-divider"><a><span></span></a></li>
+        <li><a href="#"><span class="ion-ios-cart-outline">{this.state.cart}</span></a></li>
+        <li class="header-divider"><a><span></span></a></li>
+        <li style={{ lineHeight: "0px" }}>
+          <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
+            <div class="subscribe-form-input">
+              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
+            </div>
+          </form>
+        </li>
+      </ul>
     )
     const guestLinks = (
-      <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
-        <ul class="dropdown-menu">
-          <li><a href="/login">Iniciar sesión</a></li>
-          <li><a href="/register">Registrarse</a></li>
-        </ul>
-      </li>
+      <ul class="nav navbar-nav menu-right">
+        <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="/login">Iniciar sesión</a></li>
+            <li><a href="/register">Registrarse</a></li>
+          </ul>
+        </li>
+        <li class="header-divider"><a><span></span></a></li>
+        <li style={{ lineHeight: "0px" }}>
+          <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
+            <div class="subscribe-form-input">
+              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
+            </div>
+          </form>
+        </li>
+      </ul>
     )
     return (
       <div>
-        <nav class="navbar navbar-default dark fixed-top">
+        <nav class="navbar navbar-default dark">
           <div class="container">
             <div class="navbar-header">
               <div class="container">
@@ -47,20 +69,7 @@ export class Navigation extends Component {
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <div class="container">
-                <ul class="nav navbar-nav menu-right">
-                  {isAuthenticated ? authLinks : guestLinks}
-                  <li class="header-divider"><a><span></span></a></li>
-                  <li><a href="#"><span class="ion-ios-cart-outline">{ this.state.cart }</span></a></li>
-                  <li class="header-divider"><a><span></span></a></li>
-                  <li style={{ lineHeight: "0px" }}>
-                    <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
-                      <div class="subscribe-form-input">
-                        <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
-                      </div>
-                    </form>
-                  </li>
-                  
-                </ul>
+                {isAuthenticated ? authLinks : guestLinks}
               </div>
             </div>
           </div>
