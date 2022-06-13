@@ -13,6 +13,7 @@ import Login from './components/login';
 import Register from './components/register';
 import Welcome from './components/welcome';
 import Footer from './components/footer';
+import Perfil from './components/perfil';
 
 export class App extends Component {
   componentDidMount() {
@@ -31,6 +32,9 @@ export class App extends Component {
           </Routes>
           <Routes>
             <Route path="/welcome" element={<Welcome />}/>
+          </Routes>
+          <Routes>
+            <Route path="/perfil" element={<Perfil />}/>
           </Routes>
           <Footer/>
         </Provider>

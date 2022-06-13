@@ -15,7 +15,7 @@ export class Navigation extends Component {
     const authLinks = (
       <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Perfil</a></li>
+          <li><a href="/perfil">Perfil</a></li>
           <li><a href="#">Carrito de compras</a></li>
           <Logout />
         </ul>
