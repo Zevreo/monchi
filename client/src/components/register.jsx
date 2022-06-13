@@ -88,8 +88,8 @@ export class Registro extends Component {
                 <div class="sign-up-container">
                     <div class="container text-center">
                         <div class="col-md-12">
-                            <h3 class="mb5">Create your account</h3>
-                            <p class="subheading">Welcome to Purefive</p>
+                            <h3 class="mb5">Crea tu cuenta</h3>
+                            <p class="subheading">Bienvenido a Monchi</p>
                             <div class="login-form pt30 pb30">
                                 <form onSubmit={this.onSubmit}>
                                     <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.FirstName} onChange={this.onChangeFirstName} required />
@@ -138,12 +138,12 @@ export class Registro extends Component {
                                     </select>
                                     <p className="help-block text-danger"></p>
                                     <div class="actions">
-                                        <p class="dark-grey">By creating an account, you agree to the <a href="#">Terms of Service</a>.</p>
+                                        <p class="dark-grey">Al crear una cuenta accedes a nuestros <a href="#">Terminos de Servicio</a>.</p>
                                     </div>
                                     <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
                                 </form>
                             </div>
-                            <p>Or <a href="#">login</a> usign an existing account</p>
+                            <p>O <a href="/login">inicia sesión</a> usando una cuenta existente</p>
                         </div>
                     </div>
                 </div>

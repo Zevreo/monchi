@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import Logout from "./logout";
 
 export class Navigation extends Component {
+  state = {
+    cart: 2
+  };
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
   render() {
     const { isAuthenticated } = this.props.auth;
     const authLinks = (
-      <li class="dropdown"><a href="shop-3columns.html" class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+      <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
         <ul class="dropdown-menu">
           <li><a href="#">Perfil</a></li>
           <li><a href="#">Carrito de compras</a></li>
@@ -19,7 +22,7 @@ export class Navigation extends Component {
       </li>
     )
     const guestLinks = (
-      <li class="dropdown"><a href="shop-3columns.html" class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+      <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
         <ul class="dropdown-menu">
           <li><a href="/login">Iniciar sesión</a></li>
           <li><a href="/register">Registrarse</a></li>
@@ -47,6 +50,8 @@ export class Navigation extends Component {
                 <ul class="nav navbar-nav menu-right">
                   {isAuthenticated ? authLinks : guestLinks}
                   <li class="header-divider"><a><span></span></a></li>
+                  <li><a href="#"><span class="ion-ios-cart-outline">{ this.state.cart }</span></a></li>
+                  <li class="header-divider"><a><span></span></a></li>
                   <li style={{ lineHeight: "0px" }}>
                     <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
                       <div class="subscribe-form-input">
@@ -54,6 +59,7 @@ export class Navigation extends Component {
                       </div>
                     </form>
                   </li>
+                  
                 </ul>
               </div>
             </div>
