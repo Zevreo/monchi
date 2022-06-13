@@ -18,15 +18,13 @@ export class Perfil extends Component {
 
                     <div class="col-md-7 mr-auto text-center">
                         
-                        <h4 class="mb1">Dashboard</h4>
                         
                         <div class="buttons-tabs-centered">
                             
                             <ul id="buttonTabs" class="nav nav-tabs nav-tabs-center">
                                 <li class="active"><a href="#tab-c1" data-toggle="tab">Mi informacion</a></li>
-                                <li class=""><a href="#tab-c2" data-toggle="tab">Second</a></li>
-                                <li class=""><a href="#tab-c3" data-toggle="tab">Third</a></li>
-                                <li class=""><a href="#tab-c4" data-toggle="tab">Fourth</a></li>
+                                <li class=""><a href="#tab-c2" data-toggle="tab">Domicilio</a></li>
+                               
                             </ul>
                             
                             <div id="myTabContent" class="tab-content">
@@ -36,16 +34,44 @@ export class Perfil extends Component {
                                 </div>
                                 
                                 <div class="tab-pane fade" id="tab-c2"> 
-                                    <p>Sed scelerisque urna id scelerisque tincidunt. Sed scelerisque laoreet dolor sed aliquam. Duis at eros vehicula, sollicitudin magna elementum, pretium diam. Vivamus bibendum fringilla mauris et rhoncus. Phasellus mattis egestas risus ac tempor. Nam dapibus sodales ornare. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+                                <section class="checkout">
+                <div class=""> 
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text-center ">
+     
+                            <h3 class="mb20">Tu Domicilio</h3>
+                            
+                            <label for="exampleFormControlSelect1">Street</label>
+                            <input type="text" class="input-text" name="billing_first_name" value=""/>
+
+                            <label for="exampleFormControlSelect1">Suburb</label>
+                            <input type="text"  class="input-text" name="billing_last_name" value="" />
+                           
+                            <div class="half-left col-sm-6">
+                            <label for="exampleFormControlSelect1">Postal Code</label>
+                                <input type="text" class="input-text" name="billing_first_name" value=""/>
+                            </div>
+                            <div class="half-right col-sm-6">
+                            <label for="exampleFormControlSelect1">Country</label>
+                                <input type="text" class="input-text" name="billing_last_name" value=""/>
+                            </div>
+                            <div class="half-left col-sm-6">
+                            <label for="exampleFormControlSelect1">State</label>
+                                <input type="text" class="input-text" name="billing_last_name" value=""/>
+                            </div>
+                            <div class="half-right col-sm-6">
+                            <label for="exampleFormControlSelect1">References</label>
+                                <input type="text" class="input-text" name="billing_last_name" value=""/>
+                            </div>
+                            
+                            
+                        </div>  
+                    </div>
+                </div>
+            </section>
                                 </div>
                                 
-                                <div class="tab-pane fade" id="tab-c3"> 
-                                    <p>Sed scelerisque urna id scelerisque tincidunt. Sed scelerisque laoreet dolor sed aliquam. Duis at eros vehicula, sollicitudin magna elementum, pretium diam. Vivamus bibendum fringilla mauris et rhoncus. Phasellus mattis egestas risus ac tempor. Nam dapibus sodales ornare.</p>
-                                </div>
-                                
-                                <div class="tab-pane fade" id="tab-c4"> 
-                                    <p>Sed scelerisque urna id scelerisque tincidunt. Sed scelerisque laoreet dolor sed aliquam. Duis at eros vehicula, sollicitudin magna elementum, pretium diam. Vivamus bibendum fringilla mauris et rhoncus. Sed scelerisque urna id scelerisque tincidunt. Phasellus mattis egestas risus ac tempor. Nam dapibus sodales ornare.</p>
-                                </div>
+
                                 
                             </div>
                             
