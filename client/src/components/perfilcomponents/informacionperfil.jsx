@@ -25,22 +25,35 @@ export class Informacionperfil extends Component{
                         <div class="col-sm-8 col-sm-offset-2 text-center ">
      
                             <h3 class="mb20">Tu informacion</h3>
+                            
                             <div class="half-left col-sm-6">
-                                <input type="text" class="input-text" name="billing_first_name" placeholder={user ? user.FirstName : "loading"}/>
+                            <label for="exampleFormControlSelect1">FirsName</label>
+                                <input type="text" class="input-text" name="billing_first_name" value={user ? user.FirstName : "loading"}/>
+
+                            </div>
+
+                            <div class="half-right col-sm-6">
+                            <label for="exampleFormControlSelect1">LastName</label>
+                                <input type="text"  class="input-text" name="billing_last_name" value={user ? user.LastName : "loading"} />
+                            </div>
+                            <div class="half-left col-sm-6">
+                            <label for="exampleFormControlSelect1">BirtDate</label>
+                                <input type="text" class="input-text" name="billing_first_name" value={user ? user.BirthDate : "loading"}/>
                             </div>
                             <div class="half-right col-sm-6">
-                                <input type="text" class="input-text" name="billing_last_name" placeholder={user ? user.LastName : "loading"}/>
+                            <label for="exampleFormControlSelect1">Country</label>
+                                <input type="text" class="input-text" name="billing_last_name" value={user ? user.Country : "loading"}/>
                             </div>
-                            <input type="text" class="input-text" name="billing_email" placeholder={user ? user.FirstName : "loading"}/> 
-                            <input type="text" class="input-text" name="billing_address" placeholder="Street Address"/>
-                            <input type="text" class="input-text" name="billing_apt" placeholder="Apartment, suite, unit etc."/>
                             <div class="half-left col-sm-6">
-                                <input type="text" class="input-text" name="billing_city" placeholder="City"/>
+                            <label for="exampleFormControlSelect1">Phone</label>
+                                <input type="text" class="input-text" name="billing_last_name" value={user ? user.PhoneNumber : "loading"}/>
                             </div>
                             <div class="half-right col-sm-6">
-                                <input type="text" class="input-text" name="billing_post" placeholder="Postcode"/>
-                            </div> 
-                            <input type="text" class="input-text" name="billing_phone" placeholder="Phone"/>
+                            <label for="exampleFormControlSelect1">Coin</label>
+                                <input type="text" class="input-text" name="billing_last_name" value={user ? user.DefaultCoin : "loading"}/>
+                            </div>
+                            
+                            
                         </div>  
                     </div>
                 </div>

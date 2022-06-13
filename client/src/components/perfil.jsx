@@ -23,7 +23,7 @@ export class Perfil extends Component {
                         <div class="buttons-tabs-centered">
                             
                             <ul id="buttonTabs" class="nav nav-tabs nav-tabs-center">
-                                <li class="active"><a href="#tab-c1" data-toggle="tab">First</a></li>
+                                <li class="active"><a href="#tab-c1" data-toggle="tab">Mi informacion</a></li>
                                 <li class=""><a href="#tab-c2" data-toggle="tab">Second</a></li>
                                 <li class=""><a href="#tab-c3" data-toggle="tab">Third</a></li>
                                 <li class=""><a href="#tab-c4" data-toggle="tab">Fourth</a></li>
@@ -62,7 +62,9 @@ export class Perfil extends Component {
         )
         return(
             <div>
-                {isAuthenticated ? authLinks : guestLinks}
+                {isAuthenticated ? authLinks : null}
+                {!isAuthenticated ? guestLinks : null}
+                
             </div>
          );
     }
