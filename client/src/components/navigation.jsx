@@ -5,7 +5,7 @@ import Logout from "./logout";
 
 export class Navigation extends Component {
   state = {
-    cart: 2
+    cart: 0
   };
   static propTypes = {
     auth: PropTypes.object.isRequired
@@ -16,7 +16,7 @@ export class Navigation extends Component {
       <ul class="nav navbar-nav menu-right">
         <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Perfil</a></li>
+            <li><a href="/perfil">Perfil</a></li>
             <li><a href="#">Carrito de compras</a></li>
             <Logout />
           </ul>
