@@ -22,30 +22,22 @@ export class MyStore extends Component {
     };
     render() {
         return (
-            <section class="checkout">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 text-center ">
-                        <h3 class="mb20">Tu informacion</h3>
-                        <div class="half-left col-sm-6">
-                            <label for="exampleFormControlSelect1">FirsName</label>
-                            <input type="text" class="input-text" name="billing_first_name" value={ this.state.store ? this.state.store.Name : "loading" } />
+            <section class="shop-product pt100 pb40">
+                <div class="container"> 
+                    <div class="row">
+                        <div class="col-sm-5 mt40 mb40">
+                            <div><img src={ this.state.store ? this.state.store.StoreImage : "loading" } class="img-responsive width100" alt="#"/></div>
                         </div>
-                        <div class="half-right col-sm-6">
-                            <label for="exampleFormControlSelect1">Pais</label>
-                            <input type="text" class="input-text" name="billing_last_name" value={ this.state.store ? this.state.store.Country : "loading"} />
-                        </div>
-                        <div class="half-left col-sm-6">
-                            <label for="exampleFormControlSelect1">Descripcion</label>
-                            <input type="text" class="input-text" name="billing_last_name" value={ this.state.store ? this.state.store.Description : "loading"} />
-                        </div>
-                        <div class="half-right col-sm-6">
-                            <img src={ this.state.store ? this.state.store.StoreImage : "loading"} />
+                        <div class="col-sm-7 mt40 mb40 product-details">
+                            <h3>{ this.state.store ? this.state.store.Name : "loading" }</h3>
+                            <h4 >{ this.state.store ? this.state.store.Country : "loading" }</h4>
+                            <p>{ this.state.store ? this.state.store.Description : "loading" }</p>
+                            <a href="#" class="btn btn-dark btn-lg btn-appear mt20"><span>Ir a mis productos <i class="ion-android-arrow-forward"></i></span></a>
                         </div>
                     </div>
                 </div>
             </section>
-        );
-    }
+    )}
 }
 const mapStateToProps = (state) => ({
     auth: state.auth
