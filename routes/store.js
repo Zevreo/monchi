@@ -29,20 +29,15 @@ router.post('/', auth, (req, res) => {
     const OwnerId = req.body.OwnerId;
     const Name = req.body.Name;
     const Country = req.body.Country;
-    const Description = req.body.Description;
-    const StoreImage = req.body.StoreImage;
+    const Description = (req.body.Description ? req.body.Description : "No description");
+    const StoreImage = (req.body.StoreImage ? req.body.StoreImage : "../../613b38eaa594d30013a82b27.png");
 
     const newStore = new Store({
         OwnerId, Name, Country, Description, StoreImage
     });
-    if (res.locals.Role == "Owner" || res.locals.Role == "Administrator") {
-        newStore.save()
-            .then(() => res.json('Tienda creada'))
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
-    else {
-        return res.status(401).json('No tienes permiso para hacer eso');
-    }
+    newStore.save()
+        .then(() => res.json('Tienda creada'))
+        .catch(err => res.status(400).json('Error: ' + err));
 
 });
 
@@ -55,8 +50,8 @@ router.get('/:id', (req, res) => {
 
 //GET ById OWNER
 router.get('/owner/:OwnerId', (req, res) => {
-    const {OwnerId} = req.params;
-    Store.find({OwnerId})
+    const { OwnerId } = req.params;
+    Store.find({ OwnerId })
         .then(store => res.json(store))
         .catch(err => res.status(400).json('Error: ' + err));
 });

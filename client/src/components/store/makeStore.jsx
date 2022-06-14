@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { tokenConfig } from "../../actions/authActions";
 
 export class MakeStore extends Component {
     static propTypes = {
@@ -45,6 +46,15 @@ export class MakeStore extends Component {
     onSubmit(e) {
         e.preventDefault();
         const { user } = this.props.auth;
+        const { token } = this.props.auth;
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        if(token){
+            config.headers['x-auth-token'] = token;
+        }
         if(user){
             const store = {
                 OwnerId: user._id,
@@ -54,7 +64,7 @@ export class MakeStore extends Component {
                 StoreImage: this.state.StoreImage
             };
             console.log(store);
-            axios.post('/api/store', store)
+            axios.post('/api/store', store, config)
                 .then(res => console.log(res.data));
             window.location = '/myStore';
         }

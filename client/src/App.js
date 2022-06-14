@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import 'react-devtools';
 
 //Redux
@@ -22,31 +22,31 @@ export class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
   }
-  render(){
+  render() {
     return (
       <Router>
         <Provider store={store}>
-          <Navigation/>
+          <Navigation />
           <Routes>
-            <Route path="/" element={<Welcome />} exact/>
+            <Route path="/" element={<Welcome />} exact />
           </Routes>
           <Routes>
-            <Route path="/login" element={<Login />}/>
+            <Route path="/login" element={<Login />} />
           </Routes>
           <Routes>
-            <Route path="/register" element={<Register />}/>
+            <Route path="/register" element={<Register />} />
           </Routes>
           <Routes>
-            <Route path="/perfil" element={<Perfil />}/>
+            <Route path="/perfil" element={<Perfil />} />
           </Routes>
           <Routes>
-            <Route path="/makeStore" element={<MakeStore />}/>
+            <Route path="/makeStore" element={<MakeStore />} />
           </Routes>
           <Routes>
-            <Route path="/myStore" element={<MyStore />}/>
+            <Route path="/myStore" element={<MyStore />} />
           </Routes>
           <Routes>
-            <Route path="/newAddress" element={<NewAddress />}/>
+            <Route path="/newAddress" element={<NewAddress />} />
           </Routes>
         </Provider>
       </Router>

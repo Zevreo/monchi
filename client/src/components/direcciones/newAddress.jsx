@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { tokenConfig } from "../../actions/authActions";
 
 export class NewAddress extends Component {
     static propTypes = {
@@ -77,12 +78,21 @@ export class NewAddress extends Component {
             Surname: e.target.value
         });
     }
-    onSubmit(e) {
+    onSubmit = (e) => {
         e.preventDefault();
         const { user } = this.props.auth;
+        const { token } = this.props.auth;
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        if(token){
+            config.headers['x-auth-token'] = token;
+        }
         if(user){
             const address = {
-                UserId: this.props.auth.user._id,
+                UserId: user._id,
                 Street: this.state.Street,
                 ExternalNum: this.state.ExternalNum,
                 InternalNum: this.state.InternalNum,
@@ -94,7 +104,7 @@ export class NewAddress extends Component {
                 Surname: this.state.Surname
             };
             console.log(address);
-            axios.post('/api/address', address)
+            axios.post('/api/address', address, config)
             .then(res => console.log(res.data));
         window.location = '/perfil';
         }

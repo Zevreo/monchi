@@ -28,7 +28,7 @@ export class MyStore extends Component {
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-4 mt40 mb40">
-                                <div><img src={this.state.store ? this.state.store.StoreImage : "loading"} class="img-responsive width100" alt="#" /></div>
+                                <div><img src={ this.state.store ? `${this.state.store.StoreImage}` : "/613b38eaa594d30013a82b27.png" } class="img-responsive width100" alt="Imagen de tienda" /></div>
                             </div>
                             <div class="col-sm-8 mt40 mb40 product-details">
                                 <h3>{this.state.store ? this.state.store.Name : "loading"}</h3>
