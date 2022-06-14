@@ -16,42 +16,48 @@ const auth = require('../middleware/auth');
     Default: 
 */
 //GET User's Addressess
-router.get('/:id', auth, (req, res) => {
-    const {UserId} = req.params.id;
-    Address.find({UserId})
+router.get('/my/:UserId', auth, (req, res) => {
+    const UserId = req.params.UserId;
+    Address.find({ UserId })
         .then(addressess => res.json(addressess))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 //POST Add store
 router.post('/', auth, (req, res) => {
-
-    const UserId = req.body.UserId;
-    const Street = req.body.Street;
-    const ExternalNum = req.body.ExternalNum;
-    const InternalNum = req.body.InternalNum;
-    const Country = req.body.Country;
-    const State = req.body.State;
-    const City = req.body.City;
-    const Postcode = req.body.Postcode;
-    const References = req.body.References;
-    const Surname = req.body.Surname;
-    const Default = false;
-
-    const newAddress = new Address({
-        UserId, Street, ExternalNum, InternalNum,
-        Country, State, City, Postcode,
-        References, Surname, Default
-    });
-    if ( req.body.UserId == res.locals.id ) {
-        newAddress.save()
-            .then(() => res.json('Direccion agregada'))
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
-    else {
-        return res.status(401).json('No tienes permiso para hacer eso');
-    }
-
+    const UserId = res.locals.id;
+    var Default = true;
+    Address.findOne({ $and: [{ UserId }, { Default }] })
+        .then(address => {
+            if (address != null) {
+                Default = false;
+                console.log(Default);
+            }
+            const Street = req.body.Street;
+            const ExternalNum = req.body.ExternalNum;
+            const InternalNum = req.body.InternalNum;
+            const Country = req.body.Country;
+            const State = req.body.State;
+            const City = req.body.City;
+            const Postcode = req.body.Postcode;
+            const References = req.body.References;
+            const Surname = req.body.Surname;
+            console.log(Default);
+            const newAddress = new Address({
+                UserId, Street, ExternalNum, InternalNum,
+                Country, State, City, Postcode,
+                References, Surname, Default
+            });
+            if (req.body.UserId == res.locals.id) {
+                newAddress.save()
+                    .then(() => res.json('Direccion agregada'))
+                    .catch(err => res.status(400).json('Error: ' + err));
+            }
+            else {
+                return res.status(401).json('No tienes permiso para hacer eso');
+            }
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 //GET ById Address
@@ -87,6 +93,33 @@ router.put('/:id', auth, (req, res) => {
         })
         .catch(err => res.status(400).json('Error: ' + err));
 })
+
+//PUT Change default
+router.put('/default/:id', auth, (req, res) => {
+    const UserId = res.locals.id;
+    const Default = true;
+    Address.findOne({ $and: [{ UserId }, { Default }] })
+        .then(address => {
+            const id = address.id;
+            Address.findById(id)
+                .then(address => {
+                    address.Default = false;
+                    address.save()
+                        .then(() => console.log('Direccion actualizada'))
+                        .catch(err => console.log('Error1: ' + err));
+                })
+                .catch(err => console.log('Error2: ' + err));
+        })
+        .catch(err => console.log('Error3: ' + err));
+    Address.findById(req.params.id)
+        .then(address => {
+            address.Default = true;
+            address.save()
+                .then(() => res.json('Direccion actualizada'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 //DELETE ById auth
 router.delete('/:id', auth, (req, res) => {
