@@ -17,14 +17,12 @@ export class Navigation extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     const { user } = this.props.auth;
-    const ownerLinks = (
-      <li><a href="/myStores">Volerme vendedor</a></li>
-    )
-    if ( isAuthenticated && user.Role == 'Owner'){
-      const ownerLinks = (
-        <li><a href="/myStores">Tus tiendas</a></li>
-      )
-    }
+    const ownerLinks = ( isAuthenticated && user.Role == 'Owner') 
+    ? (
+      <li><a href="/myStore">Tu tienda</a></li>
+      ) :
+      (<li><a href="/makeStore">Volverte vendedor</a></li>)
+    
     
     const authLinks = (
       <ul class="nav navbar-nav menu-right">

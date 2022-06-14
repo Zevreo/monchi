@@ -14,6 +14,8 @@ import Login from './components/login';
 import Register from './components/register';
 import Welcome from './components/welcome';
 import Perfil from './components/perfil';
+import MakeStore from './components/store/makeStore';
+import MyStore from './components/store/myStore';
 
 export class App extends Component {
   componentDidMount() {
@@ -35,6 +37,12 @@ export class App extends Component {
           </Routes>
           <Routes>
             <Route path="/perfil" element={<Perfil />}/>
+          </Routes>
+          <Routes>
+            <Route path="/makeStore" element={<MakeStore />}/>
+          </Routes>
+          <Routes>
+            <Route path="/myStore" element={<MyStore />}/>
           </Routes>
         </Provider>
       </Router>

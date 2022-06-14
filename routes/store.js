@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Store = require('../models/stores.model');
+let User = require('../models/users.model');
 const bcrypt = require('bcryptjs');
 const auth = require('../middleware/auth');
 
@@ -20,6 +21,12 @@ router.get('/', (req, res) => {
 
 //POST Add store
 router.post('/', auth, (req, res) => {
+    User.findById(req.body.OwnerId)
+        .then(user => {
+            user.Role = "Owner";
+            user.save()
+        })
+
     const OwnerId = req.body.OwnerId;
     const Name = req.body.Name;
     const Country = req.body.Country;
@@ -31,18 +38,26 @@ router.post('/', auth, (req, res) => {
     });
     if (res.locals.Role == "Owner" || res.locals.Role == "Administrator") {
         newStore.save()
-        .then(() => res.json('Tienda creada'))
-        .catch(err => res.status(400).json('Error: ' + err));
+            .then(() => res.json('Tienda creada'))
+            .catch(err => res.status(400).json('Error: ' + err));
     }
     else {
         return res.status(401).json('No tienes permiso para hacer eso');
     }
-    
+
 });
 
-//GET ById auth
+//GET ById STORE
 router.get('/:id', (req, res) => {
     Store.findById(req.params.id)
+        .then(store => res.json(store))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//GET ById OWNER
+router.get('/owner/:OwnerId', (req, res) => {
+    const {OwnerId} = req.params;
+    Store.find({OwnerId})
         .then(store => res.json(store))
         .catch(err => res.status(400).json('Error: ' + err));
 });
