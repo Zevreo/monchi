@@ -17,7 +17,7 @@ const addressSchema = new Schema({
     City:
     {type: String, required: true},
     Postcode: 
-    {type: String, required: true },
+    {type: Number, required: true },
     References: 
     {type: String, required: true },
     Surname: 

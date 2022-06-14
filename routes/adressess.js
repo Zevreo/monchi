@@ -36,14 +36,14 @@ router.post('/', auth, (req, res) => {
     const Postcode = req.body.Postcode;
     const References = req.body.References;
     const Surname = req.body.Surname;
-    const Default = 'False';
+    const Default = false;
 
     const newAddress = new Address({
         UserId, Street, ExternalNum, InternalNum,
         Country, State, City, Postcode,
         References, Surname, Default
     });
-    if ( res.locals.id == req.params.id ) {
+    if ( req.body.UserId == res.locals.id ) {
         newAddress.save()
             .then(() => res.json('Direccion agregada'))
             .catch(err => res.status(400).json('Error: ' + err));

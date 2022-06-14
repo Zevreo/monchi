@@ -29,7 +29,7 @@ export class Perfil extends Component {
                                     <div class="tab-pane fade" id="tab-c2">
                                         <section class="checkout">
                                             <div class="row text-center ">
-                                                <a href="/new-address" class="btn btn-dark btn-lg btn-appear mt20">Agregar</a>
+                                                <a href="/newAddress" class="btn btn-dark btn-lg btn-appear mt20">Agregar</a>
                                                 <h3 class="mb20">Sobrenombre (Predeterminado)</h3>
                                                 <label for="exampleFormControlSelect1">Calle</label>
                                                 <input type="text" class="input-text" name="billing_first_name" value="" />

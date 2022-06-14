@@ -38,12 +38,12 @@ export class NewAddress extends Component {
     }
     onChangeExternalNum(e) {
         this.setState({
-            ExternalNum: e.target.value
+            ExternalNum: parseInt(e.target.value)
         });
     }
     onChangeInternalNum(e) {
         this.setState({
-            InternalNum: e.target.value
+            InternalNum: parseInt(e.target.value)
         });
     }
     onChangeCountry(e) {
@@ -63,7 +63,7 @@ export class NewAddress extends Component {
     }
     onChangePostcode(e) {
         this.setState({
-            Postcode: e.target.value
+            Postcode: parseInt(e.target.value)
         });
     }
     onChangeReferences(e) {
@@ -100,13 +100,11 @@ export class NewAddress extends Component {
         }
     }
     render() {
-        const { user } = this.props.auth;
         return (
             <section class="pt90 pb100">
                 <div class="container">
                     <div class="checkout">
                         <form class="row text-center" onSubmit={this.onSubmit}>
-                            <h2>{ user ? user.FirstName : 'Loading'}</h2>
                             <div class="half-left col-sm-6">
                                 <label for="exampleFormControlSelect1">Sobrenombre</label>
                                 <input type="text" class="input-text" value={this.state.Surname} onChange={this.onChangeSurname} required />
@@ -119,17 +117,17 @@ export class NewAddress extends Component {
                             </div>
                             <div class="half-left col-sm-6">
                                 <label for="exampleFormControlSelect1">Numero exterior</label>
-                                <input type="text" class="input-text" value={this.state.ExternalNum} onChange={this.onChangeExternalNum} required />
+                                <input type="number" class="input-text" value={this.state.ExternalNum} onChange={this.onChangeExternalNum} required />
                                 <p className="help-block text-danger"></p>
                             </div>
                             <div class="half-right col-sm-6">
                                 <label for="exampleFormControlSelect1">Numero interior</label>
-                                <input type="text" class="input-text" value={this.state.InternalNum} onChange={this.onChangeInternalNum} required />
+                                <input type="number" class="input-text" value={this.state.InternalNum} onChange={this.onChangeInternalNum} required />
                                 <p className="help-block text-danger"></p>
                             </div>
                             <div class="half-left col-sm-6">
                                 <label for="exampleFormControlSelect1">Codigo postal</label>
-                                <input type="text" class="input-text" value={this.state.Postcode} onChange={this.onChangePostcode} required />
+                                <input type="number" class="input-text" value={this.state.Postcode} onChange={this.onChangePostcode} required />
                                 <p className="help-block text-danger"></p>
                             </div>
                             <div class="half-right col-sm-6">
@@ -160,5 +158,5 @@ export class NewAddress extends Component {
 }
 const mapStateToProps = (state) => ({
     auth: state.auth
-})
+});
 export default connect(mapStateToProps, null)(NewAddress);
