@@ -16,6 +16,7 @@ import Welcome from './components/welcome';
 import Perfil from './components/perfil';
 import MakeStore from './components/store/makeStore';
 import MyStore from './components/store/myStore';
+import NewAddress from './components/direcciones/new-address';
 
 export class App extends Component {
   componentDidMount() {
@@ -43,6 +44,9 @@ export class App extends Component {
           </Routes>
           <Routes>
             <Route path="/myStore" element={<MyStore />}/>
+          </Routes>
+          <Routes>
+            <Route path="/new-address" element={<NewAddress />}/>
           </Routes>
         </Provider>
       </Router>

@@ -14,6 +14,8 @@ const addressSchema = new Schema({
     {type: String, required: true },
     State: 
     {type: String, required: true },
+    City:
+    {type: String, required: true},
     Postcode: 
     {type: String, required: true },
     References: 

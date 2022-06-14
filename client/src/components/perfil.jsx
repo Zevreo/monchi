@@ -19,7 +19,8 @@ export class Perfil extends Component {
                             <div class="buttons-tabs-centered">
                                 <ul id="buttonTabs" class="nav nav-tabs nav-tabs-center">
                                     <li class="active"><a href="#tab-c1" data-toggle="tab">Mi informacion</a></li>
-                                    <li class=""><a href="#tab-c2" data-toggle="tab">Domicilio</a></li>
+                                    <li class=""><a href="#tab-c2" data-toggle="tab">Domicilios</a></li>
+                                    <li class=""><a href="#tab-c3" data-toggle="tab">Pedidos</a></li>
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
                                     <div class="tab-pane fade active in" id="tab-c1">
@@ -27,34 +28,42 @@ export class Perfil extends Component {
                                     </div>
                                     <div class="tab-pane fade" id="tab-c2">
                                         <section class="checkout">
-                                            <div class="">
-                                                <div class="row">
-                                                    <div class="col-sm-8 col-sm-offset-2 text-center ">
-                                                        <h3 class="mb20">Tu Domicilio</h3>
-                                                        <label for="exampleFormControlSelect1">Street</label>
-                                                        <input type="text" class="input-text" name="billing_first_name" value="" />
-                                                        <label for="exampleFormControlSelect1">Suburb</label>
-                                                        <input type="text" class="input-text" name="billing_last_name" value="" />
-                                                        <div class="half-left col-sm-6">
-                                                            <label for="exampleFormControlSelect1">Postal Code</label>
-                                                            <input type="text" class="input-text" name="billing_first_name" value="" />
-                                                        </div>
-                                                        <div class="half-right col-sm-6">
-                                                            <label for="exampleFormControlSelect1">Country</label>
-                                                            <input type="text" class="input-text" name="billing_last_name" value="" />
-                                                        </div>
-                                                        <div class="half-left col-sm-6">
-                                                            <label for="exampleFormControlSelect1">State</label>
-                                                            <input type="text" class="input-text" name="billing_last_name" value="" />
-                                                        </div>
-                                                        <div class="half-right col-sm-6">
-                                                            <label for="exampleFormControlSelect1">References</label>
-                                                            <input type="text" class="input-text" name="billing_last_name" value="" />
-                                                        </div>
-                                                    </div>
+                                            <div class="row text-center ">
+                                                <a href="/new-address" class="btn btn-dark btn-lg btn-appear mt20">Agregar</a>
+                                                <h3 class="mb20">Sobrenombre (Predeterminado)</h3>
+                                                <label for="exampleFormControlSelect1">Calle</label>
+                                                <input type="text" class="input-text" name="billing_first_name" value="" />
+                                                <div class="half-left col-sm-6">
+                                                    <label for="exampleFormControlSelect1">Numero exterior</label>
+                                                    <input type="text" class="input-text" name="billing_first_name" value="" />
                                                 </div>
+                                                <div class="half-right col-sm-6">
+                                                    <label for="exampleFormControlSelect1">Numero interior</label>
+                                                    <input type="text" class="input-text" name="billing_last_name" value="" />
+                                                </div>
+                                                <div class="half-left col-sm-6">
+                                                    <label for="exampleFormControlSelect1">Codigo postal</label>
+                                                    <input type="text" class="input-text" name="billing_last_name" value="" />
+                                                </div>
+                                                <div class="half-right col-sm-6">
+                                                    <label for="exampleFormControlSelect1">Pais</label>
+                                                    <input type="text" class="input-text" name="billing_last_name" value="" />
+                                                </div>
+                                                <div class="half-left col-sm-6">
+                                                    <label for="exampleFormControlSelect1">Estado</label>
+                                                    <input type="text" class="input-text" name="billing_last_name" value="" />
+                                                </div>
+                                                <div class="half-right col-sm-6">
+                                                    <label for="exampleFormControlSelect1">Ciudad</label>
+                                                    <input type="text" class="input-text" name="billing_last_name" value="" />
+                                                </div>
+                                                <label for="exampleFormControlSelect1">Referencias</label>
+                                                <input type="text" class="input-text" name="billing_first_name" value="" />
                                             </div>
                                         </section>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab-c3">
+                                        <></>
                                     </div>
                                 </div>
                             </div>

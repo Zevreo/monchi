@@ -30,7 +30,7 @@ export class MyStore extends Component {
                             <div class="col-sm-4 mt40 mb40">
                                 <div><img src={this.state.store ? this.state.store.StoreImage : "loading"} class="img-responsive width100" alt="#" /></div>
                             </div>
-                            <div class="col-sm-6 mt40 mb40 product-details">
+                            <div class="col-sm-8 mt40 mb40 product-details">
                                 <h3>{this.state.store ? this.state.store.Name : "loading"}</h3>
                                 <h4 >{this.state.store ? this.state.store.Country : "loading"}</h4>
                                 <p>{this.state.store ? this.state.store.Description : "loading"}</p>
