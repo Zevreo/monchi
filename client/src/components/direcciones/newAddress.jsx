@@ -30,6 +30,7 @@ export class NewAddress extends Component {
         this.onChangePostcode = this.onChangePostcode.bind(this);
         this.onChangeReferences = this.onChangeReferences.bind(this);
         this.onChangeSurname = this.onChangeSurname.bind(this);
+        const { user } = this.props.auth;
     }
     onChangeStreet(e) {
         this.setState({
@@ -79,10 +80,9 @@ export class NewAddress extends Component {
     onSubmit(e) {
         e.preventDefault();
         const { user } = this.props.auth;
-        console.log(user);
-        if (user) {
+        if(user){
             const address = {
-                UserId: user._id,
+                UserId: this.props.auth.user._id,
                 Street: this.state.Street,
                 ExternalNum: this.state.ExternalNum,
                 InternalNum: this.state.InternalNum,
@@ -95,8 +95,8 @@ export class NewAddress extends Component {
             };
             console.log(address);
             axios.post('/api/address', address)
-                .then(res => console.log(res.data));
-            window.location = '/perfil';
+            .then(res => console.log(res.data));
+        window.location = '/perfil';
         }
     }
     render() {
