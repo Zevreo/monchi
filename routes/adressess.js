@@ -96,7 +96,7 @@ router.put('/:id', auth, (req, res) => {
 
 //PUT Change default
 router.put('/default/:id', auth, (req, res) => {
-    const UserId = res.locals.id;
+    const UserId = req.body.UserId;
     const Default = true;
     Address.findOne({ $and: [{ UserId }, { Default }] })
         .then(address => {
@@ -123,14 +123,9 @@ router.put('/default/:id', auth, (req, res) => {
 
 //DELETE ById auth
 router.delete('/:id', auth, (req, res) => {
-    if (req.params.UserId == res.locals.id) {
-        Address.findByIdAndDelete(req.params.id)
-            .then(() => { res.json('Direccion eliminada') })
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
-    else {
-        return res.status(401).json('No tienes permiso para hacer eso');
-    }
+    Address.findByIdAndDelete(req.params.id)
+        .then(() => { res.json('Direccion eliminada') })
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
