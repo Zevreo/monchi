@@ -11,33 +11,31 @@ export class Informacionperfil extends Component {
         const { user } = this.props.auth;
         return (
             <section class="checkout">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 text-center ">
-                        <h3 class="mb20">Tu informacion</h3>
-                        <div class="half-left col-sm-6">
-                            <label for="exampleFormControlSelect1">FirsName</label>
-                            <input type="text" class="input-text" name="billing_first_name" value={user ? user.FirstName : "loading"} />
-                        </div>
-                        <div class="half-right col-sm-6">
-                            <label for="exampleFormControlSelect1">LastName</label>
-                            <input type="text" class="input-text" name="billing_last_name" value={user ? user.LastName : "loading"} />
-                        </div>
-                        <div class="half-left col-sm-6">
-                            <label for="exampleFormControlSelect1">BirtDate</label>
-                            <input type="text" class="input-text" name="billing_first_name" value={user ? user.BirthDate : "loading"} />
-                        </div>
-                        <div class="half-right col-sm-6">
-                            <label for="exampleFormControlSelect1">Country</label>
-                            <input type="text" class="input-text" name="billing_last_name" value={user ? user.Country : "loading"} />
-                        </div>
-                        <div class="half-left col-sm-6">
-                            <label for="exampleFormControlSelect1">Phone</label>
-                            <input type="text" class="input-text" name="billing_last_name" value={user ? user.PhoneNumber : "loading"} />
-                        </div>
-                        <div class="half-right col-sm-6">
-                            <label for="exampleFormControlSelect1">Coin</label>
-                            <input type="text" class="input-text" name="billing_last_name" value={user ? user.DefaultCoin : "loading"} />
-                        </div>
+                <div class="row text-center ">
+                    <h3 class="mb20">Tu informacion</h3>
+                    <div class="half-left col-sm-6">
+                        <label for="exampleFormControlSelect1">Nombre</label>
+                        <input type="text" class="input-text" name="billing_first_name" value={user ? user.FirstName : "loading"} />
+                    </div>
+                    <div class="half-right col-sm-6">
+                        <label for="exampleFormControlSelect1">Apellido</label>
+                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.LastName : "loading"} />
+                    </div>
+                    <div class="half-left col-sm-6">
+                        <label for="exampleFormControlSelect1">Fecha de nacimiento</label>
+                        <input type="text" class="input-text" name="billing_first_name" value={user ? user.BirthDate : "loading"} />
+                    </div>
+                    <div class="half-right col-sm-6">
+                        <label for="exampleFormControlSelect1">Pais</label>
+                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.Country : "loading"} />
+                    </div>
+                    <div class="half-left col-sm-6">
+                        <label for="exampleFormControlSelect1">Telefono</label>
+                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.PhoneNumber : "loading"} />
+                    </div>
+                    <div class="half-right col-sm-6">
+                        <label for="exampleFormControlSelect1">Moneda predeterminada</label>
+                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.DefaultCoin : "loading"} />
                     </div>
                 </div>
             </section>

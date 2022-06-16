@@ -26,9 +26,8 @@ export class Navigation extends Component {
     
     const authLinks = (
       <ul class="nav navbar-nav menu-right">
-        <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+        <li class="dropdown"><a class="dropdown-toggle" href="/perfil">Cuenta<i class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="/perfil">Ver perfil</a></li>
             <li><a href="#">Carrito de compras</a></li>
             { ownerLinks }
             <Logout />
@@ -48,9 +47,8 @@ export class Navigation extends Component {
     )
     const guestLinks = (
       <ul class="nav navbar-nav menu-right">
-        <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+        <li class="dropdown"><a class="dropdown-toggle" href="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="/login">Iniciar sesión</a></li>
             <li><a href="/register">Registrarse</a></li>
           </ul>
         </li>
