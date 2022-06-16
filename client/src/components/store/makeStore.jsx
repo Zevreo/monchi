@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { tokenConfig } from "../../actions/authActions";
 
 export class MakeStore extends Component {
     static propTypes = {
@@ -15,7 +14,7 @@ export class MakeStore extends Component {
             Name: '',
             Country: '',
             Description: '',
-            StoreImage: ''
+            ImageUrl: ''
         }
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCountry = this.onChangeCountry.bind(this);
@@ -40,11 +39,33 @@ export class MakeStore extends Component {
     }
     onChangeStoreImage(e) {
         this.setState({
-            StoreImage: e.target.value
+            StoreImage: e.target.files[0]
         });
     }
-    onSubmit(e) {
+    onChangeImageUrl(e) {
+        this.setState({
+            ImageUrl: e.target.value
+        })
+    }
+    async onSubmit(e) {
         e.preventDefault();
+        let image = this.state.StoreImage;
+
+        if (image !== '') {
+            console.log("entered")
+            const formData = new FormData();
+            formData.append("file", image);
+            formData.append("upload_preset", "monchi"); // Replace the preset name with your own
+            formData.append("api_key", "876895554677544"); // Replace API key with your own Cloudinary key
+            formData.append("timestamp", (Date.now() / 1000) | 0);
+
+            await axios.post('https://api.cloudinary.com/v1_1/dvticou1l/image/upload', formData)
+                .then(res => {
+                    this.state.ImageUrl = res.data.url;
+                })
+                .catch(err => console.log('Error: ' + err));
+
+        }
         const { user } = this.props.auth;
         const { token } = this.props.auth;
         const config = {
@@ -52,19 +73,18 @@ export class MakeStore extends Component {
                 "Content-type": "application/json"
             }
         }
-        if(token){
+        if (token) {
             config.headers['x-auth-token'] = token;
         }
-        if(user){
+        if (user) {
             const store = {
                 OwnerId: user._id,
                 Name: this.state.Name,
                 Country: this.state.Country,
                 Description: this.state.Description,
-                StoreImage: this.state.StoreImage
+                StoreImage: this.state.ImageUrl
             };
-            console.log(store);
-            axios.post('/api/store', store, config)
+            await axios.post('/api/store', store, config)
                 .then(res => console.log(res.data));
             window.location = '/myStore';
         }
@@ -79,11 +99,13 @@ export class MakeStore extends Component {
                             <p class="subheading">Bienvenido a Monchi</p>
                             <div class="sign-up-form pt30 pb30">
                                 <form class="row" onSubmit={this.onSubmit}>
-                                    <div class="col-md-6">
-                                        <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.Name} onChange={this.onChangeName} required />
+                                    <div className="col-md-6">
+                                        <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.Name} onChange={this.onChangeName} required feedbackToolTip />
                                         <p className="help-block text-danger"></p>
-                                        <input class="sign-up-email bg-white" type="text" placeholder="URL Imagen" value={this.state.StoreImage} onChange={this.onChangeStoreImage} />
+                                        <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
+                                            onChange={this.onChangeStoreImage} id="imageUpload" title="La imagen cargada toma prioridad" />
                                         <p className="help-block text-danger"></p>
+                                        <input class="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={this.state.ImageUrl} onChange={this.onChangeImageUrl} tooltip="La imagen cargada toma prioridad"  />
                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
                                             <option default disabled value=''>Seleccione su pais</option>
                                             <option value='Estados Unidos de América'>Estados Unidos de América</option>

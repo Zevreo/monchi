@@ -31,7 +31,6 @@ router.post('/', auth, (req, res) => {
         .then(address => {
             if (address != null) {
                 Default = false;
-                console.log(Default);
             }
             const Street = req.body.Street;
             const ExternalNum = req.body.ExternalNum;
@@ -42,7 +41,6 @@ router.post('/', auth, (req, res) => {
             const Postcode = req.body.Postcode;
             const References = req.body.References;
             const Surname = req.body.Surname;
-            console.log(Default);
             const newAddress = new Address({
                 UserId, Street, ExternalNum, InternalNum,
                 Country, State, City, Postcode,
