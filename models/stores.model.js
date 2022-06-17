@@ -11,7 +11,7 @@ const storeSchema = new Schema({
     Description:
     {type : String, default: "No description"},
     StoreImage:
-    {type: String, default: "../../assets/613b38eaa594d30013a82b27.png"}
+    {type: String, default: "../../613b38eaa594d30013a82b27.png"}
 }, {
     timestamps: true
 });

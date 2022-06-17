@@ -15,24 +15,48 @@
   <link href="%PUBLIC_URL%/css/custom.css" rel="stylesheet" type="text/css" media="all" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300%7CMontserrat:400,700%7CRaleway:400,200,300"
     rel="stylesheet" type="text/css" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <link rel="preconnect" href="https://app.snipcart.com" />
-  <link rel="preconnect" href="https://cdn.snipcart.com" />
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.2/default/snipcart.css" />
+  <style>
+    .svgLoader {
+      animation: spin 0.7s linear infinite;
+      margin: auto;
+    }
+
+    .divLoader {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <div id="snipcart" data-api-key="NWMwZWNkZGMtZjU2ZS00YzM3LWFlZjYtMmM5Zjk0MWViZDcxNjM3Njg0OTY0ODg5NTk4MTM3" hidden>
+  <div id="root">
+    <div class="divLoader">
+      <svg class="svgLoader" width="50" height="50" viewBox="0 0 50 50">
+        <path fill="#c779d0"
+          d="M25,5A20.14,20.14,0,0,1,45,22.88a2.51,2.51,0,0,0,2.49,2.26h0A2.52,2.52,0,0,0,50,22.33a25.14,25.14,0,0,0-50,0,2.52,2.52,0,0,0,2.5,2.81h0A2.51,2.51,0,0,0,5,22.88,20.14,20.14,0,0,1,25,5Z">
+        </path>
+      </svg>
+    </div>
   </div>
   <!-- Scripts -->
   <script src="%PUBLIC_URL%/js/jquery.min.js"></script>
   <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
   <script src="%PUBLIC_URL%/js/plugins.js"></script>
   <script src="%PUBLIC_URL%/js/scripts.js"></script>
-  <script src="https://cdn.snipcart.com/themes/v3.2.2/default/snipcart.js" async></script>
 </body>
 
 </html>
