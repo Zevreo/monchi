@@ -36,17 +36,14 @@ router.get('/', async (req, res) => {
 
 //POST Add product with tags
 router.post('/', auth, (req, res) => {
+    console.log(req.body);
     const { StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription } = req.body;
-    const newProduct = new Product({ StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription });
+    const newProduct = new Product( StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription );
     const newProductID = newProduct._id;
-    console.log(newProduct);
     const { tags } = req.body;
     const tagsSplit = tags.split(',');
-    console.log(tagsSplit);
     for (var tag of tagsSplit) {
-        console.log(tag);
         const newTag = new Tag({ ProductId: `${newProductID}`, Tags: `${tag}` });
-        console.log(newTag);
         newTag.save()
             .catch(err => res.status(400).json('Error: ' + err));
     }
