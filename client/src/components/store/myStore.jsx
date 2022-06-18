@@ -17,7 +17,7 @@ export class MyStore extends Component {
         const { user } = this.props.auth;
         if (user && this.state.updated === false) {
             axios.get(`/api/store/owner/${user._id}`)
-                .then(res => this.setState({ store: res.data[0] }));
+                .then(res => this.setState({ store: res.data }));
             this.setState({ updated: true });
         }
     };

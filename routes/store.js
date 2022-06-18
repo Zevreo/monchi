@@ -50,8 +50,8 @@ router.get('/:id', (req, res) => {
 
 //GET ById OWNER
 router.get('/owner/:OwnerId', (req, res) => {
-    const { OwnerId } = req.params;
-    Store.find({ OwnerId })
+    const OwnerId = req.params;
+    Store.findOne(OwnerId)
         .then(store => res.json(store))
         .catch(err => res.status(400).json('Error: ' + err));
 });
