@@ -20,13 +20,10 @@ router.get('/', async (req, res) => {
     await Product.find()
         .then(products => {prods = products})
         .catch(err => res.status(400).json('Error: ' + err));
-    console.log(prods);
     for (var prod of prods) {
-        console.log("prod: " + prod.id);
         await Tag.find({ ProductId: prod.id }).select("Tags -_id")
             .then(tags => {
                 productsWithTags.push({prod, tags})
-                console.log("tags: " + tags);
             })
             .catch(err => res.status(400).json('Error: ' + err));;
         console.log(productsWithTags);
@@ -34,11 +31,29 @@ router.get('/', async (req, res) => {
     res.json(productsWithTags);
 });
 
+//GET All ByStore
+router.get('/store/:StoreId', async (req, res) => {
+    const StoreId = req.params.StoreId;
+    console.log(StoreId);
+    var productsWithTags = [];
+    var prods = null;
+    await Product.find({ StoreId: StoreId })
+        .then(products => {prods = products})
+        .catch(err => res.status(400).json('Error: ' + err));
+    for (var prod of prods) {
+        await Tag.find({ ProductId: prod.id }).select("Tags -_id")
+            .then(tags => {
+                productsWithTags.push({prod, tags})
+            })
+            .catch(err => res.status(400).json('Error: ' + err));;
+    }
+    res.json(productsWithTags);
+});
+
 //POST Add product with tags
 router.post('/', auth, (req, res) => {
-    console.log(req.body);
     const { StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription } = req.body;
-    const newProduct = new Product( StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription );
+    const newProduct = new Product({ StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription });
     const newProductID = newProduct._id;
     const { tags } = req.body;
     const tagsSplit = tags.split(',');
