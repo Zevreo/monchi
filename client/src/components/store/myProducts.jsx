@@ -30,21 +30,33 @@ export class MyProducts extends Component {
                 <div class="container">
                     <div class="row white-bg">
                         <ul class="shop-items portfolioContainer columns-4 margin">
-                            {this.state.products !== [null]
-                                ? this.state.products.map((d, i) => (
-                                    <li class="shop-item">
-                                        <a href={`/product/${d.prod._id}`}>
+                            { this.state.products.map((d, i) => (
+                                <li key={i}>
+                                    { d ?
+                                        <a href={`/product/${d._id}`}>
                                             <div class="item">
                                                 <img src="img/shop/1.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">{d.prod.PriceCoin}$</span>{d.prod.ProductPrice}</h4>
+                                                <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}</h4>
                                                 <div class="info hover-bottom">
-                                                    <h4>{d.prod.ProductName}</h4>
+                                                    <h4>{d.ProductName}</h4>
+                                                    <p>Tags:{ d.Tags.map((d, i) => <i>{d}</i> )}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        :
+                                        <a href="#">
+                                            <div class="item">
+                                                <img src='/img/shop/1.jpg' alt="#" />
+                                                <h4 class="price"><span class="currency">$</span>19.99<span class="old-price">26.95</span></h4>
+                                                <div class="info hover-bottom">
+                                                    <h4>The Over Shirt</h4>
                                                     <p>View Details</p>
                                                 </div>
                                             </div>
                                         </a>
-                                    </li>
-                                )) : "loading"}
+                                    }
+                                </li>
+                            ))}
                         </ul>
 
                         <div class="col-md-12 text-center">
