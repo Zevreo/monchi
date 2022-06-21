@@ -9,45 +9,47 @@ export class MyProducts extends Component {
     };
     constructor(props) {
         super(props);
-        this.state = { store: [null] };
-        this.state = { updated: false };
+        this.state = { store: [null], updated: false, products: [null] };
     };
     componentDidUpdate() {
         const { user } = this.props.auth;
         if (user && this.state.updated === false) {
             axios.get(`/api/store/owner/${user._id}`)
-                .then(res => this.setState({ store: res.data[0] }));
+                .then(res => {
+                    this.setState({ store: res.data });
+                    axios.get(`/api/product/store/${res.data._id}`)
+                        .then(prods => this.setState({ products: prods.data }))
+                });
             this.setState({ updated: true });
         }
+
     };
     render() {
         return (
             <section class="shop pt60 pb40">
                 <div class="container">
                     <div class="row white-bg">
-                        <h2>Mis productos</h2>
-                        <p class="shop-result-count">Showing 1–12 of 23 results</p>
-                        <select class="shop-sorting">
-                            <option value=".popular">Sort by Popularity</option>
-                            <option value=".rating">Sort by Rating</option>
-                            <option value=".price-low">Sort by Price - Low</option>
-                            <option value=".price-high">Sort by Price - High</option>
-                            <option value=".newest">Sort by Newest</option>
-                        </select>
-                        <ul class="shop-items portfolioContainer columns-4 margin">
-                            <li class="shop-item">
-                                <a href="shop-product.html">
-                                    <div class="item">
-                                        <img src="img/shop/1.jpg" alt="#"/>
-                                            <h4 class="price"><span class="currency">$</span>19.99<span class="old-price">26.95</span></h4>
-                                            <div class="info hover-bottom">
-                                                <h4>The Over Shirt</h4>
-                                                <p>View Details</p>
+                        <ul class="col-md-12 container margin row">
+                            { this.state.products.map((d, i) => (
+                                <li class="product-item col-lg-3 col-md-4 col-sm-6" key={i}>
+                                    { d ?
+                                        <a href={`/product/${d._id}`}>
+                                            <div class="item">
+                                                <img src={d.ProductImage} alt="#" />
+                                                <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}</h4>
+                                                <div class="info hover-bottom">
+                                                    <h4>{d.ProductName}</h4>
+                                                    <p>Tags:{ d.Tags.map((d, i) => <i> {d} </i> )}</p>
+                                                </div>
                                             </div>
-                                    </div>
-                                </a>
-                            </li>
+                                        </a>
+                                        :
+                                        ""
+                                    }
+                                </li>
+                            ))}
                         </ul>
+
                         <div class="col-md-12 text-center">
                             <ul class="pagination">
                                 <li>

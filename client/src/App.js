@@ -57,6 +57,9 @@ export class App extends Component {
           <Routes>
             <Route exact path="/paramstest/:id&page=:page&search=:search" element={<ParamsTest />} />
           </Routes>
+          <Routes>
+            <Route path="/createProduct" element={<CreateProduct />} />
+          </Routes>
           <Footer />
         </Provider>
       </Router>
