@@ -29,31 +29,22 @@ export class MyProducts extends Component {
             <section class="shop pt60 pb40">
                 <div class="container">
                     <div class="row white-bg">
-                        <ul class="shop-items portfolioContainer columns-4 margin">
+                        <ul class="col-md-12 container margin row">
                             { this.state.products.map((d, i) => (
-                                <li key={i}>
+                                <li class="product-item col-lg-3 col-md-4 col-sm-6" key={i}>
                                     { d ?
                                         <a href={`/product/${d._id}`}>
                                             <div class="item">
-                                                <img src="img/shop/1.jpg" alt="#" />
+                                                <img src={d.ProductImage} alt="#" />
                                                 <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}</h4>
                                                 <div class="info hover-bottom">
                                                     <h4>{d.ProductName}</h4>
-                                                    <p>Tags:{ d.Tags.map((d, i) => <i>{d}</i> )}</p>
+                                                    <p>Tags:{ d.Tags.map((d, i) => <i> {d} </i> )}</p>
                                                 </div>
                                             </div>
                                         </a>
                                         :
-                                        <a href="#">
-                                            <div class="item">
-                                                <img src='/img/shop/1.jpg' alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>19.99<span class="old-price">26.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>The Over Shirt</h4>
-                                                    <p>View Details</p>
-                                                </div>
-                                            </div>
-                                        </a>
+                                        ""
                                     }
                                 </li>
                             ))}

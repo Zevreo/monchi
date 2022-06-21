@@ -53,6 +53,7 @@ router.get('/store/:StoreId', async (req, res) => {
                     ProductDescription: product.ProductDescription,
                     ProductPrice: product.ProductPrice,
                     PriceCoin: product.PriceCoin,
+                    ProductImage: product.ProductImage,
                     Tags: productTags,
                     Modified: product.updatedAt
                 };
@@ -65,17 +66,17 @@ router.get('/store/:StoreId', async (req, res) => {
 
 //POST Add product with tags
 router.post('/', auth, (req, res) => {
-    const { StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription } = req.body;
-    const newProduct = new Product({ StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription });
+    const { StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage } = req.body;
+    const newProduct = new Product({ StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage });
     const newProductID = newProduct._id;
     const { tags } = req.body;
     const tagsSplit = tags.split(',');
-    for (var tag of tagsSplit) {
-        const newTag = new Tag({ ProductId: `${newProductID}`, Tags: `${tag}` });
-        newTag.save()
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
     if (res.locals.Role == "Owner") {
+        for (var tag of tagsSplit) {
+            const newTag = new Tag({ ProductId: `${newProductID}`, Tags: `${tag}` });
+            newTag.save()
+                .catch(err => res.status(400).json('Error: ' + err));
+        }
         newProduct.save()
             .then(prod => res.json(prod))
             .catch(err => res.status(400).json('Error: ' + err));
