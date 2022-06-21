@@ -34,7 +34,7 @@ export class MyStore extends Component {
                                 <h3>{this.state.store ? this.state.store.Name : "loading"}</h3>
                                 <h4 >{this.state.store ? this.state.store.Country : "loading"}</h4>
                                 <p>{this.state.store ? this.state.store.Description : "loading"}</p>
-                                <a href="#" class="btn btn-dark btn-lg btn-appear mt20"><span>Agregar un producto <i class="ion-android-arrow-forward"></i></span></a>
+                                <a href="/createProduct" class="btn btn-dark btn-lg btn-appear mt20"><span>Agregar un producto <i class="ion-android-arrow-forward"></i></span></a>
                                 <a href="#" class="btn btn-dark btn-lg btn-appear mt20"><span>Ver mis ventas <i class="ion-android-arrow-forward"></i></span></a>
                             </div>
                         </div>
