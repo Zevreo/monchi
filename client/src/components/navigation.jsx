@@ -4,20 +4,32 @@ import PropTypes from 'prop-types';
 import Logout from "./logout";
 
 export class Navigation extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
-    cart: 2
+    cart: '',
+    id: ''
   };
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
   render() {
     const { isAuthenticated } = this.props.auth;
+    const { user } = this.props.auth;
+    const ownerLinks = ( isAuthenticated && user.Role == 'Owner') 
+    ? (
+      <li><a href="/myStore">Tu tienda</a></li>
+      ) :
+      (<li><a href="/makeStore">Volverte vendedor</a></li>)
+    
+    
     const authLinks = (
       <ul class="nav navbar-nav menu-right">
-        <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+        <li class="dropdown"><a class="dropdown-toggle" href="/perfil">Cuenta<i class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Perfil</a></li>
             <li><a href="#">Carrito de compras</a></li>
+            { ownerLinks }
             <Logout />
           </ul>
         </li>
@@ -35,9 +47,8 @@ export class Navigation extends Component {
     )
     const guestLinks = (
       <ul class="nav navbar-nav menu-right">
-        <li class="dropdown"><a class="dropdown-toggle">Cuenta<i class="fa fa-chevron-down"></i></a>
+        <li class="dropdown"><a class="dropdown-toggle" href="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></a>
           <ul class="dropdown-menu">
-            <li><a href="/login">Iniciar sesión</a></li>
             <li><a href="/register">Registrarse</a></li>
           </ul>
         </li>
@@ -63,8 +74,8 @@ export class Navigation extends Component {
                   <span class="icon-bar middle-bar"></span>
                   <span class="icon-bar bottom-bar"></span>
                 </button>
-                <a class="navbar-brand logo-light" href="/welcome"><img src="/Monchi-Logo.png" alt="#" /></a>
-                <a class="navbar-brand logo-dark" href="/welcome"><img src="/Monchi-Logo.png" alt="#" /></a>
+                <a class="navbar-brand logo-light" href="/"><img src="/Monchi-Logo.png" alt="#" /></a>
+                <a class="navbar-brand logo-dark" href="/"><img src="/Monchi-Logo.png" alt="#" /></a>
               </div>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
