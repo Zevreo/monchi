@@ -1,16 +1,22 @@
-// Pendiente
-/*
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const nameSchema = new Schema({
-    String: 
-    {type: String, required: true }
+const specsSchema = new Schema({
+    PropertyId: 
+    {type: String, required: true },
+    Specification: 
+    {type: String, required: true },
+    Quantity: 
+    {type: Number, required: true },
+    Linked: 
+    {type: Boolean, required: false },
+    LinkedSpecId: 
+    {type: String, required: false }
 }, {
-    timestamps: true
+    timestamps: false
 });
 
-const Name = mongoose.model('Name', nameSchema);
+const Specs = mongoose.model('Specs', specsSchema);
 
-module.exports = Name;
-*/
+module.exports = Specs;

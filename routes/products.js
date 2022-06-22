@@ -20,13 +20,27 @@ router.get('/', async (req, res) => {
     await Product.find()
         .then(products => { prods = products })
         .catch(err => res.status(400).json('Error: ' + err));
-    for (var prod of prods) {
-        await Tag.find({ ProductId: prod.id }).select("Tags -_id")
+    for (var product of prods) {
+        await Tag.find({ ProductId: product.id }).select("Tags -_id")
             .then(tags => {
-                productsWithTags.push({ prod, tags })
+                var productTags = [];
+                for (var tag of tags) {
+                    productTags.push(tag.Tags);
+                }
+                var prod = {
+                    _id: product.id,
+                    StoreId: product.StoreId,
+                    ProductName: product.ProductName,
+                    ProductDescription: product.ProductDescription,
+                    ProductPrice: product.ProductPrice,
+                    PriceCoin: product.PriceCoin,
+                    ProductImage: product.ProductImage,
+                    Tags: productTags,
+                    Modified: product.updatedAt
+                };
+                productsWithTags.push(prod)
             })
             .catch(err => res.status(400).json('Error: ' + err));;
-        console.log(productsWithTags);
     }
     res.json(productsWithTags);
 });

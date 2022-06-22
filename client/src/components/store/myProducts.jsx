@@ -29,13 +29,13 @@ export class MyProducts extends Component {
             <section class="shop pt60 pb40">
                 <div class="container">
                     <div class="row white-bg">
-                        <ul class="col-md-12 container margin row">
+                        <ul class="shop-items portfolioContainer col-md-12 height-auto margin row">
                             { this.state.products.map((d, i) => (
-                                <li class="product-item col-lg-3 col-md-4 col-sm-6" key={i}>
+                                <li class="relative col-lg-3 col-md-4 col-sm-6" style={{ padding: '15px'}} key={i}>
                                     { d ?
                                         <a href={`/product/${d._id}`}>
                                             <div class="item">
-                                                <img src={d.ProductImage} alt="#" />
+                                                <img src={d.ProductImage} alt="#" class="contain" />
                                                 <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}</h4>
                                                 <div class="info hover-bottom">
                                                     <h4>{d.ProductName}</h4>
