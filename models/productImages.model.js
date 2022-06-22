@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 const productImagesSchema = new Schema({
     ProductId: 
     {type: String, required: true },
+    PropertySpecId: 
+    {type: String, required: true },
     ImageURL:
     {type: String, required: true}
 }, {
