@@ -12,7 +12,7 @@ export class shoppingcart extends Component {
                             <div class="hero-container container pt50">
                                 <div class="hero-content text-left scroll-opacity">
                                     <div class="section-heading">
-                                        <h1 class="white mb10">Shop</h1>
+                                        <h1 class="white mb10">Productos</h1>
                                         <h5 class="white pl5">Save Up To 70% Off Sale</h5>
                                     </div>
                                     <ol class="breadcrumb">
@@ -42,7 +42,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="#">
-                                            <div class="item">
+                                            <div id= "1" class="item">
                                                 <img src='/img/shop/1.jpg' alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>19.99<span class="old-price">26.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -56,7 +56,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "2" class="item">
                                                 <img src='/img/shop/2.jpg' alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>13.99<span class="old-price">20.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -70,7 +70,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "3" class="item">
                                                 <img src="img/shop/3.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>16.99<span class="old-price">22.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -84,7 +84,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "4" class="item">
                                                 <img src="img/shop/4.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>12.99<span class="old-price">25.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -98,7 +98,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "5" class="item">
                                                 <img src="img/shop/5.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>15.99<span class="old-price">27.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -112,7 +112,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "6" class="item">
                                                 <img src="img/shop/6.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>18.99<span class="old-price">23.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -126,7 +126,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "7" class="item">
                                                 <img src="img/shop/7.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>14.99<span class="old-price">20.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -140,7 +140,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "8" class="item">
                                                 <img src="img/shop/8.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>17.99<span class="old-price">29.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -154,7 +154,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "9" class="item">
                                                 <img src="img/shop/9.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>12.99<span class="old-price">21.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -168,7 +168,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "10" class="item">
                                                 <img src="img/shop/10.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>19.99<span class="old-price">26.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -182,7 +182,7 @@ export class shoppingcart extends Component {
 
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "11" class="item">
                                                 <img src="img/shop/11.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>13.99<span class="old-price">20.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -195,7 +195,7 @@ export class shoppingcart extends Component {
                                     </li>
                                     <li class="shop-item">
                                         <a href="shop-product.html">
-                                            <div class="item">
+                                            <div id= "12" class="item">
                                                 <img src="./img/shop/12.jpg" alt="#" />
                                                 <h4 class="price"><span class="currency">$</span>16.99<span class="old-price">22.95</span></h4>
                                                 <div class="info hover-bottom">
@@ -242,6 +242,6 @@ export class shoppingcart extends Component {
                 </div>
             </div>
         )
-    }
+    } 
 }
 export default shoppingcart;
