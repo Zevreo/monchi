@@ -23,78 +23,62 @@ export class Allproducts extends Component {
     render() {
         return (
             <div class="site-wrapper">
-                    <section class="shop pt60 pb40">
-                        <div class="container">
-                            <div class="row white-bg">
-
-                                <p class="shop-result-count">Showing 1–12 of 23 results</p>
-                                <select class="shop-sorting">
-                                    <option value=".popular">Sort by Popularity</option>
-                                    <option value=".rating">Sort by Rating</option>
-                                    <option value=".price-low">Sort by Price - Low</option>
-                                    <option value=".price-high">Sort by Price - High</option>
-                                    <option value=".newest">Sort by Newest</option>
-                                </select>
-
-                                <ul class="shop-items portfolioContainer margin">
-                                    {this.state.products.map((d,i)=>(
-                                        
-                                       <div class="col-md-3 col-sm-6">
-                                         <li class="shop-item" key={i}>
-                                            {d ?
-                                            <a href="#">
-                                                <div class="item">
-                                                    <img src={d.ProductImage} alt="#" />
-                                                    <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}<span class="old-price">26.95</span></h4>
-                                                    <div class="info hover-bottom">
-                                                        <h4>The Over Shirt</h4>
-                                                        <p>View Details</p>
-                                                    </div>
+                   <section class="shop pt60 pb40">
+                <div class="container">
+                    <div class="row white-bg">
+                        <ul class="shop-items portfolioContainer col-md-12 height-auto margin row">
+                            { this.state.products.map((d, i) => (
+                                <li class="relative col-lg-3 col-md-4 col-sm-6" style={{ padding: '15px'}} key={i}>
+                                    { d ?
+                                        <a href={`/product/${d._id}`}>
+                                            <div class="item">
+                                                <img src={d.ProductImage} alt="#" class="contain" />
+                                                <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}</h4>
+                                                <div class="info hover-bottom">
+                                                    <h4>{d.ProductName}</h4>
+                                                    <p>Tags:{ d.Tags.map((d, i) => <i> {d} </i> )}</p>
                                                 </div>
-                                            </a>
-                                           :
-                                           ""
-                                        }
-                                        
-                                    </li>
-                                       </div>
-                                    ))}
-                                    
+                                            </div>
+                                        </a>
+                                        :
+                                        ""
+                                    }
+                                </li>
+                            ))}
+                        </ul>
 
-                                    
-                                </ul>
-                                <div class="col-md-12 text-center">
-                                    <ul class="pagination">
-                                        <li>
-                                            <a href="#" aria-label="Previous">
-                                                <span aria-hidden="true"><i class="ion-ios-arrow-thin-left"></i></span>
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="#">1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">4</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">5</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" aria-label="Next">
-                                                <span aria-hidden="true"><i class="ion-ios-arrow-thin-right"></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="col-md-12 text-center">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true"><i class="ion-ios-arrow-thin-left"></i></span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#">1</a>
+                                </li>
+                                <li>
+                                    <a href="#">2</a>
+                                </li>
+                                <li>
+                                    <a href="#">3</a>
+                                </li>
+                                <li>
+                                    <a href="#">4</a>
+                                </li>
+                                <li>
+                                    <a href="#">5</a>
+                                </li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true"><i class="ion-ios-arrow-thin-right"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                    </section>
+                    </div>
+                </div>
+            </section>
                 </div>
             // <section class="shop pt60 pb40">
             //     <div class="mb60">
