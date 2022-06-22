@@ -17,6 +17,9 @@ import Perfil from './components/perfil';
 import MakeStore from './components/store/makeStore';
 import MyStore from './components/store/myStore';
 import NewAddress from './components/direcciones/newAddress';
+import ParamsTest from './components/paramsTest';
+import Footer from './components/footer';
+import CreateProduct from './components/productos/createProduct';
 
 export class App extends Component {
   componentDidMount() {
@@ -48,6 +51,13 @@ export class App extends Component {
           <Routes>
             <Route path="/newAddress" element={<NewAddress />} />
           </Routes>
+          <Routes>
+            <Route exact path="/paramstest/:id&page=:page&search=:search" element={<ParamsTest />} />
+          </Routes>
+          <Routes>
+            <Route path="/createProduct" element={<CreateProduct />} />
+          </Routes>
+          <Footer />
         </Provider>
       </Router>
     );

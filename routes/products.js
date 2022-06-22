@@ -1,6 +1,8 @@
 const router = require('express').Router();
 let Product = require('../models/products.model');
-const bcrypt = require('bcryptjs');
+let Tag = require('../models/productTags.model');
+let Props = require('../models/productProperties.model');
+let Specs = require('../models/propertySpecs.model');
 const auth = require('../middleware/auth');
 
 /*
@@ -11,47 +13,109 @@ const auth = require('../middleware/auth');
     PriceCoin:
 */
 
-//GET All stores
-router.get('/', (req, res) => {
-    Product.find()
-        .then(stores => res.json(stores))
+//GET All products with tags
+router.get('/', async (req, res) => {
+    var productsWithTags = [];
+    var prods = null;
+    await Product.find()
+        .then(products => { prods = products })
         .catch(err => res.status(400).json('Error: ' + err));
+    for (var product of prods) {
+        await Tag.find({ ProductId: product.id }).select("Tags -_id")
+            .then(tags => {
+                var productTags = [];
+                for (var tag of tags) {
+                    productTags.push(tag.Tags);
+                }
+                var prod = {
+                    _id: product.id,
+                    StoreId: product.StoreId,
+                    ProductName: product.ProductName,
+                    ProductDescription: product.ProductDescription,
+                    ProductPrice: product.ProductPrice,
+                    PriceCoin: product.PriceCoin,
+                    ProductImage: product.ProductImage,
+                    Tags: productTags,
+                    Modified: product.updatedAt
+                };
+                productsWithTags.push(prod)
+            })
+            .catch(err => res.status(400).json('Error: ' + err));;
+    }
+    res.json(productsWithTags);
 });
 
-//POST Add store
-router.post('/', auth, (req, res) => {
-    const StoreId = req.body.StoreId;
-    const ProductName = req.body.ProductName;
-    const ProductPrice = req.body.ProductPrice;
-    const PriceCoin = req.body.PriceCoin;
-    const ProductDescription = req.body.ProductDescription;
-
-    const newProduct = new Product({
-        StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription
-    });
-    if (res.locals.Role == "Owner" || res.locals.Role == "Administrator") {
-        newProduct.save()
-        .then(() => res.json('Producto agregado'))
+//GET All ByStore
+router.get('/store/:StoreId', async (req, res) => {
+    const StoreId = req.params.StoreId;
+    var productsWithTags = [];
+    var prods = null;
+    await Product.find({ StoreId: StoreId })
+        .then(products => { prods = products })
         .catch(err => res.status(400).json('Error: ' + err));
+    for (var product of prods) {
+        await Tag.find({ ProductId: product.id }).select("Tags -_id")
+            .then(tags => {
+                var productTags = [];
+                for (var tag of tags) {
+                    productTags.push(tag.Tags);
+                }
+                var prod = {
+                    _id: product.id,
+                    StoreId: product.StoreId,
+                    ProductName: product.ProductName,
+                    ProductDescription: product.ProductDescription,
+                    ProductPrice: product.ProductPrice,
+                    PriceCoin: product.PriceCoin,
+                    ProductImage: product.ProductImage,
+                    Tags: productTags,
+                    Modified: product.updatedAt
+                };
+                productsWithTags.push(prod)
+            })
+            .catch(err => res.status(400).json('Error: ' + err));;
+    }
+    res.json(productsWithTags);
+});
+
+//POST Add product with tags
+router.post('/', auth, (req, res) => {
+    const { StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage } = req.body;
+    const newProduct = new Product({ StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage });
+    const newProductID = newProduct._id;
+    const { tags } = req.body;
+    const tagsSplit = tags.split(',');
+    if (res.locals.Role == "Owner") {
+        for (var tag of tagsSplit) {
+            const newTag = new Tag({ ProductId: `${newProductID}`, Tags: `${tag}` });
+            newTag.save()
+                .catch(err => res.status(400).json('Error: ' + err));
+        }
+        newProduct.save()
+            .then(prod => res.json(prod))
+            .catch(err => res.status(400).json('Error: ' + err));
     }
     else {
         return res.status(401).json('No tienes permiso para hacer eso');
     }
-    
 });
 
-//GET ById auth
+//GET ById
 router.get('/:id', (req, res) => {
     Product.findById(req.params.id)
-        .then(store => res.json(store))
+        .then(prod => {
+            Tag.find({ ProductId: `${prod._id}` }).select("Tags")
+                .then(tags => res.json({ prod, tags }))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
         .catch(err => res.status(400).json('Error: ' + err));
 });
-
+/*
 //PUT Update ById auth
 router.put('/:id', auth, (req, res) => {
     Store.findById(req.params.id)
         .then(product => {
-            if (req.params.OwnerId == res.locals.id || res.locals.Role == "Administrator") {
+            if (req.params.OwnerId == res.locals.id) {
                 product.StoreId = (req.body.StoreId ? req.body.StoreId : product.StoreId);
                 product.ProductName = (req.body.ProductName ? req.body.ProductName : product.ProductName);
                 product.ProductPrice = (req.body.ProductPrice ? req.body.ProductPrice : product.ProductPrice);
@@ -80,5 +144,5 @@ router.delete('/:id', auth, (req, res) => {
         return res.status(401).json('No tienes permiso para hacer eso');
     }
 });
-
+*/
 module.exports = router;

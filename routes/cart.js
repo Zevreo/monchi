@@ -1,5 +1,6 @@
 const router = require('express').Router();
-let Properties = require('../models/productProperties.model');
-let Specs = require('../models/propertySpecs.model');
-const bcrypt = require('bcryptjs');
+let Prods = require('../models/products.model');
+let Cart = require('../models/cart.model');
 const auth = require('../middleware/auth');
+
+module.exports = router;

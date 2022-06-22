@@ -5,11 +5,9 @@ const productPropertiesSchema = new Schema({
     ProductId: 
     {type: String, required: true },
     PropertyName:
-    {type: String, required: true},
-    PropertyType:
     {type: String, required: true}
 }, {
-    timestamps: true
+    timestamps: false
 });
 
 const ProductProperties = mongoose.model('ProductProperties', productPropertiesSchema);
