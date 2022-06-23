@@ -80,7 +80,9 @@ router.get('/store/:StoreId', async (req, res) => {
 
 //POST Add product with tags
 router.post('/', auth, (req, res) => {
-    const { StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage } = req.body;
+    const { StoreId, ProductName, ProductPrice, ProductDescription } = req.body;
+    const PriceCoin = (req.body.PriceCoin ? req.body.PriceCoin : "USD");
+    const ProductImage = (req.body.ProductImage ? req.body.ProductImage : "../../613b38eaa594d30013a82b27.png");
     const newProduct = new Product({ StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage });
     const newProductID = newProduct._id;
     const { tags } = req.body;
