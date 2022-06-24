@@ -137,7 +137,7 @@ export class Registro extends Component {
                                             <option value='MYR'>Ringgit</option>
                                             <option value='JPY'>Yen</option>
                                             <option value='CNY'>Yuan</option>
-                                            <option value='MNX'>Peso mexicano</option>
+                                            <option value='MXN'>Peso mexicano</option>
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>

@@ -20,13 +20,27 @@ router.get('/', async (req, res) => {
     await Product.find()
         .then(products => { prods = products })
         .catch(err => res.status(400).json('Error: ' + err));
-    for (var prod of prods) {
-        await Tag.find({ ProductId: prod.id }).select("Tags -_id")
+    for (var product of prods) {
+        await Tag.find({ ProductId: product.id }).select("Tags -_id")
             .then(tags => {
-                productsWithTags.push({ prod, tags })
+                var productTags = [];
+                for (var tag of tags) {
+                    productTags.push(tag.Tags);
+                }
+                var prod = {
+                    _id: product.id,
+                    StoreId: product.StoreId,
+                    ProductName: product.ProductName,
+                    ProductDescription: product.ProductDescription,
+                    ProductPrice: product.ProductPrice,
+                    PriceCoin: product.PriceCoin,
+                    ProductImage: product.ProductImage,
+                    Tags: productTags,
+                    Modified: product.updatedAt
+                };
+                productsWithTags.push(prod)
             })
             .catch(err => res.status(400).json('Error: ' + err));;
-        console.log(productsWithTags);
     }
     res.json(productsWithTags);
 });
@@ -66,7 +80,9 @@ router.get('/store/:StoreId', async (req, res) => {
 
 //POST Add product with tags
 router.post('/', auth, (req, res) => {
-    const { StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage } = req.body;
+    const { StoreId, ProductName, ProductPrice, ProductDescription } = req.body;
+    const PriceCoin = (req.body.PriceCoin ? req.body.PriceCoin : "USD");
+    const ProductImage = (req.body.ProductImage ? req.body.ProductImage : "../../613b38eaa594d30013a82b27.png");
     const newProduct = new Product({ StoreId, ProductName, ProductPrice, PriceCoin, ProductDescription, ProductImage });
     const newProductID = newProduct._id;
     const { tags } = req.body;
