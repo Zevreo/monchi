@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from 'axios';
 
 export class shoppingcart extends Component {
-    
     render() {
         return (
             <div>
@@ -12,7 +11,7 @@ export class shoppingcart extends Component {
                             <div class="hero-container container pt50">
                                 <div class="hero-content text-left scroll-opacity">
                                     <div class="section-heading">
-                                        <h1 class="white mb10">Productos</h1>
+                                        <h1 class="white mb10">Carrito de compras</h1>
                                         <h5 class="white pl5">Save Up To 70% Off Sale</h5>
                                     </div>
                                     <ol class="breadcrumb">
@@ -23,225 +22,113 @@ export class shoppingcart extends Component {
                             </div>
                         </div>
                     </div>
-                </section>
-                <div class="site-wrapper">
-                    <section class="shop pt60 pb40">
-                        <div class="container">
-                            <div class="row white-bg">
+                </section> 
+                <section class="cart pt60 pb60">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-sm-9 mt40 mb40">
+                    <h4 class="bag-summary mb20">Your Items</h4>
+                    <table class="shop_table cart" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="product-thumbnail">Item</th>
+                            <th class="product-name">Description</th>
+                            <th class="product-price">Unit Price</th>
+                            <th class="product-quantity">Quantity</th>
+                            <th class="product-subtotal">Subtotal</th>
+                            <th class="product-remove">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="cart_item">
+                        <td class="product-thumbnail">
+                            <a href="#">
+                                <img src="img/shop/cart-item1.jpg" alt="#"/>
+                            </a>
+                        </td>
+                        <td class="product-name">
+                            <a href="#">The Wallet</a> 
+                        </td>
+                        <td class="product-price">
+                            <span class="amount">$99</span> 
+                        </td>
+                        <td class="product-quantity">
+                            <div class="quantity">
+                                <input type="number" step="1" name="cart-qty" value="1" class="qty" size="4"/> 
+                            </div>
+                        </td>
+                        <td class="product-subtotal">
+                            <span class="amount">$99</span> 
+                        </td>
+                        <td class="product-remove">
+                            <a href="#" class="remove" title="Remove this item">×</a> 
+                        </td>
+                    </tr>
+                    <tr class="cart_item">
+                        <td class="product-thumbnail">
+                            <a href="#">
+                                <img src="img/shop/cart-item2.jpg" alt="#"/>
+                            </a> 
+                        </td>                
+                        <td class="product-name">
+                            <a href="#">Dot Socks</a> 
+                        </td>
+                        <td class="product-price">
+                            <span class="amount">$16</span> 
+                        </td>                
+                        <td class="product-quantity">                                    
+                            <div class="quantity">
+                                <input type="number" step="2" name="cart-qty" value="2" class="qty" size="4"/> 
+                            </div>
+                        </td>                
+                        <td class="product-subtotal">
+                            <span class="amount">$32</span> 
+                        </td>
+                        <td class="product-remove">
+                            <a href="#" class="remove" title="Remove this item">×</a> 
+                        </td>                
+                        </tr> 
+                    </tbody>
 
-                                <p class="shop-result-count">Showing 1–12 of 23 results</p>
-                                <select class="shop-sorting">
-                                    <option value=".popular">Sort by Popularity</option>
-                                    <option value=".rating">Sort by Rating</option>
-                                    <option value=".price-low">Sort by Price - Low</option>
-                                    <option value=".price-high">Sort by Price - High</option>
-                                    <option value=".newest">Sort by Newest</option>
-                                </select>
-
-                                <ul class="shop-items portfolioContainer columns-4 margin">
-
-                                    <li class="shop-item">
-                                        <a href="#">
-                                            <div id= "1" class="item">
-                                                <img src='/img/shop/1.jpg' alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>19.99<span class="old-price">26.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>The Over Shirt</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "2" class="item">
-                                                <img src='/img/shop/2.jpg' alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>13.99<span class="old-price">20.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Script Sweatshirt</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "3" class="item">
-                                                <img src="img/shop/3.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>16.99<span class="old-price">22.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Splatter Tank Top</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "4" class="item">
-                                                <img src="img/shop/4.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>12.99<span class="old-price">25.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Consume T-Shirt</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "5" class="item">
-                                                <img src="img/shop/5.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>15.99<span class="old-price">27.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Script Tank Top</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "6" class="item">
-                                                <img src="img/shop/6.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>18.99<span class="old-price">23.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>The Deadline</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "7" class="item">
-                                                <img src="img/shop/7.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>14.99<span class="old-price">20.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Dark Shirt Logo</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "8" class="item">
-                                                <img src="img/shop/8.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>17.99<span class="old-price">29.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Nowhere T-Shirt</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "9" class="item">
-                                                <img src="img/shop/9.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>12.99<span class="old-price">21.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Ping Sweatshirt</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "10" class="item">
-                                                <img src="img/shop/10.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>19.99<span class="old-price">26.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>The Loose Scripts</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "11" class="item">
-                                                <img src="img/shop/11.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>13.99<span class="old-price">20.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>Script Sweatshirt</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="shop-item">
-                                        <a href="shop-product.html">
-                                            <div id= "12" class="item">
-                                                <img src="./img/shop/12.jpg" alt="#" />
-                                                <h4 class="price"><span class="currency">$</span>16.99<span class="old-price">22.95</span></h4>
-                                                <div class="info hover-bottom">
-                                                    <h4>The Arch Sweatshirt</h4>
-                                                    <p>View Details</p>
-                                                    <button>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="col-md-12 text-center">
-                                    <ul class="pagination">
-                                        <li>
-                                            <a href="#" aria-label="Previous">
-                                                <span aria-hidden="true"><i class="ion-ios-arrow-thin-left"></i></span>
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="#">1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">4</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">5</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" aria-label="Next">
-                                                <span aria-hidden="true"><i class="ion-ios-arrow-thin-right"></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                    </table>
+                    <form class="coupon mb-xs-24"/>
+                                <h5>Add a coupon code:</h5>
+                                <input class="coupon-code" type="text" placeholder="Coupon Code"/>
+                                <input class="apply-btn btn-dark" type="submit" value="Apply"/>
+                    <form/>
+                    </div>
+                    <div class="col-sm-3 mt40 mb40">
+                            <h4 class="bag-totals mb20">Cart Totals</h4>
+                            <div class="cart_totals">
+                                <table cellspacing="0">
+                                    <tbody>
+                                        <tr class="cart-subtotal">
+                                            <th>Subtotal</th>
+                                            <td><span class="amount">$131</span></td>
+                                        </tr>
+                                        <tr class="shipping">
+                                            <th>Shipping</th>
+                                            <td><p>Free</p></td>
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th>Total</th>
+                                            <td><strong><span class="amount">$131</span></strong> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="wc-proceed-to-checkout">
+                                    <a href="#" class="btn btn-primary btn-md btn-appear"><span>Cheeckout <i class="ion-bag"></i></span></a> 
                                 </div>
                             </div>
+                            <a href="/welcome" class="highlight mt20">Continue Shopping</a>
                         </div>
-                    </section>
+                        
+                    </div>
                 </div>
-            </div>
+                </section>
+                
+            </div>    
         )
     } 
-}
+};
 export default shoppingcart;

@@ -15,7 +15,6 @@ export const shoppinginitialstate = {
     {id:11, name: "Script Sweatshirt", precio: 180},
     {id:12, name: "The Arch Sweatshirt", precio: 200},
   ]
-  cart[],
 };
 
 
