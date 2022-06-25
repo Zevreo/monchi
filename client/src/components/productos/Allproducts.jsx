@@ -23,7 +23,7 @@ export class Allproducts extends Component {
     render() {
         return (
             <div class="site-wrapper">
-                   <section class="shop pt60 pb40">
+                <section class="shop pt60 pb40">
                 <div class="container">
                     <div class="row white-bg">
                         <ul class="shop-items portfolioContainer col-md-12 height-auto margin row">
