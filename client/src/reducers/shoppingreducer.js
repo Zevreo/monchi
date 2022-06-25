@@ -15,4 +15,19 @@ export const shoppinginitialstate = {
       {id:12, name: "p1", precio: 100},
 
     ]
-}
+};
+
+export function ShoppingReducer(state, action){
+  switch(action.type){
+    case TYPES.ADD_TO_CART:{
+    }
+    case TYPES.REMOVE_ONE_FROM_CART:{
+    }
+    case TYPES.REMOVE_ALL_FROM_CART:{  
+    } 
+    case TYPES.CLEAR_CART:{
+    }
+    default:
+      return:state;
+  }
+};
