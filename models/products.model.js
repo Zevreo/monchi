@@ -11,7 +11,9 @@ const productSchema = new Schema({
     ProductPrice:
     {type: Number, required: true},
     PriceCoin:
-    {type: String, required: true, default: "USD"}
+    {type: String, default: "USD"},
+    ProductImage:
+    {type: String, default: "../../613b38eaa594d30013a82b27.png"}
 }, {
     timestamps: true
 });
