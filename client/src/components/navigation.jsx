@@ -24,27 +24,27 @@ export class Navigation extends Component {
       (<li><a href="/makeStore">Volverte vendedor</a></li>)
     
     
-    const authLinks = (
-      <ul class="nav navbar-nav menu-right">
-        <li class="dropdown"><a class="dropdown-toggle" href="/perfil">Cuenta<i class="fa fa-chevron-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Carrito de compras</a></li>
-            { ownerLinks }
-            <Logout />
-          </ul>
-        </li>
-        <li class="header-divider"><a><span></span></a></li>
-        <li><a href="#"><span class="ion-ios-cart-outline">{this.state.cart}</span></a></li>
-        <li class="header-divider"><a><span></span></a></li>
-        <li style={{ lineHeight: "0px" }}>
-          <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
-            <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
-            </div>
-          </form>
-        </li>
-      </ul>
-    )
+      const authLinks = (
+        <ul class="nav navbar-nav menu-right">
+          <li class="dropdown"><a class="dropdown-toggle" href="/perfil">Cuenta<i class="fa fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="/shoppingcart">Carrito de compras</a></li>
+              { ownerLinks }
+              <Logout />
+            </ul>
+          </li>
+          <li class="header-divider"><a><span></span></a></li>
+          <li><a href="/shoppingcart"><span class="ion-ios-cart-outline">{this.state.cart}</span></a></li>
+          <li class="header-divider"><a><span></span></a></li>
+          <li style={{ lineHeight: "0px" }}>
+            <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
+              <div class="subscribe-form-input">
+                <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
+              </div>
+            </form>
+          </li>
+        </ul>
+      )
     const guestLinks = (
       <ul class="nav navbar-nav menu-right">
         <li class="dropdown"><a class="dropdown-toggle" href="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></a>
