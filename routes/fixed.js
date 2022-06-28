@@ -9,7 +9,7 @@ let Country = require('../models/countries.model');
 
 //GET All Coins
 router.get('/currency', (req, res) => {
-    Coin.find()
+    Coin.find().sort('Name')
         .then(coins => res.json(coins))
         .catch(err => res.status(400).json('Error: ' + err));;
 });
