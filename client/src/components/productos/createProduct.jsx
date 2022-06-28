@@ -121,7 +121,7 @@ export function CreateProduct(props) {
                                     <option value='MYR'>Ringgit</option>
                                     <option value='JPY'>Yen</option>
                                     <option value='CNY'>Yuan</option>
-                                    <option value='MXn'>Peso mexicano</option>
+                                    <option value='MXN'>Peso mexicano</option>
                                 </select>
                                 <p className="help-block text-danger"></p>
                                 <input class="input-text" type="text" placeholder="Descripcion" value={ProductDescription} onChange={e => setProductDescription(e.target.value)} required />
