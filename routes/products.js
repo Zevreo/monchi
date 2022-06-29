@@ -45,7 +45,7 @@ router.get('/', async (req, res) => {
     res.json(productsWithTags);
 });
 
-//GET All ByStore
+// GET ALL by name or tag
 router.get('/store/:StoreId', async (req, res) => {
     const StoreId = req.params.StoreId;
     var productsWithTags = [];
@@ -77,6 +77,41 @@ router.get('/store/:StoreId', async (req, res) => {
     }
     res.json(productsWithTags);
 });
+
+//GET All ByStore
+router.get('/Products/:Product', async (req, res) => {
+    const Product = req.params.Product;
+    var productsWithTags = [];
+    var prods = null;
+    await Product.find({ StoreId: StoreId })
+        .then(products => { prods = products })
+        .catch(err => res.status(400).json('Error: ' + err));
+    for (var product of prods) {
+        await Tag.find({ ProductId: product.id }).select("Tags -_id")
+            .then(tags => {
+                var productTags = [];
+                for (var tag of tags) {
+                    productTags.push(tag.Tags);
+                }
+                var prod = {
+                    _id: product.id,
+                    StoreId: product.StoreId,
+                    ProductName: product.ProductName,
+                    ProductDescription: product.ProductDescription,
+                    ProductPrice: product.ProductPrice,
+                    PriceCoin: product.PriceCoin,
+                    ProductImage: product.ProductImage,
+                    Tags: productTags,
+                    Modified: product.updatedAt
+                };
+                productsWithTags.push(prod)
+            })
+            .catch(err => res.status(400).json('Error: ' + err));;
+    }
+    res.json(productsWithTags);
+});
+
+
 
 //POST Add product with tags
 router.post('/', auth, (req, res) => {

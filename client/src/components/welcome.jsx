@@ -5,8 +5,6 @@ export class Welcome extends Component {
     render() {
         return (
             <div>
-                
-                
                 <Allproducts></Allproducts>
             </div>
         )

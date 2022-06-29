@@ -12,8 +12,7 @@ export class Allproducts extends Component {
         this.state = {updated: false, products: [null] };
     };
     componentDidUpdate() {
-        const { user } = this.props.auth;
-        if (user && this.state.updated === false) {
+        if (this.state.updated === false) {
             axios.get(`/api/product/`)
                 .then(prod => { this.setState({ products: prod.data });
                 });

@@ -2,18 +2,37 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Logout from "./logout";
+import axios from 'axios';
 
 export class Navigation extends Component {
   constructor(props) {
     super(props);
-  }
-  state = {
-    cart: '',
-    id: ''
-  };
+    this.state = {
+      Products: [null]
+    }
+    this.onChangeProducts = this.onChangeProducts.bind(this);
+  } 
+  onChangeProducts(e) {
+    this.setState({
+        Products: e.target.value
+    });
+}
+  
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    const product={
+      Product:this.state.Products
+    }
+   
+    
+    axios.get(`/api/product/`,product)
+        .then(res => console.log(res.data));
+    window.location = '/perfil';
+}
   render() {
     const { isAuthenticated } = this.props.auth;
     const { user } = this.props.auth;
@@ -54,9 +73,9 @@ export class Navigation extends Component {
         </li>
         <li class="header-divider"><a><span></span></a></li>
         <li style={{ lineHeight: "0px" }}>
-          <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
+          <form onSubmit={this.onSubmit} method="post" id="subscribe-form">
             <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
+              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." value={this.state.Products} onChange={this.onChangeProducts} autocomplete="on" />
             </div>
           </form>
         </li>
