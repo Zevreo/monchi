@@ -30,3 +30,6 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/store', require('./routes/store'));
 app.use('/api/address', require('./routes/adressess'));
+app.use('/api/product', require('./routes/products'));
+app.use('/api/fixed', require('./routes/fixed'));
+app.use('/api/cart', require('./routes/cart'));

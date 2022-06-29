@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 export class MyAddress extends Component {
     constructor(props) {
         super(props);
-        this.state = { addresses: [] };
-        this.state = { updated: false };
+        this.state = { addresses: [], updated: false };
     }
     componentDidUpdate() {
         const { user } = this.props.auth;

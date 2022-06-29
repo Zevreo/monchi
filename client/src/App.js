@@ -17,9 +17,9 @@ import Perfil from './components/perfil';
 import MakeStore from './components/store/makeStore';
 import MyStore from './components/store/myStore';
 import NewAddress from './components/direcciones/newAddress';
-import ViewProduct from './components/Products/viewProduct';
-import ProductDetail from './components/Products/productDetail';
-
+import ParamsTest from './components/paramsTest';
+import Footer from './components/footer';
+import CreateProduct from './components/productos/createProduct';
 
 export class App extends Component {
   componentDidMount() {
@@ -52,13 +52,12 @@ export class App extends Component {
             <Route path="/newAddress" element={<NewAddress />} />
           </Routes>
           <Routes>
-            <Route path="/viewproduct/:string" element={<ViewProduct />} />
+            <Route exact path="/paramstest/:id&page=:page&search=:search" element={<ParamsTest />} />
           </Routes>
-          
           <Routes>
-            <Route exact path="/product/:id" element={<productDetail />} />
+            <Route path="/createProduct" element={<CreateProduct />} />
           </Routes>
-          
+          <Footer />
         </Provider>
       </Router>
     );
