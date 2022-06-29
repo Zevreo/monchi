@@ -32,29 +32,17 @@ export class App extends Component {
           <Navigation />
           <Routes>
             <Route path="/" element={<Welcome />} exact />
-          </Routes>
-          <Routes>
             <Route path="/login" element={<Login />} />
-          </Routes>
-          <Routes>
             <Route path="/register" element={<Register />} />
-          </Routes>
-          <Routes>
             <Route path="/perfil" element={<Perfil />} />
-          </Routes>
-          <Routes>
             <Route path="/makeStore" element={<MakeStore />} />
-          </Routes>
-          <Routes>
+            <Route path="/myStore/page=:page" element={<MyStore />} />
             <Route path="/myStore" element={<MyStore />} />
-          </Routes>
-          <Routes>
             <Route path="/newAddress" element={<NewAddress />} />
-          </Routes>
-          <Routes>
-            <Route exact path="/paramstest/:id&page=:page&search=:search" element={<ParamsTest />} />
-          </Routes>
-          <Routes>
+            <Route path="/paramstest/:id&page=:page&search=:search" element={<ParamsTest />} />
+            <Route path="/paramstest/:id&page=:page" element={<ParamsTest />} />
+            <Route path="/paramstest/:id" element={<ParamsTest />}/>
+            <Route path="/paramstest" element={<ParamsTest />}/>
             <Route path="/createProduct" element={<CreateProduct />} />
           </Routes>
           <Footer />

@@ -48,9 +48,21 @@ router.get('/', async (req, res) => {
 //GET All ByStore
 router.get('/store/:StoreId', async (req, res) => {
     const StoreId = req.params.StoreId;
+    const { page = 1, limit = 12, sort = "updatedAt", order = -1 } = req.headers;
+    if(page < 1){
+        page = 1;
+    }
+    if(limit < 1){
+        limit = 12;
+    }
+    if( sort != "updatedAt" && sort != "ProductPrice"){
+        sort = "updatedAt";
+    }
+    const count = await Product.find({ StoreId: StoreId }).countDocuments();
     var productsWithTags = [];
     var prods = null;
-    await Product.find({ StoreId: StoreId })
+    await Product.find({ StoreId: StoreId }).sort({ [sort]: order })
+        .limit(limit * 1).skip((page - 1) * limit)
         .then(products => { prods = products })
         .catch(err => res.status(400).json('Error: ' + err));
     for (var product of prods) {
@@ -75,6 +87,12 @@ router.get('/store/:StoreId', async (req, res) => {
             })
             .catch(err => res.status(400).json('Error: ' + err));;
     }
+    res.set({
+        'x-page': page,
+        'x-count': count,
+        'x-limit': limit,
+        'x-sort': sort
+    })
     res.json(productsWithTags);
 });
 

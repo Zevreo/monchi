@@ -5,6 +5,10 @@ import { useParams } from "react-router";
 
 export function ParamsTest(props) {
     let { id, page, search } = useParams();
+    const [ Page, setPage] = useState(page)
+    if (Page === undefined) {
+        setPage(1);
+    }
     const [store, setStore] = useState();
     async function Request() {
         const { user } = props.auth;
@@ -23,7 +27,7 @@ export function ParamsTest(props) {
                 <h3>Store {store ? store.Name : ''}</h3>
                 <h3>User { user ? user.FirstName : ''}</h3>
                 <h3>ID URL: {id ? id : ''}</h3>
-                <h3>PAGE: {page ? page : ''}</h3>
+                <h3>PAGE: { Page ? Page : ''}</h3>
                 <h3>SEARCH: {search ? search : ''}</h3>
             </div>
         </div>
