@@ -1,10 +1,39 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
+
 export class shoppingcart extends Component {
-    
+    static propTypes = {
+        auth: PropTypes.object.isRequired
+    };
+    constructor(props) {
+        super(props);
+        this.state = { updated: false, products: [null] };
+    };
+    componentDidUpdate() {
+        const { token } = this.props.auth;
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        if (token) {
+            config.headers['x-auth-token'] = token;
+        }
+        const{user}=this.props
+        if (this.state.updated === false) {
+            axios.get(`/api/cart/${user._id}`)
+                .then(prod => {
+                    this.setState({ products: prod.data });
+                });
+            this.setState({ updated: true });
+        }
+    };
     
     render() {
+        const{user} = this.props.auth;
         return (
             <div>
                 <section class="page-hero">
@@ -42,54 +71,39 @@ export class shoppingcart extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                    <tr class="cart_item">
-                        <td class="product-thumbnail">
-                            <a href="#">
-                                <img src="img/shop/cart-item1.jpg" alt="#"/>
-                            </a>
-                        </td>
-                        <td class="product-name">
-                            <a href="#">The Wallet</a> 
-                        </td>
-                        <td class="product-price">
-                            <span class="amount">$99</span> 
-                        </td>
-                        <td class="product-quantity">
-                            <div class="quantity">
-                                <input type="number" step="1" name="cart-qty" value="1" class="qty" size="4"/> 
+                        {this.state.products.map((d, i) =>(
+                            <div key={i}>
+                            {d ?
+                            <tr class="cart_item">
+                            <td class="product-thumbnail">
+                                <a href="#">
+                                    <img src="" alt="#"/>
+                                </a> 
+                                <a href="#">{d.ProductImage}</a>
+                            </td>
+                            <td class="product-name">
+                                <a href="#" >{d.ProductName}</a> 
+                            </td>
+                            <td class="product-price">
+                                <span class="amount">$99</span> 
+                            </td>
+                            <td class="product-quantity">
+                                <div class="quantity">
+                                    <input type="number" step="1" name="cart-qty" value="1" class="qty" size="4"/> 
+                                </div>
+                            </td>
+                            <td class="product-subtotal">
+                                <span class="amount">$99</span> 
+                            </td>
+                            <td class="product-remove">
+                                <a href="#" class="remove" title="Remove this item">×</a> 
+                            </td>
+                            </tr>
+                                :
+                                ""
+                            }
                             </div>
-                        </td>
-                        <td class="product-subtotal">
-                            <span class="amount">$99</span> 
-                        </td>
-                        <td class="product-remove">
-                            <a href="#" class="remove" title="Remove this item">×</a> 
-                        </td>
-                    </tr>
-                    <tr class="cart_item">
-                        <td class="product-thumbnail">
-                            <a href="#">
-                                <img src="img/shop/cart-item2.jpg" alt="#"/>
-                            </a> 
-                        </td>                
-                        <td class="product-name">
-                            <a href="#">Dot Socks</a> 
-                        </td>
-                        <td class="product-price">
-                            <span class="amount">$16</span> 
-                        </td>                
-                        <td class="product-quantity">                                    
-                            <div class="quantity">
-                                <input type="number" step="2" name="cart-qty" value="2" class="qty" size="4"/> 
-                            </div>
-                        </td>                
-                        <td class="product-subtotal">
-                            <span class="amount">$32</span> 
-                        </td>
-                        <td class="product-remove">
-                            <a href="#" class="remove" title="Remove this item">×</a> 
-                        </td>                
-                        </tr> 
+                        ))}
                     </tbody>
 
                     </table>
@@ -133,4 +147,8 @@ export class shoppingcart extends Component {
         )
     } 
 };
-export default shoppingcart;
+
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps, null)(shoppingcart);
