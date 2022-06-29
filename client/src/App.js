@@ -17,6 +17,9 @@ import Perfil from './components/perfil';
 import MakeStore from './components/store/makeStore';
 import MyStore from './components/store/myStore';
 import NewAddress from './components/direcciones/newAddress';
+import ViewProduct from './components/Products/viewProduct';
+import ProductDetail from './components/Products/productDetail';
+
 
 export class App extends Component {
   componentDidMount() {
@@ -48,6 +51,14 @@ export class App extends Component {
           <Routes>
             <Route path="/newAddress" element={<NewAddress />} />
           </Routes>
+          <Routes>
+            <Route path="/viewproduct/:string" element={<ViewProduct />} />
+          </Routes>
+          
+          <Routes>
+            <Route exact path="/product/:id" element={<productDetail />} />
+          </Routes>
+          
         </Provider>
       </Router>
     );
