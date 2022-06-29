@@ -85,7 +85,7 @@ export class shoppingcart extends Component {
                                 <a href="#" >{d.ProductName}</a> 
                             </td>
                             <td class="product-price">
-                                <span class="amount">$99</span> 
+                                <span class="amount">{user ? user.DefaultCoin : d.PriceCoin}$</span> 
                             </td>
                             <td class="product-quantity">
                                 <div class="quantity">
