@@ -16,6 +16,7 @@ export function MyProducts(props) {
     const [maxPage, setMax] = useState(1);
     const [msg, setMsg] = useState();
     const [disable, setDisable] = useState(false);
+    const [more, setMore] = useState(1);
 
     let { page } = useParams();
     if (page > 0) {
@@ -52,7 +53,8 @@ export function MyProducts(props) {
         setDisable(true);
         if (int === "plus") {
             if (Page >= maxPage) {
-                setMsg("No puedes exceder el limite de paginas");
+                setMsg(`No puedes exceder el limite de paginas (x${more})`);
+                setMore(more + 1);
             }
             else {
                 setPage(Page + 1);
@@ -61,7 +63,8 @@ export function MyProducts(props) {
         else {
             if (int === "minus") {
                 if (Page <= 1) {
-                    setMsg("No puedes tener paginas negativas");
+                    setMsg(`No puedes tener paginas negativas (x${more})`);
+                    setMore(more + 1);
                 }
                 else {
                     setPage(Page - 1);
@@ -85,6 +88,7 @@ export function MyProducts(props) {
 
     useEffect(() => {
         show();
+        setDisable(false);
     }, [msg]);
 
     useEffect(() => {
