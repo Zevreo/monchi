@@ -5,6 +5,7 @@ import axios from 'axios';
 import Sinacces from "./perfilcomponents/sinacceso";
 import Informacionperfil from "./perfilcomponents/informacionperfil";
 import MyAddress from "./direcciones/myAddress";
+import { Link } from "react-router-dom";
 
 export class Perfil extends Component {
     static propTypes = {
@@ -13,8 +14,8 @@ export class Perfil extends Component {
     render() {
         const { isAuthenticated } = this.props.auth;
         const authLinks = (
-            <section class="pt90 pb100">
-                <div class="container">
+            <section class="bg-grey-1">
+                <div class="login-container">
                     <div class="row">
                         <div class="col-md-7 mr-auto text-center">
                             <div class="buttons-tabs-centered">
@@ -25,10 +26,10 @@ export class Perfil extends Component {
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
                                     <div class="tab-pane fade active in" id="tab-c1">
-                                        <Informacionperfil></Informacionperfil>
+                                        <Informacionperfil/>
                                     </div>
                                     <div class="tab-pane fade" id="tab-c2">
-                                        <a href="/newAddress" class="btn btn-dark btn-lg btn-appear mt20">Agregar</a>
+                                        <Link to="/newAddress" class="btn btn-dark btn-lg btn-appear mt20">Agregar</Link>
                                         <MyAddress/>
                                     </div>
                                     <div class="tab-pane fade" id="tab-c3">

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 export class MakeStore extends Component {
     static propTypes = {
@@ -91,7 +92,7 @@ export class MakeStore extends Component {
     }
     render() {
         return (
-            <section id="sign-up" class="bg-grey-1">
+            <section class="bg-grey-1">
                 <div class="sign-up-container">
                     <div class="container text-center">
                         <div class="col-md-12">
@@ -130,7 +131,7 @@ export class MakeStore extends Component {
                                         <p className="help-block text-danger"></p>
                                     </div>
                                     <div class="actions">
-                                        <p class="dark-grey">Al crear una tienda accedes a nuestros <a href="#">Terminos de Servicio</a>.</p>
+                                        <p class="dark-grey">Al crear una tienda accedes a nuestros <Link to="#">Terminos de Servicio</Link>.</p>
                                     </div>
                                     <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
                                 </form>

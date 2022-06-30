@@ -8,7 +8,7 @@ export class MyAddress extends Component {
         super(props);
         this.state = { addresses: [], updated: false };
     }
-    componentDidUpdate() {
+    componentDidMount() {
         const { user } = this.props.auth;
         const { token } = this.props.auth;
         const config = {
@@ -71,7 +71,7 @@ export class MyAddress extends Component {
     }
     render() {
         return (
-            <section class="checkout">
+            <div class="checkout">
                 <div class="icon-tabs-centered">
                     <ul id="iconTabs" class="nav nav-tabs nav-tabs-center">
                         {this.state.addresses
@@ -135,7 +135,7 @@ export class MyAddress extends Component {
                             )) : "loading"}
                     </div>
                 </div>
-            </section>
+            </div>
         )
     }
 }
