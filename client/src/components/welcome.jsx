@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import Allproducts from './productos/Allproducts'
 export class Welcome extends Component {
     render() {
@@ -10,5 +9,4 @@ export class Welcome extends Component {
         )
     }
 }
-
 export default Welcome;
