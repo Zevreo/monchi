@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 export class MyAddress extends Component {
     constructor(props) {
@@ -23,26 +22,21 @@ export class MyAddress extends Component {
             axios.get(`/api/address/my/${user._id}`, config)
                 .then(res => this.setState({ addresses: res.data }));
             this.setState({ updated: true });
-            console.log(this.state.addresses);
         }
     }
     onSubmit = (e) => {
         e.preventDefault();
         const { user } = this.props.auth;
-        console.log(user);
         const UserId = { UserId: user._id };
-        console.log(UserId);
         const { token } = this.props.auth;
         const config = {
             headers: {
                 "Content-type": "application/json"
             }
         }
-        console.log(config);
         if (token) {
             config.headers['x-auth-token'] = token;
         }
-        console.log(config);
         const id = e.target.id.value;
         axios.put(`/api/address/default/${id}`, UserId, config)
             .then(res => console.log(res.data));
@@ -58,7 +52,6 @@ export class MyAddress extends Component {
                     "Content-type": "application/json"
                 }
             }
-            console.log(config);
             if (token) {
                 config.headers['x-auth-token'] = token;
             }
@@ -76,7 +69,7 @@ export class MyAddress extends Component {
                     <ul id="iconTabs" class="nav nav-tabs nav-tabs-center">
                         {this.state.addresses
                             ? this.state.addresses.map((d, i) => (
-                                <li><a href={`#tab-i${i}`} data-toggle="tab"><span class={d.Default == true ? "icon-tab ion-ios-location" : "icon-tab ion-ios-location-outline"}></span><span>{d.Surname}</span></a></li>
+                                <li><a href={`#tab-i${i}`} data-toggle="tab"><span class={d.Default === true ? "icon-tab ion-ios-location" : "icon-tab ion-ios-location-outline"}></span><span>{d.Surname}</span></a></li>
                             )) : "loading"}
                     </ul>
                     <div id="myTabContent" class="tab-content">
@@ -84,7 +77,7 @@ export class MyAddress extends Component {
                             ? this.state.addresses.map((d, i) => (
                                 <div class="tab-pane fade" id={`tab-i${i}`}>
                                     <div class="row text-center">
-                                        {d.Default == true ? <h3>Predeterminado</h3> :
+                                        {d.Default === true ? <h3>Predeterminado</h3> :
                                             <form onSubmit={this.onSubmit}>
                                                 <input type="text" class="input-text" value={d._id} name="id" hidden />
                                                 <input class="btn btn-lg btn-appear" type="submit" value="Volver predeterminado" />
@@ -126,10 +119,10 @@ export class MyAddress extends Component {
                                             <label for="exampleFormControlSelect1">Referencias</label>
                                             <textarea type="text" class="input-text" value={d.References} disabled />
                                         </div>
-                                        <form onSubmit={this.SubmitDelete}>
+                                        {d.Default === true ? "" : <form onSubmit={this.SubmitDelete}>
                                             <input type="text" class="input-text" value={d._id} name="id" hidden />
                                             <input class="btn btn-lg btn-appear" type="submit" value="Eliminar" />
-                                        </form>
+                                        </form>}
                                     </div>
                                 </div>
                             )) : "loading"}

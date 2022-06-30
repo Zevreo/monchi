@@ -15,10 +15,13 @@ export function MyProducts(props) {
     const [products, setProducts] = useState();
     const [maxPage, setMax] = useState(1);
     const [msg, setMsg] = useState();
+    const [disable, setDisable] = useState(false);
+
     let { page } = useParams();
     if (page > 0) {
         setPage(page);
     }
+
     function getProducts() {
         const { user } = props.auth;
         if (user) {
@@ -38,12 +41,15 @@ export function MyProducts(props) {
                             setPage(Number(prods.headers['x-page']));
                             setLimit(Number(prods.headers['x-limit']));
                             setCount(Number(prods.headers['x-count']));
+                            setDisable(false);
                         })
                 });
             setUpdated(true);
         }
     }
+
     function Paginate(int) {
+        setDisable(true);
         if (int === "plus") {
             if (Page >= maxPage) {
                 setMsg("No puedes exceder el limite de paginas");
@@ -52,31 +58,42 @@ export function MyProducts(props) {
                 setPage(Page + 1);
             }
         }
-        if (int === "minus") {
-            if (Page <= 1) {
-                setMsg("No puedes tener paginas negativas");
+        else {
+            if (int === "minus") {
+                if (Page <= 1) {
+                    setMsg("No puedes tener paginas negativas");
+                }
+                else {
+                    setPage(Page - 1);
+                }
             }
             else {
-                setPage(Page - 1);
+                setPage(int);
             }
         }
     }
+
     function show() {
         var x = document.getElementById("errorMessage");
         x.style.display = "block";
     }
+
     function hide() {
         var x = document.getElementById("errorMessage");
         x.style.display = "none";
     }
+
     useEffect(() => {
         show();
     }, [msg]);
+
     useEffect(() => {
         setMax(Math.ceil(count / limit));
     }, [products])
+
     useEffect(() => {
         hide()
+        setDisable(true);
         if (Page === 1) {
             getProducts();
         }
@@ -84,28 +101,29 @@ export function MyProducts(props) {
             setPage(1);
         }
     }, [limit, sort, order]);
+
     useEffect(() => {
-        hide()
+        hide();
         getProducts();
     }, [Page]);
     return (
         <div class="container">
             <div class="row white-bg">
                 <p class="shop-result-count">Showing {limit ? ((limit * (Page - 1)) + 1) : "?"} to {limit ? ((limit * Page) > count ? count : (limit * Page)) : "?"} of {count ? count : "?"} results</p>
-                <select class="shop-sorting" onChange={(e) => setSort(e.target.value)}>
+                <select class="shop-sorting" onChange={(e) => setSort(e.target.value)} disabled={disable}>
                     <option value="updatedAt">Date</option>
                     <option value="ProductPrice">Price</option>
                 </select>
-                <select class="shop-sorting" onChange={(e) => setOrder(e.target.value)}>
+                <select class="shop-sorting" onChange={(e) => setOrder(e.target.value)} disabled={disable}>
                     <option value={-1}>Descending</option>
                     <option value={1}>Ascending</option>
                 </select>
-                <select class="shop-sorting" onChange={(e) => setLimit(e.target.value)}>
+                <select class="shop-sorting" onChange={(e) => setLimit(e.target.value)} disabled={disable}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="4">4</option>
                 </select>
-                <div class="row" id="errorMessage" style={{display:'none'}}>
+                <div class="row" id="errorMessage" style={{ display: 'none' }}>
                     <div class="col-md-4 col-md-offset-4">
                         <div class="alert alert-warning fade in">
                             <button type="button" class="close" onClick={(e) => hide()}><i class="ion-ios-close"></i></button>
@@ -136,16 +154,42 @@ export function MyProducts(props) {
                 <div class="col-md-12 text-center">
                     <ul class="pagination">
                         <li>
-                            <a type="button" onClick={(e) => Paginate("minus")} aria-label="Previous">
-                                <span aria-hidden="true"><i class="ion-ios-arrow-thin-left"></i></span>
+                            <a type="button" onClick={(e) => Paginate(1)} hidden={disable}>
+                                <span aria-hidden="true"><i class="ion-chevron-left"></i></span>
                             </a>
                         </li>
+                        <li>
+                            <a type="button" onClick={(e) => Paginate("minus")} aria-label="Previous" hidden={disable}>
+                                <span aria-hidden="true"><i class="ion-ios-arrow-back"></i></span>
+                            </a>
+                        </li>
+                        {Page > 2 ?
+                            <li>
+                                <a type="button" onClick={(e) => Paginate(Page - 2)} hidden={disable}>{Page ? Page - 2 : "loading"}</a>
+                            </li> : ''}
+                        {Page > 1 ?
+                            <li>
+                                <a type="button" onClick={(e) => Paginate(Page - 1)} hidden={disable}>{Page ? Page - 1 : "loading"}</a>
+                            </li> : ''}
                         <li class="active">
-                            <a type="button">{Page ? Page : "loading"}</a>
+                            <a type="button" disabled>{Page ? Page : "loading"}</a>
+                        </li>
+                        {Page < maxPage ?
+                            <li>
+                                <a type="button" onClick={(e) => Paginate(Page + 1)} hidden={disable}>{Page ? Page + 1 : "loading"}</a>
+                            </li> : ''}
+                        {Page < (maxPage - 1) ?
+                            <li>
+                                <a type="button" onClick={(e) => Paginate(Page + 2)} hidden={disable}>{Page ? Page + 2 : "loading"}</a>
+                            </li> : ''}
+                        <li>
+                            <a type="button" onClick={(e) => Paginate("plus")} aria-label="Next" hidden={disable}>
+                                <span aria-hidden="true"><i class="ion-ios-arrow-forward"></i></span>
+                            </a>
                         </li>
                         <li>
-                            <a type="button" onClick={(e) => Paginate("plus")} aria-label="Next">
-                                <span aria-hidden="true"><i class="ion-ios-arrow-thin-right"></i></span>
+                            <a type="button" onClick={(e) => Paginate(maxPage)} aria-label="Next" hidden={disable}>
+                                <span aria-hidden="true"><i class="ion-chevron-right"></i></span>
                             </a>
                         </li>
                     </ul>

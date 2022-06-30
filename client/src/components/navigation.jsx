@@ -7,18 +7,15 @@ import { Link } from "react-router-dom";
 export class Navigation extends Component {
   constructor(props) {
     super(props);
+    this.state = { cart: '', id: '' };
   }
-  state = {
-    cart: '',
-    id: ''
-  };
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
   render() {
     const { isAuthenticated } = this.props.auth;
     const { user } = this.props.auth;
-    const ownerLinks = (isAuthenticated && user.Role == 'Owner')
+    const ownerLinks = (isAuthenticated && user.Role === 'Owner')
       ? (
         <li><Link to="/myStore">Tu tienda</Link></li>
       ) :
@@ -36,11 +33,11 @@ export class Navigation extends Component {
         </li>
         <li class="header-divider"></li>
         <li><Link to="#"><span class="ion-ios-cart-outline">{this.state.cart}</span></Link></li>
-        <li class="header-divider"><a><span></span></a></li>
+        <li class="header-divider"></li>
         <li style={{ lineHeight: "0px" }}>
           <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
             <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
+              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" />
             </div>
           </form>
         </li>
@@ -57,7 +54,7 @@ export class Navigation extends Component {
         <li style={{ lineHeight: "0px" }}>
           <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
             <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
+              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" />
             </div>
           </form>
         </li>
