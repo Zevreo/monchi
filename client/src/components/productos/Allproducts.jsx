@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Converter from '../converter';
 import { Link } from "react-router-dom";
+import Loader from '../loader';
 
 export class Allproducts extends Component {
     static propTypes = {
@@ -46,7 +47,7 @@ export class Allproducts extends Component {
                                             </div>
                                         </Link>
                                         :
-                                        ""
+                                        <li className="relative col-md-12 center-items"><Loader /></li>
                                     }
                                 </li>
                             ))}

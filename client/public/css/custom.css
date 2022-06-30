@@ -53,6 +53,7 @@ section {
 
 .relative {
     position: relative !important;
+    left: 0px !important;
 }
 
 .height-auto {
