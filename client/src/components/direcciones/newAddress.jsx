@@ -111,7 +111,7 @@ export class NewAddress extends Component {
     }
     render() {
         return (
-            <section class="pt90 pb100">
+            <section class="bg-grey-1">
                 <div class="container">
                     <div class="checkout">
                         <form class="row text-center" onSubmit={this.onSubmit}>

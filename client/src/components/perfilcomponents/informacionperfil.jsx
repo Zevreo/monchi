@@ -10,7 +10,7 @@ export class Informacionperfil extends Component {
     render() {
         const { user } = this.props.auth;
         return (
-            <section class="checkout">
+            <div class="checkout">
                 <div class="row text-center ">
                     <h3 class="mb20">Tu informacion</h3>
                     <div class="half-left col-sm-6">
@@ -38,7 +38,7 @@ export class Informacionperfil extends Component {
                         <input type="text" class="input-text" name="billing_last_name" value={user ? user.DefaultCoin : "loading"} />
                     </div>
                 </div>
-            </section>
+            </div>
         )
     }
 }

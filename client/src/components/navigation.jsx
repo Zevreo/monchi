@@ -2,22 +2,13 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Logout from "./logout";
-import axios from 'axios';
+import { Link } from "react-router-dom";
 
 export class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      Products: [null]
-    }
-    this.onChangeProducts = this.onChangeProducts.bind(this);
-  } 
-  onChangeProducts(e) {
-    this.setState({
-        Products: e.target.value
-    });
-}
-  
+    this.state = { cart: '', id: '' };
+  }
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
@@ -36,29 +27,29 @@ export class Navigation extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     const { user } = this.props.auth;
-    const ownerLinks = ( isAuthenticated && user.Role == 'Owner') 
-    ? (
-      <li><a href="/myStore">Tu tienda</a></li>
+    const ownerLinks = (isAuthenticated && user.Role === 'Owner')
+      ? (
+        <li><Link to="/myStore">Tu tienda</Link></li>
       ) :
-      (<li><a href="/makeStore">Volverte vendedor</a></li>)
-    
-    
+      (<li><Link to="/makeStore">Volverte vendedor</Link></li>)
+
+
     const authLinks = (
       <ul class="nav navbar-nav menu-right">
-        <li class="dropdown"><a class="dropdown-toggle" href="/perfil">Cuenta<i class="fa fa-chevron-down"></i></a>
+        <li class="dropdown"><Link className="dropdown-toggle" to="/perfil">Cuenta<i class="fa fa-chevron-down"></i></Link>
           <ul class="dropdown-menu">
-            <li><a href="#">Carrito de compras</a></li>
-            { ownerLinks }
+            <li><Link to="#">Carrito de compras</Link></li>
+            {ownerLinks}
             <Logout />
           </ul>
         </li>
-        <li class="header-divider"><a><span></span></a></li>
-        <li><a href="#"><span class="ion-ios-cart-outline">{this.state.cart}</span></a></li>
-        <li class="header-divider"><a><span></span></a></li>
+        <li class="header-divider"></li>
+        <li><Link to="#"><span class="ion-ios-cart-outline">{this.state.cart}</span></Link></li>
+        <li class="header-divider"></li>
         <li style={{ lineHeight: "0px" }}>
           <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
             <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autocomplete="off" />
+              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" />
             </div>
           </form>
         </li>
@@ -66,45 +57,43 @@ export class Navigation extends Component {
     )
     const guestLinks = (
       <ul class="nav navbar-nav menu-right">
-        <li class="dropdown"><a class="dropdown-toggle" href="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></a>
+        <li class="dropdown"><Link className="dropdown-toggle" to="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></Link>
           <ul class="dropdown-menu">
-            <li><a href="/register">Registrarse</a></li>
+            <li><Link to="/register">Registrarse</Link></li>
           </ul>
         </li>
-        <li class="header-divider"><a><span></span></a></li>
+        <li class="header-divider"></li>
         <li style={{ lineHeight: "0px" }}>
           <form onSubmit={this.onSubmit} method="post" id="subscribe-form">
             <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." value={this.state.Products} onChange={this.onChangeProducts} autocomplete="on" />
+              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" />
             </div>
           </form>
         </li>
       </ul>
     )
     return (
-      <div>
-        <nav class="navbar navbar-default dark">
-          <div class="container">
-            <div class="navbar-header">
-              <div class="container">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar top-bar"></span>
-                  <span class="icon-bar middle-bar"></span>
-                  <span class="icon-bar bottom-bar"></span>
-                </button>
-                <a class="navbar-brand logo-light" href="/"><img src="/Monchi-Logo.png" alt="#" /></a>
-                <a class="navbar-brand logo-dark" href="/"><img src="/Monchi-Logo.png" alt="#" /></a>
-              </div>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <div class="container">
-                {isAuthenticated ? authLinks : guestLinks}
-              </div>
+      <nav class="navbar navbar-default dark">
+        <div class="container">
+          <div class="navbar-header">
+            <div class="container">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar top-bar"></span>
+                <span class="icon-bar middle-bar"></span>
+                <span class="icon-bar bottom-bar"></span>
+              </button>
+              <Link className="navbar-brand logo-light" to="/"><img src="/Monchi-Logo.png" alt="#" /></Link>
+              <Link className="navbar-brand logo-dark" to="/"><img src="/Monchi-Logo.png" alt="#" /></Link>
             </div>
           </div>
-        </nav>
-      </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <div class="container">
+              {isAuthenticated ? authLinks : guestLinks}
+            </div>
+          </div>
+        </div>
+      </nav>
     );
   }
 }

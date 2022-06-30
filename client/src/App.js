@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'react-devtools';
 
 //Redux
@@ -27,7 +26,7 @@ export class App extends Component {
   }
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <Provider store={store}>
           <Navigation />
           <Routes>
@@ -47,14 +46,11 @@ export class App extends Component {
           </Routes>
           <Footer />
         </Provider>
-      </Router>
+      </BrowserRouter>
     );
   };
 };
 
 // debugger; // TO INSPECT THE PAGE BEFORE 1ST RENDER
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
 
 export default App;
