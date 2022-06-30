@@ -22,8 +22,8 @@ export class shoppingcart extends Component {
         if (token) {
             config.headers['x-auth-token'] = token;
         }
-        const{user}=this.props
-        if (this.state.updated === false) {
+        const{user} = this.props.auth;
+        if (user && this.state.updated === false) {
             axios.get(`/api/cart/${user._id}`)
                 .then(prod => {
                     this.setState({ products: prod.data });
@@ -46,7 +46,7 @@ export class shoppingcart extends Component {
                                         <h5 class="white pl5">Save Up To 70% Off Sale</h5>
                                     </div>
                                     <ol class="breadcrumb">
-                                        <li><a href="/welcome">Home</a></li>
+                                        <li><a href="/">Home</a></li>
                                         <li><a href="/shoppingcart">Shop</a></li>
                                     </ol>
                                 </div>
@@ -67,6 +67,7 @@ export class shoppingcart extends Component {
                             <th class="product-price">Unit Price</th>
                             <th class="product-quantity">Quantity</th>
                             <th class="product-subtotal">Subtotal</th>
+                            <th class="product-subtotal">Descuento</th>
                             <th class="product-remove">&nbsp;</th>
                         </tr>
                     </thead>
@@ -79,7 +80,7 @@ export class shoppingcart extends Component {
                                 <a href="#">
                                     <img src={d.ProductImage} alt="#"/>
                                 </a> 
-                                <a href="#">{d.ProductImage}</a>
+                                <a href="#"></a>
                             </td>
                             <td class="product-name">
                                 <a href="#" >{d.ProductName}</a> 
@@ -136,7 +137,7 @@ export class shoppingcart extends Component {
                                     <a href="#" class="btn btn-primary btn-md btn-appear"><span>Cheeckout <i class="ion-bag"></i></span></a> 
                                 </div>
                             </div>
-                            <a href="/welcome" class="highlight mt20">Continue Shopping</a>
+                            <a href="/" class="highlight mt20">Continue Shopping</a>
                         </div>
                         
                     </div>

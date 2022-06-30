@@ -20,7 +20,7 @@ router.post('/', auth, (req, res) => {
     }
 });
 
-router.get('/cart/:UserId', async (req, res) => {
+router.get('/:UserId', async (req, res) => {
     const UserId = req.params.UserId;
     var cartproduct=[]
     await Cart.find({ UserId: UserId })

@@ -3670,7 +3670,7 @@ ul {
 .site-wrapper {
     position: relative;
     z-index: 3;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
 }
 
 /*--- Vertical Alignment ---*/
