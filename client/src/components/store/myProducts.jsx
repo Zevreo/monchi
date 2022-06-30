@@ -153,7 +153,7 @@ export function MyProducts(props) {
                                 ""
                             }
                         </li>
-                    )) : <Loader />}
+                    )) : <li className="relative col-sm-2 col-sm-offset-5"><Loader /></li>}
                 </ul>
                 <div class="col-md-12 text-center">
                     <ul class="pagination">
