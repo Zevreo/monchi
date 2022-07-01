@@ -194,8 +194,25 @@ router.post('/', auth, (req, res) => {
 router.get('/:id', (req, res) => {
     Product.findById(req.params.id)
         .then(prod => {
-            Tag.find({ ProductId: `${prod._id}` }).select("Tags")
-                .then(tags => res.json({ prod, tags }))
+            Tag.find({ ProductId: `${prod._id}` }).select("Tags -_id")
+                .then(tags => {
+                    var productTags = [];
+                    for (var tag of tags) {
+                        productTags.push(tag.Tags);
+                    }
+                    var product = {
+                        _id: prod.id,
+                        StoreId: prod.StoreId,
+                        ProductName: prod.ProductName,
+                        ProductDescription: prod.ProductDescription,
+                        ProductPrice: prod.ProductPrice,
+                        PriceCoin: prod.PriceCoin,
+                        ProductImage: prod.ProductImage,
+                        Tags: productTags,
+                        Modified: prod.updatedAt
+                    };
+                    res.json(product);
+                })
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
