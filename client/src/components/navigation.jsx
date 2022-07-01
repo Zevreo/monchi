@@ -32,7 +32,7 @@ export class Navigation extends Component {
           </ul>
         </li>
         <li class="header-divider"></li>
-        <li><Link to="/shoppingcart"1><span class="ion-ios-cart-outline">{this.state.cart}</span></Link></li>
+        <li><Link to="/shoppingcart"><span class="ion-ios-cart-outline">{this.state.cart}</span></Link></li>
         <li class="header-divider"></li>
         <li style={{ lineHeight: "0px" }}>
           <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
