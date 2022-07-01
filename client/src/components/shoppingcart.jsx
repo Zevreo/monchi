@@ -13,15 +13,6 @@ export class shoppingcart extends Component {
         this.state = { updated: false, products: [null] };
     };
     componentDidUpdate() {
-        const { token } = this.props.auth;
-        const config = {
-            headers: {
-                "Content-type": "application/json"
-            }
-        }
-        if (token) {
-            config.headers['x-auth-token'] = token;
-        }
         const{user} = this.props.auth;
         if (user && this.state.updated === false) {
             axios.get(`/api/cart/${user._id}`)
@@ -54,7 +45,7 @@ export class shoppingcart extends Component {
                         </div>
                     </div>
                 </section> 
-                <section class="cart pt60 pb60">
+                <section class="cart pt60 pb60" class="sopas">
                 <div class="container">
                     <div class="row">
                     <div class="col-sm-9 mt40 mb40">

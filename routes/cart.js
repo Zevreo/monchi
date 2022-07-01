@@ -21,16 +21,17 @@ router.post('/', auth, (req, res) => {
 });
 
 router.get('/:UserId', async (req, res) => {
-    const UserId = req.params.UserId;
-    var cartproduct=[]
+    const {UserId} = req.params;
     await Cart.find({ UserId: UserId })
-        .then(products => {prods = products})
+        .then(prods => {
+            for(var product of prods){
+                Product.find({id: product.ProductId})
+                .then(prod => res.json(prod))
+                .catch(err => res.status(400).json('Error: ' + err));
+            }
+        })
         .catch(err => res.status(400).json('Error: ' + err));
-        for(var product of prods){
-            await Product.find({ProductId: product.ProductId})
-            .then(prod => res.json(prod))
-            .catch(err => res.status(400).json('Error: ' + err));
-        }
+        
 });
 
 module.exports = router;

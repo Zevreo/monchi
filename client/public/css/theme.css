@@ -81,7 +81,9 @@ a.highlight:hover {
         width: 1191px;
     }
 }
-
+.sopas{
+    background-color: #0cb4ce;
+}
 /*---------- HEROS ----------*/
 /* Hero Containers */
 .hero-fullscreen {
@@ -2876,6 +2878,7 @@ ul {
 }
 .pt60 {
     padding-top: 60px!important
+
 }
 .pt70 {
     padding-top: 70px!important
