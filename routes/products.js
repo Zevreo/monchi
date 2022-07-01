@@ -45,17 +45,87 @@ router.get('/', async (req, res) => {
     res.json(productsWithTags);
 });
 
-// GET ALL by name or tag
+//GET Search name, description, tags
+router.get('/search/:search', async (req, res) => {
+    const { search } = req.params;
+    var productsWithTags = [];
+    var prods = [];
+    var tagsToFind = [];
+    var prodFromTags = [];
+    await Product.find({ $or: [{ ProductName: { $regex: new RegExp(search, 'i') } }, { ProductDescription: { $regex: new RegExp(search, 'i') } }] })
+        .then(products => { prods = products })
+        .catch(err => res.status(400).json('Error: ' + err));
+    for (var product of prods) {
+        await Tag.find({ ProductId: product.id }).select("Tags -_id")
+            .then(tags => {
+                var productTags = [];
+                for (var tag of tags) {
+                    productTags.push(tag.Tags);
+                }
+                var prod = {
+                    _id: product.id,
+                    StoreId: product.StoreId,
+                    ProductName: product.ProductName,
+                    ProductDescription: product.ProductDescription,
+                    ProductPrice: product.ProductPrice,
+                    PriceCoin: product.PriceCoin,
+                    ProductImage: product.ProductImage,
+                    Tags: productTags,
+                    Modified: product.updatedAt
+                };
+                productsWithTags.push(prod)
+            })
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+    await Tag.find({ Tags: { $regex: new RegExp(search, 'i') } })
+        .then(tags => { tagsToFind = tags }).catch(err => res.status(400).json('Error: ' + err));
+    if (tagsToFind.length > 0) {
+        for (var tag of tagsToFind) {
+            await Product.findOne({ _id: tag.ProductId })
+                .then(prod => { prodFromTags.push(prod) })
+                .catch(err => res.status(400).json('Error: ' + err));
+        }
+        if (prodFromTags.length > 1) {
+            for (var prod of prodFromTags) {
+                await Tag.find({ ProductId: prod.id }).select("Tags -_id")
+                    .then(tagsX => {
+                        var productTags = [];
+                        for (var tagX of tagsX) {
+                            productTags.push(tagX.Tags);
+                        }
+                        var product = {
+                            _id: prod.id,
+                            StoreId: prod.StoreId,
+                            ProductName: prod.ProductName,
+                            ProductDescription: prod.ProductDescription,
+                            ProductPrice: prod.ProductPrice,
+                            PriceCoin: prod.PriceCoin,
+                            ProductImage: prod.ProductImage,
+                            Tags: productTags,
+                            Modified: prod.updatedAt
+                        };
+                        if (!(productsWithTags.filter(e => e._id === product._id).length > 0)) {
+                            productsWithTags.push(product);
+                        }
+                    })
+                    .catch(err => res.status(400).json('Error: ' + err));
+            }
+        }
+    }
+    res.json(productsWithTags);
+});
+
+//GET All ByStore
 router.get('/store/:StoreId', async (req, res) => {
     const StoreId = req.params.StoreId;
     const { page = 1, limit = 12, sort = "updatedAt", order = -1 } = req.headers;
-    if(page < 1){
+    if (page < 1) {
         page = 1;
     }
-    if(limit < 1){
+    if (limit < 1) {
         limit = 12;
     }
-    if( sort != "updatedAt" && sort != "ProductPrice"){
+    if (sort != "updatedAt" && sort != "ProductPrice") {
         sort = "updatedAt";
     }
     const count = await Product.find({ StoreId: StoreId }).countDocuments();
@@ -95,41 +165,6 @@ router.get('/store/:StoreId', async (req, res) => {
     })
     res.json(productsWithTags);
 });
-
-//GET All ByStore
-router.get('/Products/:Product', async (req, res) => {
-    const Product = req.params.Product;
-    var productsWithTags = [];
-    var prods = null;
-    await Product.find({ StoreId: StoreId })
-        .then(products => { prods = products })
-        .catch(err => res.status(400).json('Error: ' + err));
-    for (var product of prods) {
-        await Tag.find({ ProductId: product.id }).select("Tags -_id")
-            .then(tags => {
-                var productTags = [];
-                for (var tag of tags) {
-                    productTags.push(tag.Tags);
-                }
-                var prod = {
-                    _id: product.id,
-                    StoreId: product.StoreId,
-                    ProductName: product.ProductName,
-                    ProductDescription: product.ProductDescription,
-                    ProductPrice: product.ProductPrice,
-                    PriceCoin: product.PriceCoin,
-                    ProductImage: product.ProductImage,
-                    Tags: productTags,
-                    Modified: product.updatedAt
-                };
-                productsWithTags.push(prod)
-            })
-            .catch(err => res.status(400).json('Error: ' + err));;
-    }
-    res.json(productsWithTags);
-});
-
-
 
 //POST Add product with tags
 router.post('/', auth, (req, res) => {

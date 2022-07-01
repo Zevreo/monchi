@@ -7,23 +7,18 @@ import { Link } from "react-router-dom";
 export class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = { cart: '', id: '' };
+    this.state = { cart: '', id: '', search: '' };
   }
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
-
-  onSubmit = (e) => {
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  Search = e => {
     e.preventDefault();
-    const product={
-      Product:this.state.Products
-    }
-   
-    
-    axios.get(`/api/product/`,product)
-        .then(res => console.log(res.data));
-    window.location = '/perfil';
-}
+    window.location = `/results/search=${this.state.search}`;
+  }
   render() {
     const { isAuthenticated } = this.props.auth;
     const { user } = this.props.auth;
@@ -47,9 +42,10 @@ export class Navigation extends Component {
         <li><Link to="#"><span class="ion-ios-cart-outline">{this.state.cart}</span></Link></li>
         <li class="header-divider"></li>
         <li style={{ lineHeight: "0px" }}>
-          <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">
+          <form onSubmit={this.Search}>
             <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" />
+              <input type="text" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off"
+              onChange={this.onChange} name="search"/>
             </div>
           </form>
         </li>
@@ -64,9 +60,10 @@ export class Navigation extends Component {
         </li>
         <li class="header-divider"></li>
         <li style={{ lineHeight: "0px" }}>
-          <form onSubmit={this.onSubmit} method="post" id="subscribe-form">
+          <form onSubmit={this.Search}>
             <div class="subscribe-form-input">
-              <input type="text" name="search" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" />
+              <input type="text" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" 
+              onChange={this.onChange} name="search"/>
             </div>
           </form>
         </li>

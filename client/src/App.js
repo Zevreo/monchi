@@ -19,6 +19,8 @@ import NewAddress from './components/direcciones/newAddress';
 import ParamsTest from './components/paramsTest';
 import Footer from './components/footer';
 import CreateProduct from './components/productos/createProduct';
+import Results from './components/results';
+import SingleProduct from './components/productos/singleproduct';
 
 export class App extends Component {
   componentDidMount() {
@@ -43,6 +45,9 @@ export class App extends Component {
             <Route path="/paramstest/:id" element={<ParamsTest />}/>
             <Route path="/paramstest" element={<ParamsTest />}/>
             <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/results/search=:search" element={<Results />}/>
+            <Route path="/product/:id" element={<SingleProduct />}/>
+
           </Routes>
           <Footer />
         </Provider>
