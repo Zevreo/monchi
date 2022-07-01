@@ -13,6 +13,32 @@ export class Allproducts extends Component {
     constructor(props) {
         super(props);
         this.state = { updated: false, products: [null] };
+        this.Submit = this.Submit.bind(this);
+    };
+    Submit = (e)=> {
+        e.preventDefault();
+        const { user } = this.props.auth;
+        const { token } = this.props.auth;
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        if(token){
+            config.headers['x-auth-token'] = token;
+        }
+        if(user){
+            const productCar = {
+                UserId: user._id,
+                ProductId:e.target.ProductId.value,
+                Quantity:1
+                
+            };
+            console.log(productCar);
+            axios.post('/api/cart', productCar, config)
+            .then(res => console.log(res.data));
+        window.location = '/shoppingcart';
+        }
     };
     componentDidMount() {
         if (this.state.updated === false) {
@@ -44,6 +70,13 @@ export class Allproducts extends Component {
                                                     <h4>{d.ProductName}</h4>
                                                     <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
                                                 </div>
+                                                
+                                                    <form onSubmit={this.Submit}>
+                                                        <input type="hidden" value={user._id}  name="UserId"></input>
+                                                        <input type="hidden" value={d._id}  name="ProductId"></input>
+                                                        <input class="btn btn-dark btn-md" type="submit"  value="Enviar"/>
+                                                    </form>
+                                                
                                             </div>
                                         </Link>
                                         :

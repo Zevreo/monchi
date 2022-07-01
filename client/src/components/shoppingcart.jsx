@@ -12,7 +12,7 @@ export class shoppingcart extends Component {
         super(props);
         this.state = { updated: false, products: [null] };
     };
-    componentDidUpdate() {
+    componentDidMount() {
         const{user} = this.props.auth;
         if (user && this.state.updated === false) {
             axios.get(`/api/cart/${user._id}`)
@@ -45,23 +45,23 @@ export class shoppingcart extends Component {
                         </div>
                     </div>
                 </section> 
-                <section class="cart pt60 pb60" class="sopas">
-                <div class="container">
-                    <div class="row">
-                    <div class="col-sm-9 mt40 mb40">
-                    <h4 class="bag-summary mb20">Your Items</h4>
-                    <table class="shop_table cart" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th class="product-thumbnail">Item</th>
-                            <th class="product-name">Description</th>
-                            <th class="product-price">Unit Price</th>
-                            <th class="product-quantity">Quantity</th>
-                            <th class="product-subtotal">Subtotal</th>
-                            <th class="product-subtotal">Descuento</th>
-                            <th class="product-remove">&nbsp;</th>
-                        </tr>
-                    </thead>
+                <section class="cart pt60 pb60sopas">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-9 mt40 mb40">
+                            <h4 class="bag-summary mb20">Your Items</h4>
+                            <table class="shop_table cart" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Item</th>
+                                    <th class="product-name">Description</th>
+                                    <th class="product-price">Unit Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-subtotal">Subtotal</th>
+                                    <th class="product-subtotal">Descuento</th>
+                                    <th class="product-remove">&nbsp;</th>
+                                </tr>
+                            </thead>
                     <tbody>
                         {this.state.products.map((d, i) =>(
                             <div key={i}>
