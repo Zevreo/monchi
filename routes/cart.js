@@ -25,7 +25,6 @@ router.get('/:UserId', async (req, res) => {
     await Cart.find({ UserId: UserId })
         .then(prods => {
             for(var product of prods){
-                console.log(product)
                 Product.find({id: product.ProductId})
                 .then(prod => res.json(prod))
                 .catch(err => res.status(400).json('Error: ' + err));
