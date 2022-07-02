@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import axios from "axios";
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
 
 export class CreateProduct extends Component {
     static propTypes = {
@@ -66,9 +67,12 @@ export class CreateProduct extends Component {
         };
         await axios.post('/api/product', body, config)
             .then(res => this.setState({ success: `Producto "${this.state.ProductName}" agregado exitosamente` }))
-            .catch(err => this.setState({ error: err }))
+            .catch(err => this.setState({ error: err }));
+        setTimeout(() => {
+            useNavigate("/myStore");
+        }, 3000);
     };
-    componentDidUpdate() {
+    componentDidMount() {
         const { user } = this.props.auth;
         if (user && this.state.updated === false) {
             axios.get('/api/fixed/currency')
@@ -104,7 +108,7 @@ export class CreateProduct extends Component {
             </div>
         )
         return (
-            <section id="login" class="bg-grey-1 mt60">
+            <section id="login" class="bg-grey-1">
                 <div class="login-container">
                     {this.state.error !== null ? errorMessage : ''}
                     {this.state.success !== null ? successMessage : ''}
