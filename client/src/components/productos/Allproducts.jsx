@@ -59,6 +59,7 @@ export class Allproducts extends Component {
                             {this.state.products.map((d, i) => (
                                 <li class="relative col-lg-3 col-md-4 col-sm-6" style={{ padding: '15px' }} key={i}>
                                     {d ?
+                                    <div>
                                         <Link to={`/product/${d._id}`}>
                                             <div class="item">
                                                 <img src={d.ProductImage} alt="#" class="contain" />
@@ -71,14 +72,16 @@ export class Allproducts extends Component {
                                                     <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
                                                 </div>
                                                 
-                                                    <form onSubmit={this.Submit}>
-                                                        <input type="hidden" value={user._id}  name="UserId"></input>
-                                                        <input type="hidden" value={d._id}  name="ProductId"></input>
-                                                        <input class="btn btn-dark btn-md" type="submit"  value="Enviar"/>
-                                                    </form>
+                                                    
                                                 
                                             </div>
                                         </Link>
+                                        <form onSubmit={this.Submit}>
+                                        <input type="hidden" value={user._id}  name="UserId"></input>
+                                        <input type="hidden" value={d._id}  name="ProductId"></input>
+                                        <input class="btn btn-dark btn-md" type="submit"  value="Enviar"/>
+                                    </form>
+                                    </div>
                                         :
                                         <li className="relative col-md-12 center-items"><Loader /></li>
                                     }

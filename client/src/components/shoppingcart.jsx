@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Converter from './converter';
 
 
 export class shoppingcart extends Component {
@@ -85,7 +86,10 @@ export class shoppingcart extends Component {
                                 </div>
                             </td>
                             <td class="product-subtotal">
-                                <span class="amount">$99</span> 
+                                <span class="amount">{user ? <Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} /> : d.ProductPrice}</span> 
+                            </td>
+                            <td class="product-subtotal">
+                                <span class="amount">{user ? .9*(<Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} />) : .9*(d.ProductPrice)}</span> 
                             </td>
                             <td class="product-remove">
                                 <a href="#" class="remove" title="Remove this item">×</a> 
