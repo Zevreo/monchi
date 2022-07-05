@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 
-export class Informacionperfil extends Component {
-    constructor(props) {
-        super(props);
-    }
+export class Perfil extends Component {
     render() {
         const { user } = this.props.auth;
         return (
-            <section class="checkout">
+            <div class="checkout">
                 <div class="row text-center ">
                     <h3 class="mb20">Tu informacion</h3>
                     <div class="half-left col-sm-6">
@@ -38,7 +34,7 @@ export class Informacionperfil extends Component {
                         <input type="text" class="input-text" name="billing_last_name" value={user ? user.DefaultCoin : "loading"} />
                     </div>
                 </div>
-            </section>
+            </div>
         )
     }
 }
@@ -46,4 +42,4 @@ export class Informacionperfil extends Component {
 const mapStateToProps = (state) => ({
     auth: state.auth
 })
-export default connect(mapStateToProps, null)(Informacionperfil);
+export default connect(mapStateToProps, null)(Perfil);

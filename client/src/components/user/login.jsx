@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import { login } from '../actions/authActions';
-import { clearErrors } from '../actions/errorActions';
+import { login } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 import { connect } from 'react-redux';
+import { Link } from "react-router-dom";
 
 export class Login extends Component {
   state = {
@@ -73,8 +74,8 @@ export class Login extends Component {
                     <input class="btn btn-sm btn-login" type="submit" value="Login" />
                   </form>
                 </div>
-                <p>¿No tienes una cuenta? <a href="/register">Registrate</a></p>
-                <p class="terms">Al iniciar sesión accedes a nuestros <a href="#">Terminos de Servicio</a> y <a href="#">Política de Privacidad</a>.</p>
+                <p>¿No tienes una cuenta? <Link to="/register">Registrate</Link></p>
+                <p class="terms">Al iniciar sesión accedes a nuestros <Link to="#">Terminos de Servicio</Link> y <Link to="#">Política de Privacidad</Link>.</p>
               </div>
             </div>
           </div>

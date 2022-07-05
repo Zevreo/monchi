@@ -13,6 +13,8 @@ export function Converter(props) {
             .then(res => setValue(res.data.Value))
             .catch(err => console.log(err));
     });
-    return value;
+    return (
+        <>{value !== null ? value : "??"}</>
+    );
 };
 export default Converter;

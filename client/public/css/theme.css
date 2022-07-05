@@ -5258,7 +5258,7 @@ h4.fitness-label {
     width: 100%;
     position: relative;
     list-style: none;
-    opacity: 0;
+    opacity: 1 !important;
 }
 .container-fluid ul.portfolioContainer {
     margin: 0;

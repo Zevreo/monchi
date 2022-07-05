@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { EditTags } from "./editTags";
 
-export function CreateProduct(props) {
+export function EditProduct(props) {
     let navigate = useNavigate();
+    let { id } = useParams();
     const [ProductName, setProductName] = useState();
     const [ProductPrice, setProductPrice] = useState();
     const [PriceCoin, setPriceCoin] = useState();
     const [ProductDescription, setProductDescription] = useState();
     const [UploadImage, setUploadImage] = useState();
     const [ProductImage, setProductImage] = useState();
-    const [tags, setTags] = useState();
     const [store, setStore] = useState();
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
@@ -52,12 +53,11 @@ export function CreateProduct(props) {
                 ProductPrice,
                 PriceCoin,
                 ProductDescription,
-                ProductImage,
-                tags
+                ProductImage
             };
-            await axios.post('/api/product', body, config)
+            await axios.put(`/api/product/${id}`, body, config)
                 .then(res => {
-                    setSuccess('Producto agregado exitosamente');
+                    setSuccess('Producto modificado exitosamente');
                     setTimeout(() => {
                         navigate("/myStore");
                     }, 3000);
@@ -72,7 +72,15 @@ export function CreateProduct(props) {
                 .then(res => {
                     setStore(res.data);
                 });
-            axios.get('/api/fixed/currency')
+            axios.get(`/api/product/edit/${id}`)
+                .then(res => {
+                    setProductName(res.data.ProductName);
+                    setProductPrice(res.data.ProductPrice);
+                    setProductDescription(res.data.ProductDescription);
+                    setProductImage(res.data.ProductImage);
+                    setPriceCoin(res.data.PriceCoin);
+                });
+                axios.get('/api/fixed/currency')
                 .then(res => {
                     setCurrency(res.data);
                 });
@@ -105,34 +113,39 @@ export function CreateProduct(props) {
                 {success !== null ? successMessage : ''}
                 <div class="container text-center">
                     <div class="col-md-12">
-                        <h3 class="mb5">Crear producto</h3>
-                        <p class="subheading">Agregue su producto a su tienda</p>
-                        <div class="login-form pt30 pb30">
-                            <form onSubmit={Submit}>
-                                <input class="input-text" type="text" placeholder="Nombre del producto" value={ProductName} onChange={e => setProductName(e.target.value)} required />
-                                <p className="help-block text-danger"></p>
-                                <input class="input-text" type="number" placeholder="Precio" value={ProductPrice} onChange={e => setProductPrice(e.target.value)} required />
-                                <p className="help-block text-danger"></p>
-                                <select class="bg-white half-left" type="text" placeholder="Moneda" value={PriceCoin} onChange={e => setPriceCoin(e.target.value)} name="PriceCoin" required>
-                                    <option default value='USD'>Elija la moneda (predeterminado: USD)</option>
-                                    { currency ? currency.map((d, i) => (
-                                        <option key={i} value={d.CodeName}>{d.Name}</option>
-                                    )) : ''}
-                                </select>
-                                <p className="help-block text-danger"></p>
-                                <input class="input-text" type="text" placeholder="Descripcion" value={ProductDescription} onChange={e => setProductDescription(e.target.value)} required />
-                                <p className="help-block text-danger"></p>
-                                <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
-                                    onChange={e => setUploadImage(e.target.files[0])} id="imageUpload" title="La imagen cargada toma prioridad" />
-                                {UploadImage ?
-                                    <button class="btn btn-sm btn-login mb10" type="button" onClick={Upload}>Cargar</button>
-                                    :
-                                    <input class="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={ProductImage}
-                                        onChange={e => setProductImage(e.target.value)} tooltip="La imagen cargada toma prioridad" />}
-                                <input class="input-text" type="text" placeholder="Tags separados por commas" value={tags} onChange={e => setTags(e.target.value)} required />
-                                <p className="help-block text-danger"></p>
-                                <input class="btn btn-sm btn-login" type="submit" value="Enviar" />
+                        <h3 class="mb5">Editar producto</h3>
+                        <div class="login-form pt30 pb30" style={{ maxWidth: "100%" }}>
+                            <form onSubmit={Submit} className="row">
+                                <div className="col-md-6">
+                                    <input class="input-text" type="text" placeholder="Nombre del producto" value={ProductName} onChange={e => setProductName(e.target.value)} required />
+                                    <p className="help-block text-danger"></p>
+                                    <input class="input-text" type="number" placeholder="Precio" value={ProductPrice} onChange={e => setProductPrice(e.target.value)} required />
+                                    <p className="help-block text-danger"></p>
+                                    <select class="bg-white half-left" type="text" placeholder="Moneda" value={PriceCoin} onChange={e => setPriceCoin(e.target.value)} name="PriceCoin" required>
+                                        <option default value='USD'>Elija la moneda (predeterminado: USD)</option>
+                                        {currency ? currency.map((d, i) => (
+                                            <option key={i} value={d.CodeName}>{d.Name}</option>
+                                        )) : ''}
+                                    </select>
+                                    <p className="help-block text-danger"></p>
+                                    <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
+                                        onChange={e => setUploadImage(e.target.files[0])} id="imageUpload" title="La imagen cargada toma prioridad" />
+                                    {UploadImage ?
+                                        <button className="btn btn-sm btn-login mb10" type="button" onClick={Upload}>Cargar</button>
+                                        :
+                                        <input className="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={ProductImage}
+                                            onChange={e => setProductImage(e.target.value)} tooltip="La imagen cargada toma prioridad" />}
+                                </div>
+                                <div className="col-md-6">
+                                    <img src={ProductImage} alt="#" class="mb10" />
+                                </div>
+                                <div className="col-md-12">
+                                    <textarea class="input-text bg-white" type="text" placeholder="Descripcion" value={ProductDescription} onChange={e => setProductDescription(e.target.value)} required />
+                                    <p className="help-block text-danger"></p>
+                                    <input className="btn btn-sm btn-login" type="submit" value="Enviar" />
+                                </div>
                             </form>
+                            <EditTags id={id} />
                         </div>
                     </div>
                 </div>
@@ -144,4 +157,4 @@ export function CreateProduct(props) {
 const mapStateToProps = (state) => ({
     auth: state.auth
 });
-export default connect(mapStateToProps, null)(CreateProduct);
+export default connect(mapStateToProps, null)(EditProduct);
