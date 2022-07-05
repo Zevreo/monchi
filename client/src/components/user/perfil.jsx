@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 
-export class Informacionperfil extends Component {
-    constructor(props) {
-        super(props);
-    }
+export class Perfil extends Component {
     render() {
         const { user } = this.props.auth;
         return (
@@ -46,4 +42,4 @@ export class Informacionperfil extends Component {
 const mapStateToProps = (state) => ({
     auth: state.auth
 })
-export default connect(mapStateToProps, null)(Informacionperfil);
+export default connect(mapStateToProps, null)(Perfil);

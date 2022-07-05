@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { useParams } from "react-router";
-import Loader from '../loader';
+import Loader from '../utilities/loader';
 import { Link } from "react-router-dom";
 
 export function MyProducts(props) {
@@ -146,6 +146,7 @@ export function MyProducts(props) {
                                         <div class="info hover-bottom">
                                             <h4>{d.ProductName}</h4>
                                             <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
+                                            <Link to={`/editProduct/${d._id}`} class="btn btn-dark btn-sm btn-appear mt20">Editar</Link>
                                         </div>
                                     </div>
                                 </Link>
