@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { useParams } from "react-router";
-import Loader from '../loader';
+import Loader from '../utilities/loader';
 import { Link } from "react-router-dom";
-import Converter from "../converter";
-import loader from "../loader";
+import Converter from "../utilities/converter";
 
 export function SingleProduct(props) {
     const { user } = props.auth;
+    const[search, setSearch] = useState(null);
 
     let { id } = useParams();
     const [product, setProduct] = useState()
