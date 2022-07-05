@@ -65,7 +65,7 @@ section {
     object-fit: cover;
     width: 100%;
     max-width: 690px;
-    height: auto;
+    min-height: 517px;
     max-height: 517px;
 }
 
@@ -74,7 +74,7 @@ section {
         object-fit: cover;
         width: 100%;
         max-width: 330px;
-        height: auto;
+        min-height: 247px;
         max-height: 247px;
     }
 }
@@ -84,7 +84,7 @@ section {
         object-fit: cover;
         width: 100%;
         max-width: 283px;
-        height: auto;
+        min-height: 212px;
         max-height: 212px;
     }
 }
@@ -93,7 +93,7 @@ section {
         object-fit: cover;
         width: 100%;
         max-width: 260px;
-        height: auto;
+        min-height: 195px;
         max-height: 195px;
     }
 }

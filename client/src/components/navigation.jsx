@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Logout from "./logout";
+import Logout from "./user/logout";
 import { Link } from "react-router-dom";
 
 export class Navigation extends Component {

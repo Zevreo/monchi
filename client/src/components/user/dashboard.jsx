@@ -1,19 +1,12 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import Sinacces from "./perfilcomponents/sinacceso";
-import Informacionperfil from "./perfilcomponents/informacionperfil";
+import Perfil from "./perfil";
 import MyAddress from "./direcciones/myAddress";
 import { Link } from "react-router-dom";
 
-export class Perfil extends Component {
-    static propTypes = {
-        auth: PropTypes.object.isRequired
-    };
+export class Dashboard extends Component {
     render() {
-        const { isAuthenticated } = this.props.auth;
-        const authLinks = (
+        return (
             <section class="bg-grey-1">
                 <div class="login-container">
                     <div class="row">
@@ -26,7 +19,7 @@ export class Perfil extends Component {
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
                                     <div class="tab-pane fade active in" id="tab-c1">
-                                        <Informacionperfil/>
+                                        <Perfil/>
                                     </div>
                                     <div class="tab-pane fade" id="tab-c2">
                                         <Link to="/newAddress" class="btn btn-dark btn-lg btn-appear mt20">Agregar</Link>
@@ -41,20 +34,10 @@ export class Perfil extends Component {
                     </div>
                 </div>
             </section>
-        )
-        const guestLinks = (
-            <Sinacces></Sinacces>
-        )
-        return (
-            <div>
-                {isAuthenticated ? authLinks : null}
-                {!isAuthenticated ? guestLinks : null}
-
-            </div>
         );
     }
 }
 const mapStateToProps = (state) => ({
     auth: state.auth
 })
-export default connect(mapStateToProps, null)(Perfil);
+export default connect(mapStateToProps, null)(Dashboard);
