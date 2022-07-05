@@ -37,7 +37,7 @@ export function SingleProduct(props) {
                             </div>
                             <div class="col-sm-7 mt40 mb40 product-details">
                                 <ol class="breadcrumb">
-                                {product.Tags.map((d, i) => <li> <a href="#">{d}</a> </li>)}
+                                {product.Tags.map((d, i) => <li> <Link to={`/results/search=${d}`}> {d} </Link> </li>)}
 
                                 </ol>
                                 <h3>{product ? product.ProductName : "loading..."}</h3>
