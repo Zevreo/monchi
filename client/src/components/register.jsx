@@ -13,7 +13,9 @@ export class Registro extends Component {
             Password: '',
             Country: '',
             PhoneNumber: '',
-            DefaultCoin: ''
+            DefaultCoin: '',
+            Updated: false,
+            Currency: null
         }
         this.onChangeFirstName = this.onChangeFirstName.bind(this);
         this.onChangeLastName = this.onChangeLastName.bind(this);
@@ -82,6 +84,15 @@ export class Registro extends Component {
             .then(res => console.log(res.data));
         window.location = '/login';
     }
+    componentDidMount() {
+        if (this.state.Updated === false) {
+            axios.get('/api/fixed/currency')
+                .then(res => {
+                    this.setState({Currency: res.data});
+                    this.setState({Updated: true});
+                });
+        }
+    }
     render() {
         return (
             <section id="sign-up" class="bg-grey-1">
@@ -126,18 +137,9 @@ export class Registro extends Component {
                                         <p className="help-block text-danger"></p>
                                         <select class="bg-white" type="text" placeholder="Moneda" value={this.state.DefaultCoin} onChange={this.onChangeDefaultCoin} required>
                                             <option default disabled value=''>Seleccione su moneda preferida</option>
-                                            <option value='USD'>Dólar estadounidense</option>
-                                            <option value='EUR'>Euro</option>
-                                            <option value='GBP'>Libra esterlina</option>
-                                            <option value='INR'>Rupia</option>
-                                            <option value='AUD'>Dólar australiano</option>
-                                            <option value='CAD'>Dólar canadiense</option>
-                                            <option value='SGD'>Dólar de Singapur</option>
-                                            <option value='CHF'>Franco suizo</option>
-                                            <option value='MYR'>Ringgit</option>
-                                            <option value='JPY'>Yen</option>
-                                            <option value='CNY'>Yuan</option>
-                                            <option value='MXN'>Peso mexicano</option>
+                                            { this.state.Updated===true ? this.state.Currency.map((d, i) => (
+                                                <option key={i} value={d.CodeName}>{d.Name}</option>
+                                            )) : ''}
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>

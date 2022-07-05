@@ -13,7 +13,7 @@ export class CreateProduct extends Component {
         this.state = {
             ProductName: '', ProductPrice: null, PriceCoin: null, ProductDescription: '',
             UploadImage: null, ProductImage: null, tags: '', updated: false, store: null,
-            error: null, success: null, cloudinaryForm: null
+            error: null, success: null, cloudinaryForm: null, Currency: null
         }
         this.onChange = this.onChange.bind(this);
         this.onChangeFile = this.onChangeFile.bind(this);
@@ -71,6 +71,10 @@ export class CreateProduct extends Component {
     componentDidUpdate() {
         const { user } = this.props.auth;
         if (user && this.state.updated === false) {
+            axios.get('/api/fixed/currency')
+                .then(res => {
+                    this.setState({ Currency: res.data });
+                });
             axios.get(`/api/store/owner/${user._id}`)
                 .then(res => {
                     this.state.store = res.data;
@@ -116,26 +120,18 @@ export class CreateProduct extends Component {
                                         <input class="input-text half-left" type="number" placeholder="Precio" value={this.state.ProductPrice} onChange={this.onChange} name="ProductPrice" required />
                                         <p className="help-block text-danger"></p>
                                         <select class="bg-white half-left" type="text" placeholder="Moneda" value={this.state.PriceCoin} onChange={this.onChange} name="PriceCoin" required>
-                                            <option default value='USD'>Dólar estadounidense</option>
-                                            <option value='EUR'>Euro</option>
-                                            <option value='GBP'>Libra esterlina</option>
-                                            <option value='INR'>Rupia</option>
-                                            <option value='AUD'>Dólar australiano</option>
-                                            <option value='CAD'>Dólar canadiense</option>
-                                            <option value='SGD'>Dólar de Singapur</option>
-                                            <option value='CHF'>Franco suizo</option>
-                                            <option value='MYR'>Ringgit</option>
-                                            <option value='JPY'>Yen</option>
-                                            <option value='CNY'>Yuan</option>
-                                            <option value='MXN'>Peso mexicano</option>
+                                            <option default value='USD'>Elija la moneda (predeterminado: USD)</option>
+                                            {this.state.updated === true ? this.state.Currency.map((d, i) => (
+                                                <option key={i} value={d.CodeName}>{d.Name}</option>
+                                            )) : ''}
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>
 
                                     <div className="col-md-6">
-                                    <input class="input-text half-right" type="text" placeholder="Tags separados por commas" value={this.state.tags} onChange={this.onChange} name="tags" required />
+                                        <input class="input-text half-right" type="text" placeholder="Tags separados por commas" value={this.state.tags} onChange={this.onChange} name="tags" required />
                                         <p className="help-block text-danger"></p>
-                                        
+
                                         <input className="input-text half-right" type="text" placeholder="URL de la imagen" value={this.state.ProductImage}
                                             onChange={this.onChange} tooltip="La imagen cargada toma prioridad" name="ProductImage" />
                                         <p className="help-block text-danger"></p>
