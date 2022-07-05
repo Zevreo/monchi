@@ -4,8 +4,12 @@ import axios from 'axios';
 import { useParams } from "react-router";
 import Loader from '../loader';
 import { Link } from "react-router-dom";
+import Converter from "../converter";
+import loader from "../loader";
 
 export function SingleProduct(props) {
+    const { user } = props.auth;
+
     let { id } = useParams();
     const [product, setProduct] = useState()
 
@@ -19,48 +23,41 @@ export function SingleProduct(props) {
     }, []);
 
     return (
+        
         <div class="site-wrapper">
 
             <section class="shop-product pt100 pb40">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-sm-5 mt40 mb40">
-
-                            <div class=" navigation-thin ">
-                                <div>{ product ? <img src={ product.ProductImage } class="img-responsive width100" alt="#"/> : <Loader/> }</div>
+            <div class="container">
+                    {product ?
+                        <div class="row">
+                            <div class="col-sm-5 mt40 mb40">
+                                <div class=" navigation-thin ">
+                                    <div>{product ? <img src={product.ProductImage} class="img-responsive width100" alt="#" /> : <Loader />}</div>
+                                </div>
                             </div>
+                            <div class="col-sm-7 mt40 mb40 product-details">
+                                <ol class="breadcrumb">
+                                {product.Tags.map((d, i) => <li> <a href="#">{d}</a> </li>)}
 
-                        </div>
-
-                        <div class="col-sm-7 mt40 mb40 product-details">
-
-                            <ol class="breadcrumb">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Shirts</a></li>
-                                <li class="active">Over Shirt</li>
-                            </ol>
-                            <h3>{ product ? product.ProductName : "loading..." }</h3>
-                            <h4 class="price"><span class="currency">$</span>19.99<span class="old-price-single">26.95</span></h4>
-                            <p>Short sleeve off white Tshirt made from pure cotton, featuring The Over Co. print on the chest, along with the Over logo label on the right hip side. Regular fit. Short sleeve off white Tshirt made from pure cotton, featuring The Over Co. print on the chest, along with the Over.</p>
-
-                            <div class="quantity mb20 mt20">
-                                <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" />
+                                </ol>
+                                <h3>{product ? product.ProductName : "loading..."}</h3>
+                                <h4 class="price"><span class="currency">$</span>{user ? <Converter Current={product.PriceCoin}
+                                    Value={product.ProductPrice} Target={user.DefaultCoin} /> : product.ProductPrice}</h4>
+                                <p>{product ? product.ProductDescription : "loading..."}</p>
+                                <div class="quantity mb20 mt20">
+                                    <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" />
+                                </div>
+                                <p class="mb0">SKU: 4815162342</p>
+                                <p class="mb0">Colors: Black, White</p>
+                                <ul class="list-inline mt20">
+                                    <li><a href="#"><i class="fa fa-facebook"></i><span class="share-count">6</span></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i><span class="share-count">8</span></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest"></i><span class="share-count">3</span></a></li>
+                                </ul>
+                                <a href="#" class="btn btn-dark btn-lg btn-appear mt20"><span>Add To Cart <i class="ion-android-arrow-forward"></i></span></a>
                             </div>
-
-                            <p class="mb0">Category: <a href="#" class="highlight">Shirts</a></p>
-                            <p class="mb0">SKU: 4815162342</p>
-                            <p class="mb0">Colors: Black, White</p>
-                            <ul class="list-inline mt20">
-                                <li><a href="#"><i class="fa fa-facebook"></i><span class="share-count">6</span></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i><span class="share-count">8</span></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i><span class="share-count">3</span></a></li>
-                            </ul>
-                            <a href="#" class="btn btn-dark btn-lg btn-appear mt20"><span>Add To Cart <i class="ion-android-arrow-forward"></i></span></a>
-
                         </div>
-
-                    </div>
+                        : <Loader />}
                 </div>
             </section>
 
@@ -200,5 +197,7 @@ export function SingleProduct(props) {
 
 }
 
-
-export default SingleProduct;
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps, null)(SingleProduct);
