@@ -16,9 +16,11 @@ const auth = require('../middleware/auth');
     Default: 
 */
 //GET User's Addressess
-router.get('/my/:UserId', auth, (req, res) => {
+router.get('/my/:UserId', auth, async (req, res) => {
     const UserId = req.params.UserId;
-    Address.find({ UserId })
+    const count = await Address.find({ UserId }).countDocuments();
+    res.set({ 'x-count': count });
+    await Address.find({ UserId })
         .then(addressess => res.json(addressess))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -120,10 +122,19 @@ router.put('/default/:id', auth, (req, res) => {
 });
 
 //DELETE ById auth
-router.delete('/:id', auth, (req, res) => {
-    Address.findByIdAndDelete(req.params.id)
-        .then(() => { res.json('Direccion eliminada') })
+router.delete('/:id', auth, async (req, res) => {
+    var isDefault = null;
+    await Address.findById(req.params.id)
+        .then(address => isDefault = address.Default)
         .catch(err => res.status(400).json('Error: ' + err));
+    if (!isDefault) {
+        await Address.findByIdAndDelete(req.params.id)
+            .then(() => res.json('Direccion eliminada'))
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+    else {
+        res.status(400).json('No puedes borrar tu direccion predeterminada');
+    }
 });
 
 module.exports = router;

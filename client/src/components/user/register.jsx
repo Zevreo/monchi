@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 export class Registro extends Component {
     constructor(props) {
@@ -144,12 +145,12 @@ export class Registro extends Component {
                                         <p className="help-block text-danger"></p>
                                     </div>
                                     <div class="actions">
-                                        <p class="dark-grey">Al crear una cuenta accedes a nuestros <a href="#">Terminos de Servicio</a>.</p>
+                                        <p class="dark-grey">Al crear una cuenta accedes a nuestros <Link to="#">Terminos de Servicio</Link>.</p>
                                     </div>
                                     <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
                                 </form>
                             </div>
-                            <p>O <a href="/login">inicia sesión</a> usando una cuenta existente</p>
+                            <p>O <Link to="/login">inicia sesión</Link> usando una cuenta existente</p>
                         </div>
                     </div>
                 </div>
