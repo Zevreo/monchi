@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'react-devtools';
 
-
 //Redux
 import { loadUser } from './actions/authActions';
 import store from './store';
@@ -21,8 +20,7 @@ import Footer from './components/footer';
 import CreateProduct from './components/productos/createProductHook';
 import EditProduct from './components/productos/editProduct';
 import AllProducts from './components/productos/Allproducts';
-import PaginateProducts from './components/productos/paginateproducts';
-
+import PaginateProducts from './components/productos/paginateProducts';
 
 export class App extends Component {
   componentDidMount() {
