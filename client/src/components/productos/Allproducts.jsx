@@ -71,11 +71,7 @@ export class Allproducts extends Component {
                                                     <h4>{d.ProductName}</h4>
                                                     <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
                                                 </div>
-                                                <form onSubmit={this.Submit}>
-                                                <input type="hidden" value={user._id}  name="UserId"></input>
-                                                    <input type="hidden" value={d._id}  name="ProductId"></input>
-                                                    <input clas="btn btn-dark btn-md" type="submit"  value="Enviar" />
-                                                </form>
+                                                
                                             </div>
                                         </Link>
                                         <form onSubmit={this.Submit}>

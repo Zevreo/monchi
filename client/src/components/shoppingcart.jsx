@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
+import Converter from './converter';
 
 export class shoppingcart extends Component {
     static propTypes = {
@@ -11,6 +11,16 @@ export class shoppingcart extends Component {
     constructor(props) {
         super(props);
         this.state = { updated: false, products: [null] };
+    };
+    componentDidMount() {
+        const{user} = this.props.auth;
+        if (user && this.state.updated === false) {
+            axios.get(`/api/cart/${user._id}`)
+                .then(prod => {
+                    this.setState({ products: prod.data });
+                });
+            this.setState({ updated: true });
+        }
     };
     componentDidUpdate() {
         const{user} = this.props.auth;
@@ -58,7 +68,6 @@ export class shoppingcart extends Component {
                             <th class="product-price">Unit Price</th>
                             <th class="product-quantity">Quantity</th>
                             <th class="product-subtotal">Subtotal</th>
-                            <th class="product-subtotal">Descuento</th>
                             <th class="product-remove">&nbsp;</th>
                         </tr>
                     </thead>
@@ -77,7 +86,7 @@ export class shoppingcart extends Component {
                                 <a href="#" >{d.ProductName}</a> 
                             </td>
                             <td class="product-price">
-                                <span class="amount">{user ? user.DefaultCoin : d.PriceCoin}$</span> 
+                                <span class="amount">{user ? user.DefaultCoin : d.PriceCoin}${user ? <Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} /> : d.ProductPrice}</span> 
                             </td>
                             <td class="product-quantity">
                                 <div class="quantity">
@@ -85,7 +94,7 @@ export class shoppingcart extends Component {
                                 </div>
                             </td>
                             <td class="product-subtotal">
-                                <span class="amount">$99</span> 
+                                <span class="amount">$198</span> 
                             </td>
                             <td class="product-remove">
                                 <a href="#" class="remove" title="Remove this item">×</a> 
