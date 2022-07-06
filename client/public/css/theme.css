@@ -81,7 +81,9 @@ a.highlight:hover {
         width: 1191px;
     }
 }
-
+.sopas{
+    background-color: #0cb4ce;
+}
 /*---------- HEROS ----------*/
 /* Hero Containers */
 .hero-fullscreen {
