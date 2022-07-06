@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'react-devtools';
 
+
 //Redux
 import { loadUser } from './actions/authActions';
 import store from './store';
@@ -20,7 +21,8 @@ import Footer from './components/footer';
 import CreateProduct from './components/productos/createProductHook';
 import EditProduct from './components/productos/editProduct';
 import AllProducts from './components/productos/Allproducts';
-import paginateproducts from './components/productos/paginateproducts';
+import PaginateProducts from './components/productos/paginateproducts';
+
 
 export class App extends Component {
   componentDidMount() {
@@ -46,7 +48,7 @@ export class App extends Component {
             <Route path="/paramstest" element={<ParamsTest />} />
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/editProduct/:id" element={<EditProduct />} />
-            <Route path="/paginater" element={<paginateproducts/>} />x
+            <Route path="/paginater" element={<PaginateProducts/>} />x
           </Routes>
           <Footer />
         </Provider>
