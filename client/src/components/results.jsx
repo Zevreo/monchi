@@ -2,9 +2,9 @@ import React, { Component, useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Converter from './converter';
+import Converter from './utilities/converter';
 import { Link } from "react-router-dom";
-import Loader from './loader';
+import Loader from './utilities/loader';
 import { useParams } from "react-router";
 
 export function Results(props) {

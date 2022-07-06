@@ -21,6 +21,7 @@ import CreateProduct from './components/productos/createProductHook';
 import EditProduct from './components/productos/editProduct';
 import AllProducts from './components/productos/Allproducts';
 import SingleProduct from './components/productos/singleproduct';
+import Results from './components/results';
 
 export class App extends Component {
   componentDidMount() {
@@ -46,6 +47,7 @@ export class App extends Component {
             <Route path="/paramstest" element={<ParamsTest />} />
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/product/:id" element={<SingleProduct />} />
+            <Route path="/results/search=:search" element={<Results />}/>
             <Route path="/editProduct/:id" element={<EditProduct />} />
           </Routes>
           <Footer />

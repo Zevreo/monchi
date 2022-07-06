@@ -18,6 +18,7 @@ export function SingleProduct(props) {
             .then(prod => setProduct(prod.data));
     };
 
+    
     useEffect(() => {
         GetSingleProduct();
     }, []);
@@ -26,7 +27,7 @@ export function SingleProduct(props) {
         
         <div class="site-wrapper">
 
-            <section class="shop-product pt100 pb40">
+            <section class="shop-product pt10 pb40">
             <div class="container">
                     {product ?
                         <div class="row">
@@ -37,23 +38,17 @@ export function SingleProduct(props) {
                             </div>
                             <div class="col-sm-7 mt40 mb40 product-details">
                                 <ol class="breadcrumb">
-                                {product.Tags.map((d, i) => <li> <a href="#">{d}</a> </li>)}
+                                {product.Tags.map((d, i) => <Link to={`/results/search=${d}`}> {d} / </Link>)}
 
                                 </ol>
                                 <h3>{product ? product.ProductName : "loading..."}</h3>
-                                <h4 class="price"><span class="currency">$</span>{user ? <Converter Current={product.PriceCoin}
+                                <h4 class="price"><span class="currency">{user ? user.DefaultCoin: product.PriceCoin}</span>${user ? <Converter Current={product.PriceCoin}
                                     Value={product.ProductPrice} Target={user.DefaultCoin} /> : product.ProductPrice}</h4>
                                 <p>{product ? product.ProductDescription : "loading..."}</p>
                                 <div class="quantity mb20 mt20">
                                     <input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" />
                                 </div>
-                                <p class="mb0">SKU: 4815162342</p>
-                                <p class="mb0">Colors: Black, White</p>
-                                <ul class="list-inline mt20">
-                                    <li><a href="#"><i class="fa fa-facebook"></i><span class="share-count">6</span></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i><span class="share-count">8</span></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest"></i><span class="share-count">3</span></a></li>
-                                </ul>
+                               
                                 <a href="#" class="btn btn-dark btn-lg btn-appear mt20"><span>Add To Cart <i class="ion-android-arrow-forward"></i></span></a>
                             </div>
                         </div>
@@ -133,59 +128,6 @@ export function SingleProduct(props) {
                     </div>
                 </div>
             </section>
-            <footer id="footer-1" class="pt60 pb50">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <h4>About Purefive</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam molestie, tellus id pellentesque feugiat, sem sem cursus orci, a placerat ante ante nec massa.</p>
-                            <p><a href="http://themeforest.net/user/vossendesign/portfolio" target="_blank">© 2015 Purefive · </a>Made with <i class="ion-heart highlight"></i> for great people.</p>
-                        </div>
-
-                        <div class="col-md-4">
-                            <h4>Follow us</h4>
-                            <ul class="footer-1-social">
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-flickr"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dropbox"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                <li><a href="#"><i class="fa fa-tumblr-square"></i></a></li>
-                                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                                <li><a href="#"><i class="fa fa-vk"></i></a></li>
-                                <li><a href="#"><i class="fa fa-vine"></i></a></li>
-                                <li><a href="#"><i class="fa fa-spotify"></i></a></li>
-                                <li><a href="#"><i class="fa fa-skype"></i></a></li>
-                                <li><a href="#"><i class="fa fa-reddit"></i></a></li>
-                                <li><a href="#"><i class="fa fa-tripadvisor"></i></a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="subscription">
-                                <h4>Newsletter</h4>
-
-                                <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form" role="form">
-                                    <div class="form-validation alert"></div>
-                                    <div class="form-group subscribe-form-input">
-                                        <input type="email" name="email" id="subscribe-form-email" class="footer-subscribe-input" placeholder="Enter your email to subscribe *" autocomplete="off" />
-                                    </div>
-                                </form>
-                                <p class="subscribe-info"><i class="ion-information-circled"></i> We will never send you spam or share your email with third parties</p>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </footer>
 
             <a id="back-to-top"><i class="icon ion-chevron-up"></i></a>
 
