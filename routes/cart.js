@@ -6,10 +6,11 @@ const auth = require('../middleware/auth');
 module.exports = router;
 
 //POST Add product to cart
-router.post('/', auth, (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { UserId, ProductId, Quantity} = req.body;
     const newProductCar = new Cart({ UserId, ProductId, Quantity });
     if (res.locals.id == req.body.UserId) {
+        console.log(await Cart.exists({UserId: UserId, ProductId: ProductId}));
         if(!Cart.exists({UserId: UserId, ProductId: ProductId})){
             newProductCar.save()
             .then(prod => res.json(prod))
@@ -18,11 +19,12 @@ router.post('/', auth, (req, res) => {
         else{
             Cart.findOne({UserId: UserId, ProductId: ProductId})
             .then(product => {
+                console.log(product);
                 product.Quantity = product.Quantity+1;
                 product.save()
                 .then(prod => res.json(prod))
                 .catch(err => res.status(400).json('Error: ' + err));
-            })
+            }).catch(err => res.status(400).json('Error: ' + err));
         }
     }
     else {
