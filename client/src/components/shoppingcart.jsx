@@ -55,7 +55,7 @@ export class shoppingcart extends Component {
                         </div>
                     </div>
                 </section> 
-                <section class="cart pt60 pb60 sopas">
+                <section class="cart pt60 pb60 ">
                 <div class="container">
                     <div class="row">
                     <div class="col-sm-9 mt40 mb40">
@@ -76,29 +76,29 @@ export class shoppingcart extends Component {
                             <div key={i}>
                             {d ?
                             <tr class="cart_item">
-                            <td class="product-thumbnail">
-                                <a href="#">
-                                    <img src={d.ProductImage} alt="#"/>
-                                </a> 
-                                <a href="#"></a>
-                            </td>
-                            <td class="product-name">
-                                <a href="#" >{d.ProductName}</a> 
-                            </td>
-                            <td class="product-price">
-                                <span class="amount">{user ? user.DefaultCoin : d.PriceCoin}${user ? <Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} /> : d.ProductPrice}</span> 
-                            </td>
-                            <td class="product-quantity">
-                                <div class="quantity">
-                                    <input type="number" step="1" name="cart-qty" value="1" class="qty" size="4"/> 
-                                </div>
-                            </td>
-                            <td class="product-subtotal">
-                                <span class="amount">$198</span> 
-                            </td>
-                            <td class="product-remove">
-                                <a href="#" class="remove" title="Remove this item">×</a> 
-                            </td>
+                                <td class="product-thumbnail">
+                                    <a href="#">
+                                        <img src={d.ProductImage} alt="#"/>
+                                    </a> 
+                                    <a href="#"></a>
+                                </td>
+                                <td class="product-name">
+                                    <a href="#" >{d.ProductName}</a> 
+                                </td>
+                                <td class="product-price">
+                                    <span class="amount">{user ? user.DefaultCoin : d.PriceCoin}${user ? <Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} /> : d.ProductPrice}</span> 
+                                </td>
+                                <td class="product-quantity">
+                                    <div class="quantity">
+                                        <input type="number" step="1" name="cart-qty" value={d.Quantity} class="qty" size="4"/> 
+                                    </div>
+                                </td>
+                                <td class="product-subtotal">
+                                    <span class="amount">$198</span> 
+                                </td>
+                                <td class="product-remove">
+                                    <a href="#" class="remove" title="Remove this item">×</a> 
+                                </td>
                             </tr>
                                 :
                                 ""
