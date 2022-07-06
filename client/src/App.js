@@ -46,7 +46,7 @@ export class App extends Component {
             <Route path="/paramstest" element={<ParamsTest />} />
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/editProduct/:id" element={<EditProduct />} />
-            <Route path="/paginater" element={<PaginateProducts/>} />x
+            <Route path="/paginater" element={<PaginateProducts/>} />
           </Routes>
           <Footer />
         </Provider>
