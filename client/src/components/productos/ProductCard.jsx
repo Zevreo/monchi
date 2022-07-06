@@ -11,7 +11,7 @@ const ProductCard = props => {
         <li class="relative col-lg-3 col-md-4 col-sm-6" style={{ padding: '15px' }} key={Key}>
             <Link to={`/product/${Product._id}`}>
                 <div class="item">
-                    <img src={Product.ProductImage} alt="#" class="contain" />
+                    <img src={Product.ProductImages[0]} alt="#" class="contain" />
                     <h4 class="price">
                         <span class="currency">{user ? user.DefaultCoin : Product.PriceCoin}$</span>
                         {user ? <Converter Current={Product.PriceCoin} Value={Product.ProductPrice} Target={user.DefaultCoin} /> : Product.ProductPrice}

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import { EditTags } from "./editTags";
+import { EditImages } from "./editImages";
 
 export function EditProduct(props) {
     let navigate = useNavigate();
@@ -11,32 +12,13 @@ export function EditProduct(props) {
     const [ProductPrice, setProductPrice] = useState();
     const [PriceCoin, setPriceCoin] = useState();
     const [ProductDescription, setProductDescription] = useState();
-    const [UploadImage, setUploadImage] = useState();
-    const [ProductImage, setProductImage] = useState();
-    const [store, setStore] = useState();
+    const [Stock, setStock] = useState();
+    const [Status, setStatus] = useState();
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [currency, setCurrency] = useState();
-    var formData = new FormData();
-    const [dataform, setDataForm] = useState();
-    useEffect(() => {
-        formData.append("upload_preset", "thumbnail"); // Replace the preset name with your own
-        formData.append("api_key", "876895554677544"); // Replace API key with your own Cloudinary key
-        formData.append("timestamp", (Date.now() / 1000) | 0);
-        formData.append("file", UploadImage);
-        setDataForm(formData);
-    }, [UploadImage]);
-    async function Upload() {
-        await axios.post('https://api.cloudinary.com/v1_1/dvticou1l/image/upload', dataform)
-            .then(res => {
-                setProductImage(res.data.url);
-                setSuccess("Imagen cargada correctamente")
-            })
-            .catch(err => setError(err));
-    };
     async function Submit(e) {
         e.preventDefault();
-        console.log(ProductImage);
         if (props.auth) {
             const { token } = props.auth;
             const config = {
@@ -48,12 +30,12 @@ export function EditProduct(props) {
                 config.headers['x-auth-token'] = token;
             }
             const body = {
-                StoreId: `${store._id}`,
                 ProductName,
                 ProductPrice,
                 PriceCoin,
                 ProductDescription,
-                ProductImage
+                Stock,
+                Status
             };
             await axios.put(`/api/product/${id}`, body, config)
                 .then(res => {
@@ -68,19 +50,15 @@ export function EditProduct(props) {
     useEffect(() => {
         const { user } = props.auth;
         if (user) {
-            axios.get(`/api/store/owner/${user._id}`)
-                .then(res => {
-                    setStore(res.data);
-                });
-            axios.get(`/api/product/edit/${id}`)
+            axios.get(`/api/product/${id}`)
                 .then(res => {
                     setProductName(res.data.ProductName);
                     setProductPrice(res.data.ProductPrice);
                     setProductDescription(res.data.ProductDescription);
-                    setProductImage(res.data.ProductImage);
                     setPriceCoin(res.data.PriceCoin);
+                    setStatus(res.data.Status);
                 });
-                axios.get('/api/fixed/currency')
+            axios.get('/api/fixed/currency')
                 .then(res => {
                     setCurrency(res.data);
                 });
@@ -116,35 +94,47 @@ export function EditProduct(props) {
                         <h3 class="mb5">Editar producto</h3>
                         <div class="login-form pt30 pb30" style={{ maxWidth: "100%" }}>
                             <form onSubmit={Submit} className="row">
-                                <div className="col-md-6">
+                                <div className="col-md-4">
+                                    <label>Nombre</label>
                                     <input class="input-text" type="text" placeholder="Nombre del producto" value={ProductName} onChange={e => setProductName(e.target.value)} required />
                                     <p className="help-block text-danger"></p>
+                                </div>
+                                <div className="col-md-4">
+                                <label>Precio</label>
                                     <input class="input-text" type="number" placeholder="Precio" value={ProductPrice} onChange={e => setProductPrice(e.target.value)} required />
                                     <p className="help-block text-danger"></p>
+                                </div>
+                                <div className="col-md-4">
+                                <label>Moneda</label>
                                     <select class="bg-white half-left" type="text" placeholder="Moneda" value={PriceCoin} onChange={e => setPriceCoin(e.target.value)} name="PriceCoin" required>
-                                        <option default value='USD'>Elija la moneda (predeterminado: USD)</option>
                                         {currency ? currency.map((d, i) => (
                                             <option key={i} value={d.CodeName}>{d.Name}</option>
                                         )) : ''}
                                     </select>
                                     <p className="help-block text-danger"></p>
-                                    <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
-                                        onChange={e => setUploadImage(e.target.files[0])} id="imageUpload" title="La imagen cargada toma prioridad" />
-                                    {UploadImage ?
-                                        <button className="btn btn-sm btn-login mb10" type="button" onClick={Upload}>Cargar</button>
-                                        :
-                                        <input className="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={ProductImage}
-                                            onChange={e => setProductImage(e.target.value)} tooltip="La imagen cargada toma prioridad" />}
                                 </div>
                                 <div className="col-md-6">
-                                    <img src={ProductImage} alt="#" class="mb10" />
+                                    <label>Agregar a inventario</label>
+                                    <input class="input-text" type="number" placeholder="Agregar a inventario" value={Stock} onChange={e => setStock(e.target.value)} />
+                                    <p className="help-block text-danger"></p>
+                                </div>
+                                <div className="col-md-6">
+                                    <label>Estado</label>
+                                    <select class="bg-white half-left" type="text" placeholder="Status" value={Status} onChange={e => setStatus(e.target.value)} name="PriceCoin" required>
+                                        <option value='Active'>Activo</option>
+                                        <option value='Paused'>Pausado</option>
+                                        <option value='Removed'>Removido</option>
+                                    </select>
+                                    <p className="help-block text-danger"></p>
                                 </div>
                                 <div className="col-md-12">
+                                <label>Descipcion</label>
                                     <textarea class="input-text bg-white" type="text" placeholder="Descripcion" value={ProductDescription} onChange={e => setProductDescription(e.target.value)} required />
                                     <p className="help-block text-danger"></p>
                                     <input className="btn btn-sm btn-login" type="submit" value="Enviar" />
                                 </div>
                             </form>
+                            <EditImages id={id} />
                             <EditTags id={id} />
                         </div>
                     </div>
