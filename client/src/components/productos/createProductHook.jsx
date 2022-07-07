@@ -11,6 +11,7 @@ export function CreateProduct(props) {
     const [ProductDescription, setProductDescription] = useState();
     const [UploadImage, setUploadImage] = useState();
     const [ProductImage, setProductImage] = useState();
+    const [Stock, setStock] = useState();
     const [tags, setTags] = useState();
     const [store, setStore] = useState();
     const [error, setError] = useState(null);
@@ -53,7 +54,8 @@ export function CreateProduct(props) {
                 PriceCoin,
                 ProductDescription,
                 ProductImage,
-                tags
+                tags,
+                Stock
             };
             await axios.post('/api/product', body, config)
                 .then(res => {
@@ -110,6 +112,8 @@ export function CreateProduct(props) {
                         <div class="login-form pt30 pb30">
                             <form onSubmit={Submit}>
                                 <input class="input-text" type="text" placeholder="Nombre del producto" value={ProductName} onChange={e => setProductName(e.target.value)} required />
+                                <p className="help-block text-danger"></p>
+                                <input class="input-text" type="number" placeholder="Inventario" value={Stock} onChange={e => setStock(e.target.value)} required />
                                 <p className="help-block text-danger"></p>
                                 <input class="input-text" type="number" placeholder="Precio" value={ProductPrice} onChange={e => setProductPrice(e.target.value)} required />
                                 <p className="help-block text-danger"></p>

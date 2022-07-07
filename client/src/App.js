@@ -22,6 +22,7 @@ import EditProduct from './components/productos/editProduct';
 import AllProducts from './components/productos/Allproducts';
 import SingleProduct from './components/productos/singleproduct';
 import Results from './components/results';
+import PaginateProducts from './components/productos/paginateProducts';
 
 export class App extends Component {
   componentDidMount() {
@@ -49,6 +50,7 @@ export class App extends Component {
             <Route path="/product/:id" element={<SingleProduct />} />
             <Route path="/results/search=:search" element={<Results />}/>
             <Route path="/editProduct/:id" element={<EditProduct />} />
+            <Route path="/paginater" element={<PaginateProducts/>} />
           </Routes>
           <Footer />
         </Provider>

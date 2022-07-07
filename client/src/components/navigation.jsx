@@ -33,6 +33,7 @@ export class Navigation extends Component {
       <ul class="nav navbar-nav menu-right">
         <li class="dropdown"><Link className="dropdown-toggle" to="/perfil">Cuenta<i class="fa fa-chevron-down"></i></Link>
           <ul class="dropdown-menu">
+            <li><Link to="/paginater">Paginater</Link></li>
             <li><Link to="#">Carrito de compras</Link></li>
             {ownerLinks}
             <Logout />
@@ -56,6 +57,7 @@ export class Navigation extends Component {
         <li class="dropdown"><Link className="dropdown-toggle" to="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></Link>
           <ul class="dropdown-menu">
             <li><Link to="/register">Registrarse</Link></li>
+            <li><Link to="/paginater">Paginater</Link></li>
           </ul>
         </li>
         <li class="header-divider"></li>
