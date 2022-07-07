@@ -24,7 +24,7 @@ router.post('/', auth, (req, res) => {
                         .catch(err => res.status(400).json('Error: ' + err));
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => res.status(400).json('Error: '+err));
     }
     else {
         return res.status(401).json('No estas autenticado');

@@ -17,7 +17,7 @@ import MyStore from './components/store/myStore';
 import NewAddress from './components/user/direcciones/newAddress';
 import ParamsTest from './components/paramsTest';
 import Footer from './components/footer';
-import Shoppingcart from './components/shoppingcart';
+import ShoppingCart from './components/user/shoppingcart';
 import CreateProduct from './components/productos/createProductHook';
 import EditProduct from './components/productos/editProduct';
 import AllProducts from './components/productos/Allproducts';
@@ -46,7 +46,7 @@ export class App extends Component {
             <Route path="/paramstest/:id" element={<ParamsTest />} />
             <Route path="/paramstest" element={<ParamsTest />} />
             <Route path="/createProduct" element={<CreateProduct />} />
-            <Route path="/shoppingcart" element={<Shoppingcart/>} />
+            <Route path="/shoppingcart" element={<ShoppingCart/>} />
             <Route path="/editProduct/:id" element={<EditProduct />} />
             <Route path="/paginater" element={<PaginateProducts/>} />
           </Routes>
