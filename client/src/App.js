@@ -16,6 +16,7 @@ import MakeStore from './components/store/makeStore';
 import MyStore from './components/store/myStore';
 import NewAddress from './components/user/direcciones/newAddress';
 import ParamsTest from './components/paramsTest';
+import Footer from './components/footer';
 import Shoppingcart from './components/shoppingcart';
 import CreateProduct from './components/productos/createProductHook';
 import EditProduct from './components/productos/editProduct';

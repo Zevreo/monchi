@@ -47,7 +47,7 @@ router.get('/:UserId', async (req, res) => {
                 ProductPrice: prod.ProductPrice,
                 PriceCoin: prod.PriceCoin,
                 Quantity: product.Quantity,
-                ProductImage: prod.ProductImage
+                ProductImages: prod.ProductImages
             }))
             .catch(err => res.status(400).json('Error: ' + err));
     }

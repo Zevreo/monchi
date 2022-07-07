@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Converter from './converter';
+import Converter from './utilities/converter';
 
 export class shoppingcart extends Component {
     static propTypes = {
@@ -78,7 +78,7 @@ export class shoppingcart extends Component {
                             <tr class="cart_item">
                                 <td class="product-thumbnail">
                                     <a href="#">
-                                        <img src={d.ProductImage} alt="#"/>
+                                        <img src={d.ProductImages[0]} alt="#"/>
                                     </a> 
                                     <a href="#"></a>
                                 </td>
@@ -94,7 +94,7 @@ export class shoppingcart extends Component {
                                     </div>
                                 </td>
                                 <td class="product-subtotal">
-                                    <span class="amount">$198</span> 
+                                    <span class="amount">${(d.ProductPrice*d.Quantity)}</span> 
                                 </td>
                                 <td class="product-remove">
                                     <a href="#" class="remove" title="Remove this item">×</a> 
