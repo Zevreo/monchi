@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { useParams } from "react-router";
-import Loader from '../loader';
+import Loader from '../utilities/loader';
 import { Link } from "react-router-dom";
 
 export function MyProducts(props) {
@@ -25,6 +25,7 @@ export function MyProducts(props) {
 
     function getProducts() {
         const { user } = props.auth;
+        const { Store } = props;
         if (user) {
             const config = {
                 headers: {
@@ -34,16 +35,13 @@ export function MyProducts(props) {
                     "order": order
                 }
             }
-            axios.get(`/api/store/owner/${user._id}`)
-                .then(res => {
-                    axios.get(`/api/product/store/${res.data._id}`, config)
-                        .then(prods => {
-                            setProducts(prods.data);
-                            setPage(Number(prods.headers['x-page']));
-                            setLimit(Number(prods.headers['x-limit']));
-                            setCount(Number(prods.headers['x-count']));
-                            setDisable(false);
-                        })
+            axios.get(`/api/product/store/${Store._id}`, config)
+                .then(prods => {
+                    setProducts(prods.data);
+                    setPage(Number(prods.headers['x-page']));
+                    setLimit(Number(prods.headers['x-limit']));
+                    setCount(Number(prods.headers['x-count']));
+                    setDisable(false);
                 });
             setUpdated(true);
         }
@@ -141,11 +139,12 @@ export function MyProducts(props) {
                             {d ?
                                 <Link to={`/product/${d._id}`}>
                                     <div class="item">
-                                        <img src={d.ProductImage} alt="#" class="contain" />
+                                        <img src={d.ProductImages[0]} alt="#" class="contain" />
                                         <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}</h4>
                                         <div class="info hover-bottom">
                                             <h4>{d.ProductName}</h4>
                                             <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
+                                            <Link to={`/editProduct/${d._id}`} class="btn btn-dark btn-sm btn-appear mt20">Editar</Link>
                                         </div>
                                     </div>
                                 </Link>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Logout from "./logout";
+import Logout from "./user/logout";
 import { Link } from "react-router-dom";
 
 export class Navigation extends Component {
@@ -27,6 +27,7 @@ export class Navigation extends Component {
         <li class="dropdown"><Link className="dropdown-toggle" to="/perfil">Cuenta<i class="fa fa-chevron-down"></i></Link>
           <ul class="dropdown-menu">
             <li><Link to="/shoppingcart">Carrito de compras</Link></li>
+            <li><Link to="/paginater">Paginater</Link></li>
             {ownerLinks}
             <Logout />
           </ul>
@@ -48,6 +49,7 @@ export class Navigation extends Component {
         <li class="dropdown"><Link className="dropdown-toggle" to="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></Link>
           <ul class="dropdown-menu">
             <li><Link to="/register">Registrarse</Link></li>
+            <li><Link to="/paginater">Paginater</Link></li>
           </ul>
         </li>
         <li class="header-divider"></li>
