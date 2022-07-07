@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export function MyProducts(props) {
     const [Page, setPage] = useState(1)
-    const [limit, setLimit] = useState(1);
+    const [limit, setLimit] = useState(4);
     const [sort, setSort] = useState("updatedAt");
     const [order, setOrder] = useState(-1)
     const [count, setCount] = useState();
@@ -121,9 +121,9 @@ export function MyProducts(props) {
                     <option value={1}>Ascending</option>
                 </select>
                 <select class="shop-sorting" onChange={(e) => setLimit(e.target.value)} disabled={disable}>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
                     <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="12">12</option>
                 </select>
                 <div class="row" id="errorMessage" style={{ display: 'none' }}>
                     <div class="col-md-4 col-md-offset-4">
@@ -141,6 +141,7 @@ export function MyProducts(props) {
                                     <div class="item">
                                         <img src={d.ProductImages[0]} alt="#" class="contain" />
                                         <h4 class="price"><span class="currency">{d.PriceCoin}$</span>{d.ProductPrice}</h4>
+                                        <h3 class="price pt20"><span class="currency">Stock: </span>{d.Stock}</h3>
                                         <div class="info hover-bottom">
                                             <h4>{d.ProductName}</h4>
                                             <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
@@ -156,16 +157,16 @@ export function MyProducts(props) {
                 </ul>
                 <div class="col-md-12 text-center">
                     <ul class="pagination">
-                        <li>
+                        {Page > 1 ? <li>
                             <a type="button" onClick={(e) => Paginate(1)} hidden={disable}>
                                 <span aria-hidden="true"><i class="ion-chevron-left"></i></span>
                             </a>
-                        </li>
-                        <li>
+                        </li> : ''}
+                        {Page > 1 ? <li>
                             <a type="button" onClick={(e) => Paginate("minus")} aria-label="Previous" hidden={disable}>
                                 <span aria-hidden="true"><i class="ion-ios-arrow-back"></i></span>
                             </a>
-                        </li>
+                        </li> : ''}
                         {Page > 2 ?
                             <li>
                                 <a type="button" onClick={(e) => Paginate(Page - 2)} hidden={disable}>{Page ? Page - 2 : "loading"}</a>
@@ -185,16 +186,18 @@ export function MyProducts(props) {
                             <li>
                                 <a type="button" onClick={(e) => Paginate(Page + 2)} hidden={disable}>{Page ? Page + 2 : "loading"}</a>
                             </li> : ''}
-                        <li>
+                        {Page < maxPage ? <li>
                             <a type="button" onClick={(e) => Paginate("plus")} aria-label="Next" hidden={disable}>
                                 <span aria-hidden="true"><i class="ion-ios-arrow-forward"></i></span>
                             </a>
-                        </li>
-                        <li>
+                        </li> : ''}
+
+                        {Page < maxPage ? <li>
                             <a type="button" onClick={(e) => Paginate(maxPage)} aria-label="Next" hidden={disable}>
                                 <span aria-hidden="true"><i class="ion-chevron-right"></i></span>
                             </a>
-                        </li>
+                        </li> : ''}
+
                     </ul>
                 </div>
             </div>

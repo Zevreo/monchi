@@ -62,7 +62,7 @@ export function CreateProduct(props) {
                     setSuccess('Producto agregado exitosamente');
                     setTimeout(() => {
                         navigate("/myStore");
-                    }, 3000);
+                    }, 1000);
                 })
                 .catch(err => setError(err))
         }
