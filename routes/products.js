@@ -114,7 +114,7 @@ router.put('/removeTag/:id', (req, res) => {
     const tagIndex = req.body.tagIndex;
     Product.findById(req.params.id)
         .then(prod => {
-            prod.Tags.splice(tagIndex);
+            prod.Tags.splice(tagIndex, 1);
             prod.save().then(edited => res.json(edited));
         })
         .catch(err => res.status(400).json('Error: ' + err));
@@ -137,7 +137,7 @@ router.put('/removeImage/:id', async (req, res) => {
     await Product.findById(req.params.id)
         .then(prod => {
             if (prod.ProductImages.length > 1) {
-                prod.ProductImages.splice(imageIndex);
+                prod.ProductImages.splice(imageIndex, 1);
                 prod.save().then(edited => res.json(edited));
             }
             else {
