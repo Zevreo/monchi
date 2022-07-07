@@ -26,14 +26,14 @@ export class Navigation extends Component {
       <ul class="nav navbar-nav menu-right">
         <li class="dropdown"><Link className="dropdown-toggle" to="/perfil">Cuenta<i class="fa fa-chevron-down"></i></Link>
           <ul class="dropdown-menu">
+            <li><Link to="/shoppingcart">Carrito de compras</Link></li>
             <li><Link to="/paginater">Paginater</Link></li>
-            <li><Link to="#">Carrito de compras</Link></li>
             {ownerLinks}
             <Logout />
           </ul>
         </li>
         <li class="header-divider"></li>
-        <li><Link to="#"><span class="ion-ios-cart-outline">{this.state.cart}</span></Link></li>
+        <li><Link to="/shoppingcart"><span class="ion-ios-cart-outline">{this.state.cart}</span></Link></li>
         <li class="header-divider"></li>
         <li style={{ lineHeight: "0px" }}>
           <form action="php/subscribe-mailchimp.php" method="post" id="subscribe-form">

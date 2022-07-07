@@ -13,6 +13,32 @@ export class Allproducts extends Component {
     constructor(props) {
         super(props);
         this.state = { updated: false, products: [null] };
+        this.Submit = this.Submit.bind(this);
+    };
+    Submit = (e)=> {
+        e.preventDefault();
+        const { user } = this.props.auth;
+        const { token } = this.props.auth;
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        if(token){
+            config.headers['x-auth-token'] = token;
+        }
+        if(user){
+            const productCar = {
+                UserId: user._id,
+                ProductId:e.target.ProductId.value,
+                Quantity:1
+                
+            };
+            console.log(productCar);
+            axios.post('/api/cart', productCar, config)
+            .then(res => console.log(res.data));
+        window.location = '/shoppingcart';
+        }
     };
     componentDidMount() {
         if (this.state.updated === false) {
@@ -33,6 +59,7 @@ export class Allproducts extends Component {
                             {this.state.products.map((d, i) => (
                                 <li class="relative col-lg-3 col-md-4 col-sm-6" style={{ padding: '15px' }} key={i}>
                                     {d ?
+                                    <div>
                                         <Link to={`/product/${d._id}`}>
                                             <div class="item">
                                                 <img src={d.ProductImages[0]} alt="#" class="contain" />
@@ -44,8 +71,15 @@ export class Allproducts extends Component {
                                                     <h4>{d.ProductName}</h4>
                                                     <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
                                                 </div>
+                                                
                                             </div>
                                         </Link>
+                                        <form onSubmit={this.Submit}>
+                                        <input type="hidden" value={user._id}  name="UserId"></input>
+                                        <input type="hidden" value={d._id}  name="ProductId"></input>
+                                        <input class="btn btn-dark btn-md" type="submit"  value="Enviar"/>
+                                    </form>
+                                    </div>
                                         :
                                         <li className="relative col-md-12 center-items"><Loader /></li>
                                     }
