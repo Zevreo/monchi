@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import { EditTags } from "./editTags";
 import { EditImages } from "./editImages";
+import { EditOptions } from "./editOptions";
 
 export function EditProduct(props) {
     let navigate = useNavigate();
@@ -138,6 +139,7 @@ export function EditProduct(props) {
                             </form>
                             <EditImages id={id} />
                             <EditTags id={id} />
+                            <EditOptions id={id} />
                         </div>
                     </div>
                 </div>

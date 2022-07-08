@@ -184,11 +184,11 @@ router.get('/options/:id', (req, res) => {
 });
 
 //PUT Options Add
-router.put('/addOptions/:id', (req, res) => {
-    const { OptionName, Options} = req.body;
+router.put('/addOption/:id', (req, res) => {
+    const { OptionName, OptionTypes} = req.body;
     const newOptions = {
         OptionName: OptionName,
-        OptionTypes: Options.split(',')
+        OptionTypes: OptionTypes.split(',')
     }
     Product.findById(req.params.id)
         .then(prod => {
@@ -199,7 +199,7 @@ router.put('/addOptions/:id', (req, res) => {
 });
 
 //PUT Options Remove Single
-router.put('/removeOptionsSingle/:id', (req, res) => {
+router.put('/removeOptionSingle/:id', (req, res) => {
     const { indexParent, indexChild } = req.body;
     console.log(indexParent);
     Product.findById(req.params.id)
@@ -212,7 +212,7 @@ router.put('/removeOptionsSingle/:id', (req, res) => {
 });
 
 //PUT Options Remove Array
-router.put('/removeOptions/:id', (req, res) => {
+router.put('/removeOption/:id', (req, res) => {
     const optionIndex = req.body.optionIndex;
     Product.findById(req.params.id)
         .then(prod => {
