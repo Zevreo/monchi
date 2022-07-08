@@ -92,7 +92,7 @@ export class MakeStore extends Component {
     }
     render() {
         return (
-            <section class="bg-grey-1">
+            <section id="login" class="bg-grey-1">
                 <div class="sign-up-container">
                     <div class="container text-center">
                         <div class="col-md-12">

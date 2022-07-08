@@ -145,6 +145,24 @@ router.post('/', auth, (req, res) => {
     else return res.status(401).json('No tienes permiso para hacer eso');
 });
 
+//POST massive
+router.post('/mass', auth, (request, res) => {
+    for(var req of request.body){
+        console.log(req);
+        const { StoreId, ProductName, ProductPrice, ProductDescription, tags, PriceCoin, Stock } = req;
+        const ProductImage = (req.ProductImage ? req.ProductImage : "../../613b38eaa594d30013a82b27.png");
+        const newProduct = new Product({
+            StoreId, ProductName, ProductPrice,
+            PriceCoin, ProductDescription,
+            ProductImages: [ProductImage],
+            Tags: tags.split(','), Stock, Status: "Active"
+        });
+        newProduct.save()
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+    res.json("Added succesfully");
+});
+
 //PUT Edit base product
 router.put('/:id', auth, (req, res) => {
     if (res.locals.Role == "Owner") {
