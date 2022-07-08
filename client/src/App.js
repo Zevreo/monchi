@@ -17,10 +17,13 @@ import MyStore from './components/store/myStore';
 import NewAddress from './components/user/direcciones/newAddress';
 import ParamsTest from './components/paramsTest';
 import Footer from './components/footer';
+import ShoppingCart from './components/user/shoppingcart';
 import CreateProduct from './components/productos/createProductHook';
 import EditProduct from './components/productos/editProduct';
 import AllProducts from './components/productos/Allproducts';
 import SingleProduct from './components/productos/singleproduct';
+import Results from './components/results';
+import PaginateProducts from './components/productos/paginateProducts';
 
 export class App extends Component {
   componentDidMount() {
@@ -46,7 +49,10 @@ export class App extends Component {
             <Route path="/paramstest" element={<ParamsTest />} />
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/product/:id" element={<SingleProduct />} />
+            <Route path="/results/search=:search" element={<Results />}/>
+            <Route path="/shoppingcart" element={<ShoppingCart/>} />
             <Route path="/editProduct/:id" element={<EditProduct />} />
+            <Route path="/paginater" element={<PaginateProducts/>} />
           </Routes>
           <Footer />
         </Provider>

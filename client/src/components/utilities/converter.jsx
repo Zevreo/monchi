@@ -10,7 +10,10 @@ export function Converter(props) {
             Value: props.Value
         }
         axios.post('/api/fixed/currency/convert', body)
-            .then(res => setValue(res.data.Value))
+            .then(res => {
+                if(props.Multiplier) setValue(Number(res.data.Value)*props.Multiplier);
+                else setValue(Number(res.data.Value));
+            })
             .catch(err => console.log(err));
     });
     return (
