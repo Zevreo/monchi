@@ -30,71 +30,14 @@ router.get('/', async (req, res) => {
 //GET Search name, description, tags
 router.get('/search/:search', async (req, res) => {
     const { search } = req.params;
-    var productsWithTags = [];
-    var prods = [];
-    var tagsToFind = [];
-    var prodFromTags = [];
-    await Product.find({ $or: [{ ProductName: { $regex: new RegExp(search, 'i') } }, { ProductDescription: { $regex: new RegExp(search, 'i') } }] })
-        .then(products => { prods = products })
+
+    await Product.find({ 
+        $or: [{ ProductName: { $regex: new RegExp(search, 'i') } },
+        { ProductDescription: { $regex: new RegExp(search, 'i') } },
+        {Tags:{ $regex:new RegExp(search,'i') } }] 
+    })
+        .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
-    for (var product of prods) {
-        await Tag.find({ ProductId: product.id }).select("Tags -_id")
-            .then(tags => {
-                var productTags = [];
-                for (var tag of tags) {
-                    productTags.push(tag.Tags);
-                }
-                var prod = {
-                    _id: product.id,
-                    StoreId: product.StoreId,
-                    ProductName: product.ProductName,
-                    ProductDescription: product.ProductDescription,
-                    ProductPrice: product.ProductPrice,
-                    PriceCoin: product.PriceCoin,
-                    ProductImage: product.ProductImage,
-                    Tags: productTags,
-                    Modified: product.updatedAt
-                };
-                productsWithTags.push(prod)
-            })
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
-    await Tag.find({ Tags: { $regex: new RegExp(search, 'i') } })
-        .then(tags => { tagsToFind = tags }).catch(err => res.status(400).json('Error: ' + err));
-    if (tagsToFind.length > 0) {
-        for (var tag of tagsToFind) {
-            await Product.findOne({ _id: tag.ProductId })
-                .then(prod => { prodFromTags.push(prod) })
-                .catch(err => res.status(400).json('Error: ' + err));
-        }
-        if (prodFromTags.length > 1) {
-            for (var prod of prodFromTags) {
-                await Tag.find({ ProductId: prod.id }).select("Tags -_id")
-                    .then(tagsX => {
-                        var productTags = [];
-                        for (var tagX of tagsX) {
-                            productTags.push(tagX.Tags);
-                        }
-                        var product = {
-                            _id: prod.id,
-                            StoreId: prod.StoreId,
-                            ProductName: prod.ProductName,
-                            ProductDescription: prod.ProductDescription,
-                            ProductPrice: prod.ProductPrice,
-                            PriceCoin: prod.PriceCoin,
-                            ProductImage: prod.ProductImage,
-                            Tags: productTags,
-                            Modified: prod.updatedAt
-                        };
-                        if (!(productsWithTags.filter(e => e._id === product._id).length > 0)) {
-                            productsWithTags.push(product);
-                        }
-                    })
-                    .catch(err => res.status(400).json('Error: ' + err));
-            }
-        }
-    }
-    res.json(productsWithTags);
 });
 // get by presio
 router.get('/searchbyprice/:search', async (req, res) => {

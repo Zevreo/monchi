@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import Loader from '../utilities/loader';
 import { Link } from "react-router-dom";
 import Converter from "../utilities/converter";
+import Gallery from "./relatedprods";
 
 export function SingleProduct(props) {
     const { user } = props.auth;
@@ -33,7 +34,7 @@ export function SingleProduct(props) {
                         <div class="row">
                             <div class="col-sm-5 mt40 mb40">
                                 <div class=" navigation-thin ">
-                                    <div>{product ? <img src={product.ProductImage} class="img-responsive width100" alt="#" /> : <Loader />}</div>
+                                    <div>{product ? <img src={product.ProductImages} class="img-responsive width100" alt="#" /> : <Loader />}</div>
                                 </div>
                             </div>
                             <div class="col-sm-7 mt40 mb40 product-details">
@@ -66,62 +67,8 @@ export function SingleProduct(props) {
                         </div>
 
                         <div class="pt80 pb20">
-
-                            <ul class="shop-items portfolioContainer columns-4 margin">
-
-                                <li class="shop-item">
-                                    <a href="shop-product.html">
-                                        <div class="item">
-                                            <img src="img/shop/2.jpg" alt="#" />
-                                            <h4 class="price"><span class="currency">$</span>13.99<span class="old-price">20.95</span></h4>
-                                            <div class="info hover-bottom">
-                                                <h4>Script Sweatshirt</h4>
-                                                <p>View Details</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="shop-item">
-                                    <a href="shop-product.html">
-                                        <div class="item">
-                                            <img src="img/shop/3.jpg" alt="#" />
-                                            <h4 class="price"><span class="currency">$</span>16.99<span class="old-price">22.95</span></h4>
-                                            <div class="info hover-bottom">
-                                                <h4>Splatter Tank Top</h4>
-                                                <p>View Details</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="shop-item">
-                                    <a href="shop-product.html">
-                                        <div class="item">
-                                            <img src="img/shop/4.jpg" alt="#" />
-                                            <h4 class="price"><span class="currency">$</span>12.99<span class="old-price">25.95</span></h4>
-                                            <div class="info hover-bottom">
-                                                <h4>Consume T-Shirt</h4>
-                                                <p>View Details</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="shop-item">
-                                    <a href="shop-product.html">
-                                        <div class="item">
-                                            <img src="img/shop/5.jpg" alt="#" />
-                                            <h4 class="price"><span class="currency">$</span>15.99<span class="old-price">27.95</span></h4>
-                                            <div class="info hover-bottom">
-                                                <h4>Script Tank Top</h4>
-                                                <p>View Details</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                            </ul>
+                        { product ? <Gallery precio={product.ProductPrice}/> : "loading" }
+                          
 
                         </div>
 

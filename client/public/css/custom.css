@@ -297,3 +297,7 @@ input[type=number] {
 .bg-img-15 {
     background-image: url(../img/backgrounds/bg-15.jpg);
 }
+
+.carouselimage{
+    width: 35vh;
+}
