@@ -13,6 +13,7 @@ export function EditProduct(props) {
     const [PriceCoin, setPriceCoin] = useState();
     const [ProductDescription, setProductDescription] = useState();
     const [Stock, setStock] = useState();
+    const [CurrentStock, setCurrentStock] = useState();
     const [Status, setStatus] = useState();
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
@@ -57,6 +58,7 @@ export function EditProduct(props) {
                     setProductDescription(res.data.ProductDescription);
                     setPriceCoin(res.data.PriceCoin);
                     setStatus(res.data.Status);
+                    setCurrentStock(res.data.Stock);
                 });
             axios.get('/api/fixed/currency')
                 .then(res => {
@@ -114,7 +116,7 @@ export function EditProduct(props) {
                                     <p className="help-block text-danger"></p>
                                 </div>
                                 <div className="col-md-6">
-                                    <label>Agregar a inventario</label>
+                                    <label>Agregar a inventario (actual: {CurrentStock}) </label>
                                     <input class="input-text" type="number" placeholder="Agregar a inventario" value={Stock} onChange={e => setStock(e.target.value)} />
                                     <p className="help-block text-danger"></p>
                                 </div>
