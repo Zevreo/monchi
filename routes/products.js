@@ -43,11 +43,7 @@ router.get('/search/:search', async (req, res) => {
 router.get('/searchbyprecio/:precio', async (req, res) => {
     const { precio } = req.params;
 
-    await Product.find({ 
-        $or: [{ ProductPrice: { $regex: new RegExp( precio>=(precio-precio*.10), precio=(precio+precio*.10) , 'i') } },
-        { ProductPrice: { $regex: new RegExp(search, 'i') } },
-        {Tags:{ $regex:new RegExp(precio,'i') } }] 
-    })
+    await Product.find({ ProductPrice:precio})
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });

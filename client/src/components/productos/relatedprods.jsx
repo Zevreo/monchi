@@ -44,8 +44,8 @@ export function Gallery (props) {
     const [items] = useState(createItems(5, [setActiveIndex]));
 
     function getProductsByPrice(){
-        const{precioprod}=props;
-        axios.get(`/api/searchbyprecio/${precioprod}`)
+        const{precio}=props;
+        axios.get(`/api/searchbyprecio/${precio}`)
          .then(prod=>setProducts(prod.data));
          console.log(products);
     }
