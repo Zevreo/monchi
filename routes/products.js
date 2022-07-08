@@ -11,8 +11,18 @@ const auth = require('../middleware/auth');
 */
 
 //GET All products with tags
-router.get('/', (req, res) => {
-    Product.find()
+router.get('/', async (req, res) => {
+    const { page = 1, limit = 12, sort = "updatedAt", order = -1 } = req.headers;
+    if (page < 1) page = 1;
+    if (limit < 1) limit = 12;
+    if (sort != "updatedAt" && sort != "ProductPrice") sort = "updatedAt";
+    const count = await Product.find().countDocuments();
+    res.set({
+        'x-page': page, 'x-count': count,
+        'x-limit': limit, 'x-sort': sort
+    })
+    await Product.find().sort({ [sort]: order })
+        .limit(limit * 1).skip((page - 1) * limit)
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -201,7 +211,7 @@ router.put('/:id', auth, (req, res) => {
                 product.ProductPrice = (req.body.ProductPrice ? req.body.ProductPrice : product.ProductPrice);
                 product.PriceCoin = (req.body.PriceCoin ? req.body.PriceCoin : product.PriceCoin);
                 product.ProductDescription = (req.body.ProductDescription ? req.body.ProductDescription : product.ProductDescription);
-                product.Stock = (req.body.Stock ? parseInt(parseInt(product.Stock)+parseInt(req.body.Stock)) : product.Stock);
+                product.Stock = (req.body.Stock ? parseInt(parseInt(product.Stock) + parseInt(req.body.Stock)) : product.Stock);
                 product.Status = (req.body.Status ? req.body.Status : product.Status);
 
                 product.save()
