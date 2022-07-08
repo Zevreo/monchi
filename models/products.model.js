@@ -9,6 +9,12 @@ const Images = new Schema({
     ImageUrl:
         { type: String, default: "../../613b38eaa594d30013a82b27.png" }
 });
+const Options = new Schema({
+    OptionName: 
+    { type: String },
+    OptionTypes:
+    { type: Array }
+})
 const ProductSchema = new Schema({
     StoreId:
         { type: String, required: true },
@@ -27,8 +33,9 @@ const ProductSchema = new Schema({
     Stock:
         { type: Number, required: true },
     Status:
-        { type: String, required: true }
-
+        { type: String, required: true },
+    Options:
+        { type: [Options], required: false }
 }, {
     timestamps: true
 });

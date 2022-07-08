@@ -66,7 +66,6 @@ router.post('/', auth, (req, res) => {
 //POST massive
 router.post('/mass', auth, (request, res) => {
     for(var req of request.body){
-        console.log(req);
         const { StoreId, ProductName, ProductPrice, ProductDescription, tags, PriceCoin, Stock } = req;
         const ProductImage = (req.ProductImage ? req.ProductImage : "../../613b38eaa594d30013a82b27.png");
         const newProduct = new Product({
@@ -173,6 +172,52 @@ router.put('/removeImage/:id', async (req, res) => {
                 prod.save().then(edited => res.json(edited));
             }
 
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//GET Options
+router.get('/options/:id', (req, res) => {
+    Product.findById(req.params.id)
+        .then(prod => res.json(prod.Options))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//PUT Options Add
+router.put('/addOptions/:id', (req, res) => {
+    const { OptionName, Options} = req.body;
+    const newOptions = {
+        OptionName: OptionName,
+        OptionTypes: Options.split(',')
+    }
+    Product.findById(req.params.id)
+        .then(prod => {
+            prod.Options.push(newOptions);
+            prod.save().then(edited => res.json(edited));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//PUT Options Remove Single
+router.put('/removeOptionsSingle/:id', (req, res) => {
+    const { indexParent, indexChild } = req.body;
+    console.log(indexParent);
+    Product.findById(req.params.id)
+        .then(prod => {
+            prodOptions = prod.Options[indexParent];
+            prodOptions.OptionTypes.splice(indexChild, 1);
+            prod.save().then(edited => res.json(edited));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//PUT Options Remove Array
+router.put('/removeOptions/:id', (req, res) => {
+    const optionIndex = req.body.optionIndex;
+    Product.findById(req.params.id)
+        .then(prod => {
+            prod.Options.splice(optionIndex, 1);
+            prod.save().then(edited => res.json(edited));
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
