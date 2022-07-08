@@ -38,7 +38,6 @@ export class App extends Component {
             <Route path="/register" element={<Register />} />
             <Route path="/perfil" element={<Dashboard />} />
             <Route path="/makeStore" element={<MakeStore />} />
-            <Route path="/myStore/page=:page" element={<MyStore />} />
             <Route path="/myStore" element={<MyStore />} />
             <Route path="/newAddress" element={<NewAddress />} />
             <Route path="/paramstest/:id&page=:page&search=:search" element={<ParamsTest />} />
