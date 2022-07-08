@@ -43,6 +43,12 @@ export function Gallery (props) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [items] = useState(createItems(5, [setActiveIndex]));
 
+    function getProductsByPrice(){
+        const{precioprod}=props;
+        axios.get(`/api/searchbyprecio/${precioprod}`)
+         .then(prod=>setProducts(prod.data));
+         console.log(products);
+    }
 
     return [
         <AliceCarousel
