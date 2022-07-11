@@ -54,7 +54,7 @@ export function EditImages(props) {
     }
     return (
         <div id="login" class="bg-grey-1">
-            <h3 class="mb20">Agregar/quitar imagenes</h3>
+            <h3 class="mb20">Gestionar imagenes</h3>
             <form onSubmit={Submit} className="row">
                 <div className="col-md-6">
                     <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"

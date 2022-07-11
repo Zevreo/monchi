@@ -9,7 +9,9 @@ const cartSchema = new Schema({
     Quantity:
     {type: Number, required: true},
     ProductSpecs:
-    {type: Object, required: false}
+    {type: Object, required: false},
+    ProductOptions:
+    {type: Array, required: false}
 }, {
     timestamps: true
 });

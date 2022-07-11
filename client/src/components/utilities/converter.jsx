@@ -11,13 +11,19 @@ export function Converter(props) {
         }
         axios.post('/api/fixed/currency/convert', body)
             .then(res => {
-                if(props.Multiplier) setValue(Number(res.data.Value)*props.Multiplier);
+                if (props.Multiplier) setValue(Number(res.data.Value) * props.Multiplier);
                 else setValue(Number(res.data.Value));
             })
             .catch(err => console.log(err));
-    });
-    return (
-        <>{value !== null ? value : "??"}</>
-    );
+    }, []);
+    if (value !== null) return value;
 };
+export async function ConverterMultiply(Current, Target, Value, Multiplier) {
+    let response = null;
+    const body = { Current, Target, Value }
+    await axios.post('/api/fixed/currency/convert', body)
+        .then(res => response = (Number(res.data.Value) * Multiplier))
+        .catch(err => console.log(err));
+    return response;
+}
 export default Converter;

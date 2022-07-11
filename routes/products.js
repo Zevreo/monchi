@@ -232,10 +232,22 @@ router.put('/addOption/:id', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//PUT Options Add to parent
+router.put('/addToParent/:id', (req, res) => {
+    const { indexParent, newChild } = req.body;
+    Product.findById(req.params.id)
+        .then(prod => {
+            prodOptions = prod.Options[indexParent];
+            prodOptions.OptionTypes.push(newChild);
+            prod.save().then(edited => res.json(edited));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+})
+
 //PUT Options Remove Single
 router.put('/removeOptionSingle/:id', (req, res) => {
     const { indexParent, indexChild } = req.body;
-    console.log(indexParent);
+    console.log(indexParent, indexChild);
     Product.findById(req.params.id)
         .then(prod => {
             prodOptions = prod.Options[indexParent];
