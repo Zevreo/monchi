@@ -27,6 +27,27 @@ router.get('/', async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//GET Search name, description, tags
+router.get('/search/:search', async (req, res) => {
+    const { search } = req.params;
+
+    await Product.find({ 
+        $or: [{ ProductName: { $regex: new RegExp(search, 'i') } },
+        { ProductDescription: { $regex: new RegExp(search, 'i') } },
+        {Tags:{ $regex:new RegExp(search,'i') } }] 
+    })
+        .then(products => res.json(products))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+// get by presio
+router.get('/searchbyprecio/:precio', async (req, res) => {
+    const { precio } = req.params;
+
+    await Product.find({ ProductPrice:precio})
+        .then(products => res.json(products))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 //GET All ByStore
 router.get('/store/:StoreId', async (req, res) => {
     const StoreId = req.params.StoreId;

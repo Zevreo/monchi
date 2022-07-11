@@ -45,7 +45,7 @@ export class PaginateProducts extends Component {
               <div className="align-self-center">
                 <Pagination
                   totalRecords={totalProducts}
-                  pageLimit={4}
+                  pageLimit={20}
                   pageNeighbours={2}
                   onPageChanged={this.onPageChanged}
                 />
