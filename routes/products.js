@@ -27,6 +27,27 @@ router.get('/', async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//GET Search name, description, tags
+router.get('/search/:search', async (req, res) => {
+    const { search } = req.params;
+
+    await Product.find({ 
+        $or: [{ ProductName: { $regex: new RegExp(search, 'i') } },
+        { ProductDescription: { $regex: new RegExp(search, 'i') } },
+        {Tags:{ $regex:new RegExp(search,'i') } }] 
+    })
+        .then(products => res.json(products))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+// get by presio
+router.get('/searchbyprecio/:precio', async (req, res) => {
+    const { precio } = req.params;
+
+    await Product.find({ ProductPrice:precio})
+        .then(products => res.json(products))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 //GET All ByStore
 router.get('/store/:StoreId', async (req, res) => {
     const StoreId = req.params.StoreId;
@@ -61,24 +82,6 @@ router.post('/', auth, (req, res) => {
             .catch(err => res.status(400).json('Error: ' + err));
     }
     else return res.status(401).json('No tienes permiso para hacer eso');
-});
-
-//POST massive
-router.post('/mass', auth, (request, res) => {
-    for(var req of request.body){
-        console.log(req);
-        const { StoreId, ProductName, ProductPrice, ProductDescription, tags, PriceCoin, Stock } = req;
-        const ProductImage = (req.ProductImage ? req.ProductImage : "../../613b38eaa594d30013a82b27.png");
-        const newProduct = new Product({
-            StoreId, ProductName, ProductPrice,
-            PriceCoin, ProductDescription,
-            ProductImages: [ProductImage],
-            Tags: tags.split(','), Stock, Status: "Active"
-        });
-        newProduct.save()
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
-    res.json("Added succesfully");
 });
 
 //PUT Edit base product
