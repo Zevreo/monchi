@@ -30,20 +30,33 @@ router.get('/', async (req, res) => {
 //GET Search name, description, tags
 router.get('/search/:search', async (req, res) => {
     const { search } = req.params;
-
-    await Product.find({ 
+    const { page = 1, limit = 12, sort = "updatedAt", order = -1 } = req.headers;
+    if (page < 1) page = 1;
+    if (limit < 1) limit = 12;
+    if (sort != "updatedAt" && sort != "ProductPrice") sort = "updatedAt";
+    const count = await Product.find({
         $or: [{ ProductName: { $regex: new RegExp(search, 'i') } },
         { ProductDescription: { $regex: new RegExp(search, 'i') } },
-        {Tags:{ $regex:new RegExp(search,'i') } }] 
+        { Tags: { $regex: new RegExp(search, 'i') } }]
+    }).countDocuments();
+    res.set({
+        'x-page': page, 'x-count': count,
+        'x-limit': limit, 'x-sort': sort
     })
+    await Product.find({
+        $or: [{ ProductName: { $regex: new RegExp(search, 'i') } },
+        { ProductDescription: { $regex: new RegExp(search, 'i') } },
+        { Tags: { $regex: new RegExp(search, 'i') } }]
+    }).sort({ [sort]: order }).limit(limit * 1).skip((page - 1) * limit)
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-// get by presio
+
+// GET Related Products by Price
 router.get('/searchbyprecio/:precio', async (req, res) => {
     const { precio } = req.params;
 
-    await Product.find({ ProductPrice:precio})
+    await Product.find({ ProductPrice: precio })
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -86,7 +99,7 @@ router.post('/', auth, (req, res) => {
 
 //POST massive
 router.post('/mass', auth, (request, res) => {
-    for(var req of request.body){
+    for (var req of request.body) {
         const { StoreId, ProductName, ProductPrice, ProductDescription, tags, PriceCoin, Stock } = req;
         const ProductImage = (req.ProductImage ? req.ProductImage : "../../613b38eaa594d30013a82b27.png");
         const newProduct = new Product({
@@ -206,7 +219,7 @@ router.get('/options/:id', (req, res) => {
 
 //PUT Options Add
 router.put('/addOption/:id', (req, res) => {
-    const { OptionName, OptionTypes} = req.body;
+    const { OptionName, OptionTypes } = req.body;
     const newOptions = {
         OptionName: OptionName,
         OptionTypes: OptionTypes.split(',')
