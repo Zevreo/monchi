@@ -43,7 +43,17 @@ router.get('/search/:search', async (req, res) => {
 router.get('/searchbyprecio/:precio', async (req, res) => {
     const { precio } = req.params;
 
-    await Product.find({ ProductPrice:precio})
+    await Product.find({$or:[
+        {$and:[
+            {ProductPrice:{$lte:parseInt(precio)*1.10}},
+            {ProductPrice:{$gt:precio}}
+        ]},
+        {$and:[
+            {ProductPrice:{$gte:parseInt(precio)*.90}},
+            {ProductPrice:{$lt:precio}}
+        ]},
+        {ProductPrice:{$eq:precio}}
+    ] }) 
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });
