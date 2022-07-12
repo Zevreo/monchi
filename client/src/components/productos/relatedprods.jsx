@@ -7,54 +7,53 @@ import { Link } from "react-router-dom";
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
-
+const handleOnDragStart = e => e.preventDefault();
 
 const responsive = {
     0: { items: 1 },
     568: { items: 2 },
     1024: { items: 3 }
 };
-const handleOnDragStart = e => e.preventDefault();
 
 export function Gallery(props) {
-    const [products, setProducts] = useState(null);
-    const [pusheado, setPusheado] = useState(false);
+    const [products, setProducts] = useState([]);
+    let pusheado=false;
     
-    
-
+    console.log(products)
     async function getProductsByPrice() {
         const { precio } = props;
         await axios.get(`/api/product/searchbyprecio/${precio}`)
-            .then(prod => setProducts(prod.data));
+            .then(prod => {
+                setProducts(prod.data);
+               })
+            .catch(err => console.error(err));
     }
 
     useEffect(() => {
-        if(pusheado===false){
+        if(pusheado==false){
+            pusheado=true;
             getProductsByPrice();
-            setPusheado(true)
         }
         
     }, [])
+    
+    return (
+        <div>
+            <AliceCarousel
+                mouseTracking
+                // disableDotsControls
+                // disableButtonsControls
+                // activeIndex={activeIndex}
+                responsive={responsive}
+                mouseDragEnabled
+            >
+                {products? products.map((d,i)=>
+                <img src={d.ProductImages[0]} className="contain"  onDragStart={handleOnDragStart} ></img>
+                ):"webos"}
 
-    return [
-       <div>
-         <AliceCarousel
-            mouseTracking
-            // disableDotsControls
-            // disableButtonsControls
-            // activeIndex={activeIndex}
-            responsive={responsive}
-        >
-            {products? products.map((d,i) =>
-            <div>
-                
-                 <img src={d.ProductImages[0]} alt="#" class="contain" onDragStart={handleOnDragStart}/>
-                
-            </div>):"loading"}
-        </AliceCarousel>
-
-       </div>
-    ];
+            </AliceCarousel>
+       </div>   
+    );
 }
 
 const mapStateToProps = (state) => ({
