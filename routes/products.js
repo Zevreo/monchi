@@ -30,16 +30,29 @@ router.get('/', async (req, res) => {
 //GET Search name, description, tags
 router.get('/search/:search', async (req, res) => {
     const { search } = req.params;
-
-    await Product.find({ 
+    const { page = 1, limit = 12, sort = "updatedAt", order = -1 } = req.headers;
+    if (page < 1) page = 1;
+    if (limit < 1) limit = 12;
+    if (sort != "updatedAt" && sort != "ProductPrice") sort = "updatedAt";
+    const count = await Product.find({
         $or: [{ ProductName: { $regex: new RegExp(search, 'i') } },
         { ProductDescription: { $regex: new RegExp(search, 'i') } },
-        {Tags:{ $regex:new RegExp(search,'i') } }] 
+        { Tags: { $regex: new RegExp(search, 'i') } }]
+    }).countDocuments();
+    res.set({
+        'x-page': page, 'x-count': count,
+        'x-limit': limit, 'x-sort': sort
     })
+    await Product.find({
+        $or: [{ ProductName: { $regex: new RegExp(search, 'i') } },
+        { ProductDescription: { $regex: new RegExp(search, 'i') } },
+        { Tags: { $regex: new RegExp(search, 'i') } }]
+    }).sort({ [sort]: order }).limit(limit * 1).skip((page - 1) * limit)
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-// get by presio
+
+// GET Related Products by Price
 router.get('/searchbyprecio/:precio', async (req, res) => {
     const { precio } = req.params;
     await Product.find({$or:[
@@ -91,6 +104,23 @@ router.post('/', auth, (req, res) => {
             .catch(err => res.status(400).json('Error: ' + err));
     }
     else return res.status(401).json('No tienes permiso para hacer eso');
+});
+
+//POST massive
+router.post('/mass', auth, (request, res) => {
+    for (var req of request.body) {
+        const { StoreId, ProductName, ProductPrice, ProductDescription, tags, PriceCoin, Stock } = req;
+        const ProductImage = (req.ProductImage ? req.ProductImage : "../../613b38eaa594d30013a82b27.png");
+        const newProduct = new Product({
+            StoreId, ProductName, ProductPrice,
+            PriceCoin, ProductDescription,
+            ProductImages: [ProductImage],
+            Tags: tags.split(','), Stock, Status: "Active"
+        });
+        newProduct.save()
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+    res.json("Added succesfully");
 });
 
 //PUT Edit base product
@@ -185,6 +215,64 @@ router.put('/removeImage/:id', async (req, res) => {
                 prod.save().then(edited => res.json(edited));
             }
 
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//GET Options
+router.get('/options/:id', (req, res) => {
+    Product.findById(req.params.id)
+        .then(prod => res.json(prod.Options))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//PUT Options Add
+router.put('/addOption/:id', (req, res) => {
+    const { OptionName, OptionTypes } = req.body;
+    const newOptions = {
+        OptionName: OptionName,
+        OptionTypes: OptionTypes.split(',')
+    }
+    Product.findById(req.params.id)
+        .then(prod => {
+            prod.Options.push(newOptions);
+            prod.save().then(edited => res.json(edited));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//PUT Options Add to parent
+router.put('/addToParent/:id', (req, res) => {
+    const { indexParent, newChild } = req.body;
+    Product.findById(req.params.id)
+        .then(prod => {
+            prodOptions = prod.Options[indexParent];
+            prodOptions.OptionTypes.push(newChild);
+            prod.save().then(edited => res.json(edited));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+})
+
+//PUT Options Remove Single
+router.put('/removeOptionSingle/:id', (req, res) => {
+    const { indexParent, indexChild } = req.body;
+    console.log(indexParent, indexChild);
+    Product.findById(req.params.id)
+        .then(prod => {
+            prodOptions = prod.Options[indexParent];
+            prodOptions.OptionTypes.splice(indexChild, 1);
+            prod.save().then(edited => res.json(edited));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//PUT Options Remove Array
+router.put('/removeOption/:id', (req, res) => {
+    const optionIndex = req.body.optionIndex;
+    Product.findById(req.params.id)
+        .then(prod => {
+            prod.Options.splice(optionIndex, 1);
+            prod.save().then(edited => res.json(edited));
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
