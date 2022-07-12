@@ -14,58 +14,14 @@ const responsive = {
     568: { items: 2 },
     1024: { items: 3 }
 };
-
-const createItems = (length, [handleClick],products) => {
-
-
-    return Array.from({ length }).map((item, i) => (
-        <div
-            className="item"
-
-        >
-            <div>
-            {products? products.map((d,i)=>
-                        <img src={d.ProductImages[0]} class="carouselimage" alt="a"/>
-
-            ):"loading"}
-
-            </div>
-            
-        </div>
-    ));
-};
+const handleOnDragStart = e => e.preventDefault();
 
 export function Gallery(props) {
     const [products, setProducts] = useState(null);
-        const [activeIndex, setActiveIndex] = useState(0);
-        const items = items = useState(createItems(products.length, [setActiveIndex],products));
-   
-    if (Array.isArray(products) && products.length > 0) {
-       
-        // items.push(
+    const [pusheado, setPusheado] = useState(false);
+    
+    
 
-        // <div>
-        //     |
-        //     {products ? products.map((d, i) =>
-
-        //         <div class="item">
-        //             <img src={d.ProductImages[0]} class="contain" alt="a" />
-        //         </div>
-
-
-        //     ) : "Loading"}
-
-        //     <p>
-        //         {products ? products.length : 0}
-        //     </p>
-        // </div>
-        // )
-    }
-
-
-
-
-    console.log(products)
     async function getProductsByPrice() {
         const { precio } = props;
         await axios.get(`/api/product/searchbyprecio/${precio}`)
@@ -73,19 +29,31 @@ export function Gallery(props) {
     }
 
     useEffect(() => {
-        getProductsByPrice();
+        if(pusheado===false){
+            getProductsByPrice();
+            setPusheado(true)
+        }
+        
     }, [])
 
     return [
-        <AliceCarousel
+       <div>
+         <AliceCarousel
             mouseTracking
             // disableDotsControls
             // disableButtonsControls
-            items={items}
             // activeIndex={activeIndex}
             responsive={responsive}
-        />,
+        >
+            {products? products.map((d,i) =>
+            <div>
+                
+                 <img src={d.ProductImages[0]} alt="#" class="contain" onDragStart={handleOnDragStart}/>
+                
+            </div>):"loading"}
+        </AliceCarousel>
 
+       </div>
     ];
 }
 

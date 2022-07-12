@@ -42,7 +42,6 @@ router.get('/search/:search', async (req, res) => {
 // get by presio
 router.get('/searchbyprecio/:precio', async (req, res) => {
     const { precio } = req.params;
-
     await Product.find({$or:[
         {$and:[
             {ProductPrice:{$lte:parseInt(precio)*1.10}},
