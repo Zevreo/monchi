@@ -67,7 +67,7 @@ export function SingleProduct(props) {
                         </div>
 
                         <div class="pt80 pb20">
-                        { product ? <Gallery precio={product.ProductPrice}/> : "loading" }
+                        { product ? <Gallery precio={product.ProductPrice}/> : <Loader/>}
                           
 
                         </div>

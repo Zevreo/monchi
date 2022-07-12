@@ -31,7 +31,7 @@ export function Results(props) {
                                 {d ?
                                     <Link to={`/product/${d._id}`}>
                                         <div class="item">
-                                            <img src={d.ProductImages} alt="#" class="contain" />
+                                            <img src={d.ProductImages[0]} alt="#" class="contain" />
                                             <h4 class="price">
                                                 <span class="currency">{user ? user.DefaultCoin : d.PriceCoin}$</span>
                                                 {user ? <Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} /> : d.ProductPrice}
