@@ -1,12 +1,5 @@
 /*--- PLACE YOUR CUSTOM STYLES HERE ---*/
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
 section {
     background-position: center 0%;
 	background-size: cover;
@@ -98,11 +91,8 @@ section {
     }
 }
 
-
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
+.carouselimage{
+    width: 35vh;
 }
 
 /*--- Background Images ---*/
@@ -296,8 +286,4 @@ input[type=number] {
 
 .bg-img-15 {
     background-image: url(../img/backgrounds/bg-15.jpg);
-}
-
-.carouselimage{
-    width: 35vh;
 }

@@ -1,17 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import axios from 'axios';
-import Converter from '../utilities/converter';
+import { Converter, ConverterMultiply } from '../utilities/converter';
 import { Link } from "react-router-dom";
 
 export function ShoppingCart(props) {
+    const { user } = props.auth;
     const [Products, setProducts] = useState([]);
+    const [Total, setTotal] = useState(0);
+
     useEffect(() => {
-        const { user } = props.auth;
+        GetCart();
+    }, []);
+
+    function GetCart() {
         axios.get(`/api/cart/${user._id}`)
             .then(prod => setProducts(prod.data));
-    }, []);
-    const { user } = props.auth;
+    }
+
+    async function QtyChange(cart, qty) {
+        let body = { Quantity: qty }
+        axios.patch(`/api/cart/quantity/${cart}`, body)
+            .then(() => GetCart())
+    }
+
+    function RemoveItem(cart) {
+        axios.delete(`/api/cart/${cart}`)
+            .then(() => GetCart());
+    }
+
+    useEffect(() => {
+        CalcTotal();
+    }, [Products]);
+
+    async function CalcTotal() {
+        let conv = 0;
+        let Subtotal = 0;
+        setTotal(0);
+        for (var prod of Products) {
+            conv = await ConverterMultiply(prod.PriceCoin, user.DefaultCoin, prod.ProductPrice, prod.Quantity);
+            Subtotal = Subtotal + conv;
+        }
+        setTotal(Subtotal);
+    }
+
     return (
         <section class="cart pt60 pb60">
             <div class="container">
@@ -21,10 +53,11 @@ export function ShoppingCart(props) {
                         <table class="shop_table cart" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th class="product-thumbnail">Item</th>
-                                    <th class="product-name">Description</th>
-                                    <th class="product-price">Unit Price</th>
-                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-thumbnail">Producto</th>
+                                    <th class="product-name pr10">Nombre</th>
+                                    <th class="product-name pr10">Opciones</th>
+                                    <th class="product-price pr10">Precio</th>
+                                    <th class="product-quantity">Cantidad</th>
                                     <th class="product-subtotal">Subtotal</th>
                                     <th class="product-remove">&nbsp;</th>
                                 </tr>
@@ -37,22 +70,25 @@ export function ShoppingCart(props) {
                                                 <img src={d.ProductImages[0]} alt="#" />
                                             </Link>
                                         </td>
-                                        <td class="product-name">
+                                        <td class="product-name pr10">
                                             <Link to="#">{d.ProductName}</Link>
                                         </td>
-                                        <td class="product-price">
+                                        <td class="product-name pr10">
+                                            {d.CartOptions}
+                                        </td>
+                                        <td class="product-price pr10">
                                             <span class="amount">{user.DefaultCoin}${<Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} />}</span>
                                         </td>
                                         <td class="product-quantity">
                                             <div class="quantity">
-                                                <input type="number" step="1" name="cart-qty" value={d.Quantity} class="qty" size="4" />
+                                                <input type="number" step="1" min="1" title="Qty" class="input-text qty text" size="4" name="cart-qty" value={d.Quantity} onChange={e => QtyChange(d.CartId, e.target.value)} />
                                             </div>
                                         </td>
                                         <td class="product-subtotal">
                                             <span class="amount">{user.DefaultCoin}${<Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} Multiplier={d.Quantity} />}</span>
                                         </td>
                                         <td class="product-remove">
-                                            <a href="#" class="remove" title="Remove this item">×</a>
+                                            <button type="button" onClick={e => RemoveItem(d.CartId)} class="remove btn shadow-none" title="Remove this item">×</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -66,7 +102,7 @@ export function ShoppingCart(props) {
                                 <tbody>
                                     <tr class="cart-subtotal">
                                         <th>Subtotal</th>
-                                        <td><span class="amount">$131</span></td>
+                                        <td><span class="amount">{user.DefaultCoin}${Total}</span></td>
                                     </tr>
                                     <tr class="shipping">
                                         <th>Shipping</th>
@@ -74,7 +110,7 @@ export function ShoppingCart(props) {
                                     </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
-                                        <td><strong><span class="amount">$131</span></strong> </td>
+                                        <td><strong><span class="amount">{user.DefaultCoin}${Total}</span></strong> </td>
                                     </tr>
                                 </tbody>
                             </table>
