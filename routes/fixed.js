@@ -45,4 +45,11 @@ router.post('/currency/convert', async (req, res) => {
     res.json({ Target, Value: output.toFixed(2) });
 });
 
+//GET All Country
+router.get('/country', (req, res) => {
+    Country.find().sort('Uses')
+        .then(countries => res.json(countries))
+        .catch(err => res.status(400).json('Error: ' + err));;
+});
+
 module.exports = router;
