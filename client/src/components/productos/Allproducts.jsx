@@ -103,7 +103,7 @@ export function Allproducts(props) {
                                                 <h4>{d.ProductName}</h4>
                                                 <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
                                                 {user && d.Options.length<1 ?
-                                                    <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
+                                                    <button className="btn btn-grey1 btn-sm" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
                                                     : <p>Ver para elegir opciones</p>}
                                             </div>
                                         </div>
