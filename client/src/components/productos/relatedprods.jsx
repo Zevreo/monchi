@@ -54,10 +54,12 @@ export function Gallery(props) {
                 class="shop-items portfolioContainer col-md-12 height-auto margin row"
                 style={{ padding: "15px" }}
               >
+                <a href={`/product/${d._id}`}>
                 <img
                     src={d.ProductImages[0]}
                     className="contain"
                   />
+                </a>
                   <h4 class="price">
                     <span class="currency">
                       {user ? user.DefaultCoin : d.PriceCoin}$
