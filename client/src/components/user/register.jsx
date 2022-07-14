@@ -95,7 +95,7 @@ export class Registro extends Component {
 
             axios.get('/api/fixed/country')
                 .then(res => {
-                    this.setState({Country: res.data});
+                    this.setState({Countries: res.data});
                     this.setState({Updated: true});
                 }); 
         }
@@ -123,10 +123,10 @@ export class Registro extends Component {
                                         <p className="help-block text-danger"></p>
                                         <input class="bg-white" type="date" placeholder="Fecha de nacimiento" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
                                         <p className="help-block text-danger"></p>
-                                        <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
+                                        <select class="bg-white" type="text" value={this.state.Countries} onChange={this.onChangeCountry} required>
                                         
-                                                 { this.state.Updated===true ? this.state.Country.map((d, i) => (
-                                                <option key={i} value={d.CodeName}>{d.Name}</option>
+                                                 { this.state.Updated===true ? this.state.Countries.map((d, i) => (
+                                                <option key={i} value={d.CountryName}>{d.countryName}</option>
                                             )) : ''}
                                         
                                                                                 
