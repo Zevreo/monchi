@@ -66,12 +66,12 @@ export function ShoppingCart(props) {
                                 {Products.map((d, i) => (
                                     <tr class="cart_item">
                                         <td class="product-thumbnail">
-                                            <Link to="#">
+                                            <Link to={`/product/${d.ProductId}`}>
                                                 <img src={d.ProductImages[0]} alt="#" />
                                             </Link>
                                         </td>
                                         <td class="product-name pr10">
-                                            <Link to="#">{d.ProductName}</Link>
+                                            <Link to={`/product/${d.ProductId}`}>{d.ProductName}</Link>
                                         </td>
                                         <td class="product-name pr10">
                                             {d.CartOptions}
