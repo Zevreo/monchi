@@ -6,8 +6,6 @@ const orderProductsSchema = new Schema({
     {type: String, required: true},
     Quantity:
     {type: Number, required: true},
-    ProductSpecs:
-    {type: Object, required: false},
     ProductOptions:
     {type: Array, required: false},
     SaleCoin:
@@ -28,7 +26,11 @@ const orderSchema = new Schema({
     PaymentMethod:
     {type: String, required: true},
     PaymentSuccess:
-    {type: Boolean}
+    {type: Boolean},
+    TransactionId:
+    {type: String, required: true},
+    BuyerId:
+    {type: String, required: true}
 }, {
     timestamps: true
 });
