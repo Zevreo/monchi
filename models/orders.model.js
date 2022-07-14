@@ -4,9 +4,15 @@ const Schema = mongoose.Schema;
 const orderProductsSchema = new Schema({
     ProductId:
     {type: String, required: true},
-    SalePrice:
+    Quantity:
     {type: Number, required: true},
+    ProductSpecs:
+    {type: Object, required: false},
+    ProductOptions:
+    {type: Array, required: false},
     SaleCoin:
+    {type: String, required: true},
+    ProductPrice:
     {type: Number, required: true}
 });
 
