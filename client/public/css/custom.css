@@ -1,12 +1,5 @@
 /*--- PLACE YOUR CUSTOM STYLES HERE ---*/
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
 section {
     background-position: center 0%;
 	background-size: cover;
@@ -65,7 +58,7 @@ section {
     object-fit: cover;
     width: 100%;
     max-width: 690px;
-    height: auto;
+    min-height: 517px;
     max-height: 517px;
 }
 
@@ -74,7 +67,7 @@ section {
         object-fit: cover;
         width: 100%;
         max-width: 330px;
-        height: auto;
+        min-height: 247px;
         max-height: 247px;
     }
 }
@@ -84,7 +77,7 @@ section {
         object-fit: cover;
         width: 100%;
         max-width: 283px;
-        height: auto;
+        min-height: 212px;
         max-height: 212px;
     }
 }
@@ -93,16 +86,13 @@ section {
         object-fit: cover;
         width: 100%;
         max-width: 260px;
-        height: auto;
+        min-height: 195px;
         max-height: 195px;
     }
 }
 
-
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
+.carouselimage{
+    width: 35vh;
 }
 
 /*--- Background Images ---*/

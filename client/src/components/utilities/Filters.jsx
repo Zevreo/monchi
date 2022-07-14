@@ -1,0 +1,22 @@
+import React from "react";
+
+export function Filters(props) {
+    return (
+        <>
+            <select class="shop-sorting" onChange={(e) => props.setSort(e.target.value)} disabled={props.disable}>
+                <option value="updatedAt">Date</option>
+                <option value="ProductPrice">Price</option>
+            </select>
+            <select class="shop-sorting" onChange={(e) => props.setOrder(e.target.value)} disabled={props.disable}>
+                <option value={-1}>Descending</option>
+                <option value={1}>Ascending</option>
+            </select>
+            <select class="shop-sorting" onChange={(e) => props.setLimit(e.target.value)} disabled={props.disable}>
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="48">48</option>
+            </select>
+        </>
+    )
+}
+export default Filters;

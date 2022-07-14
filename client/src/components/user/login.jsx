@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import { login } from '../actions/authActions';
-import { clearErrors } from '../actions/errorActions';
+import { login } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 

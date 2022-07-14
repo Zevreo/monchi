@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import axios from 'axios';
-import Converter from '../utilities/converter';
+import Converter from './utilities/converter';
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import { useNavigate } from "react-router";
-import Pagination from "../utilities/Pagination";
-import Filters from "../utilities/Filters";
+import Pagination from "./utilities/Pagination";
+import Filters from "./utilities/Filters";
 
-export function Allproducts(props) {
+export function Results(props) {
+    const { user } = props.auth;
+    let { search } = useParams();
     const navigate = useNavigate();
     const [Products, setProducts] = useState([]);
     const [Page, setPage] = useState(1)
@@ -17,6 +20,26 @@ export function Allproducts(props) {
     const [count, setCount] = useState();
     const [maxPage, setMax] = useState(1);
     const [disable, setDisable] = useState(false);
+    const [Search, setSearch] = useState(search);
+
+    function GetResults() {
+        const config = {
+            headers: {
+                "page": Page,
+                "limit": limit,
+                "sort": sort,
+                "order": order
+            }
+        }
+        axios.get(`/api/product/search/${Search}`, config)
+            .then(prods => {
+                setProducts(prods.data);
+                setPage(Number(prods.headers['x-page']));
+                setLimit(Number(prods.headers['x-limit']));
+                setCount(Number(prods.headers['x-count']));
+                setDisable(false);
+            });
+    }
 
     async function AddCart(e) {
         const { user } = props.auth;
@@ -41,37 +64,18 @@ export function Allproducts(props) {
         }
     };
 
-    function getProducts() {
-        const config = {
-            headers: {
-                "page": Page,
-                "limit": limit,
-                "sort": sort,
-                "order": order
-            }
-        }
-        axios.get(`/api/product`, config)
-            .then(prods => {
-                setProducts(prods.data);
-                setPage(Number(prods.headers['x-page']));
-                setLimit(Number(prods.headers['x-limit']));
-                setCount(Number(prods.headers['x-count']));
-                setDisable(false);
-            });
-    }
+    useEffect(() =>{
+        GetResults();
+    }, [Search, Page]);
 
     useEffect(() => {
         setMax(Math.ceil(count / limit));
     }, [Products]);
 
     useEffect(() => {
-        getProducts();
-    }, [Page]);
-
-    useEffect(() => {
         setDisable(true);
         if (Page === 1) {
-            getProducts();
+            GetResults();
         }
         else {
             setPage(1);
@@ -80,7 +84,6 @@ export function Allproducts(props) {
 
     let floor = ((limit * (Page - 1)) + 1);
     let ceil = (limit * Page) > count ? count : (limit * Page);
-    const { user } = props.auth;
 
     return (
         <section class="shop bg-grey-1">
@@ -102,9 +105,9 @@ export function Allproducts(props) {
                                             <div class="info hover-bottom">
                                                 <h4>{d.ProductName}</h4>
                                                 <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
-                                                {user && d.Options.length<1 ?
+                                                {user ?
                                                     <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
-                                                    : <p>Ver para elegir opciones</p>}
+                                                    : ''}
                                             </div>
                                         </div>
                                     </Link>
@@ -123,4 +126,4 @@ export function Allproducts(props) {
 const mapStateToProps = (state) => ({
     auth: state.auth
 })
-export default connect(mapStateToProps, null)(Allproducts);
+export default connect(mapStateToProps, null)(Results);
