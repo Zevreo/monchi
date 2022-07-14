@@ -42,7 +42,8 @@ router.post('/currency/convert', async (req, res) => {
         .then(res => { inputTarget = res.USD })
         .catch(err => res.status(400).json('Error: ' + err));
     const output = (Value * inputTarget) / inputCurrent;
-    res.json({ Target, Value: output.toFixed(2) });
+    if(Target == "JPY") res.json({ Target, Value: output.toFixed(0) });
+    else res.json({ Target, Value: output.toFixed(2) });
 });
 
 module.exports = router;
