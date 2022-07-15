@@ -42,7 +42,8 @@ export function ShoppingCart(props) {
             conv = await ConverterMultiply(prod.PriceCoin, user.DefaultCoin, prod.ProductPrice, prod.Quantity);
             Subtotal = Subtotal + conv;
         }
-        setTotal(Subtotal);
+        if (user.DefaultCoin == "JPY") setTotal(Subtotal.toFixed(0));
+        else setTotal(Subtotal.toFixed(2));
     }
 
     return (
@@ -115,7 +116,7 @@ export function ShoppingCart(props) {
                                     </tr>
                                 </tbody>
                             </table>
-                            <Paypal user={user} Total={Total}/>
+                            <Paypal user={user} Total={Total} />
                         </div>
                         <a href="shop-4columns.html" class="highlight mt20">Continue Shopping</a>
                     </div>

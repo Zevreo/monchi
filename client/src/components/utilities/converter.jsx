@@ -15,7 +15,7 @@ export function Converter(props) {
                 else setValue(Number(res.data.Value));
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [props.Current, props.Target, props.Value, props.Multiplier]);
     if (value !== null) return value;
 };
 export async function ConverterMultiply(Current, Target, Value, Multiplier) {
