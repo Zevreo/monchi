@@ -16,7 +16,8 @@ export class Registro extends Component {
             PhoneNumber: '',
             DefaultCoin: '',
             Updated: false,
-            Currency: null
+            Currency: [],
+            Countries: []
         }
         this.onChangeFirstName = this.onChangeFirstName.bind(this);
         this.onChangeLastName = this.onChangeLastName.bind(this);
@@ -99,13 +100,7 @@ export class Registro extends Component {
                     this.setState({Updated: true});
                 }); 
         }
-
-        
-
     }
-
-
-
     render() {
         return (
             <section id="sign-up" class="bg-grey-1">
@@ -123,13 +118,10 @@ export class Registro extends Component {
                                         <p className="help-block text-danger"></p>
                                         <input class="bg-white" type="date" placeholder="Fecha de nacimiento" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
                                         <p className="help-block text-danger"></p>
-                                        <select class="bg-white" type="text" value={this.state.Countries} onChange={this.onChangeCountry} required>
-                                        
+                                        <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
                                                  { this.state.Updated===true ? this.state.Countries.map((d, i) => (
-                                                <option key={i} value={d.CountryName}>{d.countryName}</option>
-                                            )) : ''}
-                                        
-                                                                                
+                                                <option key={i} value={d.CountryName}>{d.CountryName}</option>
+                                            )) : ''}                             
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>

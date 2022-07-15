@@ -15,20 +15,12 @@ router.get('/country', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));;
 });
 
-//GET CountryName Country
-router.get('/country/:CountryName', (req, res) => {
-    const { CodeName } = req.params;
-    Country.findOne({ CountryName })
-        .then(countries => res.json(countries))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//POST Coins
+//POST Country
 router.post('/country', (req, res) => {
-    const { CodeName, Uses, } = req.body;
-    const newCurrency = new  Country({ CodeName,Uses});
-    newCurrency.save()
-        .then(coin => res.json(Country))
+    const { CountryName } = req.body;
+    const newCountry = new Country({ CodeName, Uses: 0});
+    newCountry.save()
+        .then(() => res.json("Pais agregado:"+CountryName))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

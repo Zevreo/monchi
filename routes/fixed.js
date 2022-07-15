@@ -52,4 +52,13 @@ router.get('/country', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));;
 });
 
+//POST Country
+router.post('/country', (req, res) => {
+    const { CountryName } = req.body;
+    const newCountry = new Country({ CountryName, Uses: 0});
+    newCountry.save()
+        .then(() => res.json("Pais agregado:"+CountryName))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
