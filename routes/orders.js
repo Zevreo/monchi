@@ -38,8 +38,13 @@ const orderSchema = new Schema({
 }); */
 
 //GET User Orders
-router.get('/', auth, (req, res) => {
-    Order.find({ UserId: res.locals.id })
+router.get('/', auth, async (req, res) => {
+    const { page = 1 } = req.headers;
+    if (page < 1) page = 1;
+    const count = await Order.find({ UserId: res.locals.id }).countDocuments();
+    res.set({ 'x-page': page, 'x-count': count })
+    await Order.find({ UserId: res.locals.id }).sort({ updatedAt: -1 })
+        .limit(5).skip((page - 1) * 5)
         .then(orders => res.json(orders))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -49,13 +54,20 @@ router.post('/', auth, async (req, res) => {
     const { SaleTotal, SaleCoin, PaymentMethod,
         PaymentSuccess, SaleProducts,
         TransactionId, BuyerId } = req.body;
-    for(var cartProd of SaleProducts){
+    for (var cartProd of SaleProducts) {
         await Product.findById(cartProd.ProductId)
-            .then(prod => {
+            .then(async prod => {
                 cartProd.SalePrice = prod.ProductPrice;
                 cartProd.SaleCoin = prod.PriceCoin;
                 cartProd.ProductOptions = cartProd.CartOptions;
-                delete cartProd.UserId;
+                cartProd.ProductImage = prod.ProductImages[0];
+                cartProd.ProductName = prod.ProductName;
+                prod.Stock = prod.Stock - cartProd.Quantity;
+                if (prod.Stock == 0) {
+                    prod.Status = "Paused"
+                }
+                await prod.save()
+                    .catch(err => res.status(400).json('Error: ' + err));
             }).catch(err => res.status(400).json('Error: ' + err));
     }
     const newOrder = new Order({
@@ -63,8 +75,8 @@ router.post('/', auth, async (req, res) => {
         PaymentSuccess, SaleProducts,
         UserId: res.locals.id, TransactionId, BuyerId
     });
-    newOrder.save()
-        .then(ord=> res.json(ord))
+    await newOrder.save()
+        .then(ord => res.json(ord))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

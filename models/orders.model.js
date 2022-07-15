@@ -11,7 +11,11 @@ const orderProductsSchema = new Schema({
     SaleCoin:
     {type: String, required: true},
     SalePrice:
-    {type: Number, required: true}
+    {type: Number, required: true},
+    ProductImage:
+    {type: String, required: true},
+    ProductName:
+    {type: String, required: true}
 });
 
 const orderSchema = new Schema({

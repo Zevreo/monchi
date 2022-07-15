@@ -81,6 +81,7 @@ export function SingleProduct(props) {
                                     <div class="quantity mb20 mt20">
                                         <input type="number" step="1" min="1" defaultValue="1" name="quantity" title="Qty" class="input-text qty text" size="4" />
                                     </div>
+                                    <p>Stock: {product.Stock}</p>
                                     {product.Options.length > 0 ?
                                         <>
                                             <h4>Opciones</h4>

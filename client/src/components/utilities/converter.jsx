@@ -11,7 +11,10 @@ export function Converter(props) {
         }
         axios.post('/api/fixed/currency/convert', body)
             .then(res => {
-                if (props.Multiplier) setValue(Number(res.data.Value) * props.Multiplier);
+                if (props.Multiplier) {
+                    if(props.Target === "JPY") setValue(Number((res.data.Value) * props.Multiplier).toFixed(0));
+                    else setValue(Number((res.data.Value) * props.Multiplier).toFixed(2));
+                }
                 else setValue(Number(res.data.Value));
             })
             .catch(err => console.log(err));

@@ -16,6 +16,9 @@ section {
     margin-top: 67px;
 }
 
+.w100 {
+    max-width: 100%;
+}
 
 .center-100{
     align-items: middle;

@@ -9,31 +9,47 @@ router.get('/:UserId', async (req, res) => {
     var prodsInCar;
     var products = [];
     await Cart.find({ UserId: UserId })
-        .then(prods => prodsInCar = prods)
+        .then(async prods => {
+            for (var product of prods) {
+                await Product.findById(product.ProductId)
+                    .then(prod => {
+                        if (prod.Stock < product.Quantity) {
+                            product.Quantity = prod.Stock;
+                            product.save()
+                                .catch(err => res.status(400).json('Error: ' + err));
+                        }
+                        products.push({
+                            CartId: product._id,
+                            ProductId: prod._id,
+                            ProductName: prod.ProductName,
+                            ProductPrice: prod.ProductPrice,
+                            PriceCoin: prod.PriceCoin,
+                            Quantity: product.Quantity,
+                            ProductImages: prod.ProductImages,
+                            CartOptions: product.ProductOptions.join('/')
+                        })
+                    })
+                    .catch(err => res.status(400).json('Error: ' + err));
+            }
+        })
         .catch(err => res.status(400).json('Error: ' + err));
-    for (var product of prodsInCar) {
-        await Product.findById(product.ProductId)
-            .then(prod => products.push({
-                CartId: product._id,
-                ProductId: prod._id,
-                ProductName: prod.ProductName,
-                ProductPrice: prod.ProductPrice,
-                PriceCoin: prod.PriceCoin,
-                Quantity: product.Quantity,
-                ProductImages: prod.ProductImages,
-                CartOptions: product.ProductOptions.join('/')
-            }))
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
     res.json(products);
 });
 
 //POST Add product to cart
-router.post('/', auth, (req, res) => {
-    const { UserId, ProductId, Quantity, ProductOptions } = req.body;
+router.post('/', auth, async (req, res) => {
+    let { UserId, ProductId, Quantity, ProductOptions } = req.body;
+    if (ProductOptions == "") ProductOptions = "N/A";
+    let Stock;
+    await Product.findById(ProductId)
+        .then(prod => {
+            if (Quantity > prod.Stock) Quantity = prod.Stock;
+            Stock = prod.Stock;
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
     const newProductCar = new Cart({ UserId, ProductId, Quantity, ProductOptions });
     if (res.locals.id == req.body.UserId) {
-        Cart.findOne({ UserId, ProductId })
+        await Cart.findOne({ UserId, ProductId })
             .then(existingProdCart => {
                 if (existingProdCart == null) {
                     newProductCar.save()
@@ -41,7 +57,7 @@ router.post('/', auth, (req, res) => {
                         .catch(err => res.status(400).json('Error: ' + err));
                 }
                 else {
-                    existingProdCart.Quantity = existingProdCart.Quantity + Quantity;
+                    if (Quantity != Stock) existingProdCart.Quantity = existingProdCart.Quantity + Quantity;
                     existingProdCart.save()
                         .then(prod => res.json(prod))
                         .catch(err => res.status(400).json('Error: ' + err));
@@ -56,9 +72,14 @@ router.post('/', auth, (req, res) => {
 
 //PATCH Cart Qty
 router.patch('/quantity/:id', (req, res) => {
-    const { Quantity } = req.body;
+    let { Quantity } = req.body;
     Cart.findById(req.params.id)
-        .then(cart => {
+        .then(async cart => {
+            await Product.findById(cart.ProductId)
+                .then(prod => {
+                    if (Quantity > prod.Stock) Quantity = prod.Stock;
+                })
+                .catch(err => res.status(400).json('Error: ' + err));
             cart.Quantity = Quantity;
             cart.save()
                 .then(() => res.json("Cantidad cambiada con exito"));
