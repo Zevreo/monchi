@@ -102,9 +102,11 @@ export function Allproducts(props) {
                                             <div class="info hover-bottom">
                                                 <h4>{d.ProductName}</h4>
                                                 <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
-                                                {user && d.Options.length<1 ?
-                                                    <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
-                                                    : <p>Ver para elegir opciones</p>}
+                                                {d.Status == "Active" &&
+                                                    (user && d.Options.length < 1 ?
+                                                        <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
+                                                        : <p>Ver para elegir opciones</p>)
+                                                }
                                             </div>
                                         </div>
                                     </Link>

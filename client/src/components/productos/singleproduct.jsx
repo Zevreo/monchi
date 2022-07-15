@@ -29,7 +29,7 @@ export function SingleProduct(props) {
         console.log(e);
         const optionsCount = product.Options.length;
         var ProductOptions = [];
-        for(var i = 1; i <= optionsCount; i++){
+        for (var i = 1; i <= optionsCount; i++) {
             ProductOptions.push(e.target[i].value);
         }
         const { user } = props.auth;
@@ -98,7 +98,11 @@ export function SingleProduct(props) {
                                             ))}
                                         </>
                                         : ''}
-                                    <button className="btn btn-lg" type="submit">Agregar al carrito</button>
+                                    {product.Status == "Active" ?
+                                        <button className="btn btn-lg" type="submit">Agregar al carrito</button>
+                                        :
+                                        `Publication is ${product.Status}`
+                                    }
                                 </form>
                             </div>
                         </div>
@@ -116,8 +120,8 @@ export function SingleProduct(props) {
                         </div>
 
                         <div class="pt80 pb20">
-                        { product ? <Gallery precio={product.ProductPrice}/> : <Loader/>}
-                          
+                            {product ? <Gallery precio={product.ProductPrice} /> : <Loader />}
+
 
                         </div>
 
