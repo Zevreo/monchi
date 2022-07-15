@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth');
 let Order = require('../models/orders.model');
+let Product = require('../models/products.model');
 
 /* const orderProductsSchema = new Schema({
     ProductId:
@@ -10,7 +12,7 @@ let Order = require('../models/orders.model');
     {type: Array, required: false},
     SaleCoin:
     {type: String, required: true},
-    ProductPrice:
+    SalePrice:
     {type: Number, required: true}
 });
 
@@ -43,17 +45,26 @@ router.get('/', auth, (req, res) => {
 });
 
 //POST New order
-router.post('/', auth, (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { SaleTotal, SaleCoin, PaymentMethod,
         PaymentSuccess, SaleProducts,
         TransactionId, BuyerId } = req.body;
+    for(var cartProd of SaleProducts){
+        await Product.findById(cartProd.ProductId)
+            .then(prod => {
+                cartProd.SalePrice = prod.ProductPrice;
+                cartProd.SaleCoin = prod.PriceCoin;
+                cartProd.ProductOptions = cartProd.CartOptions;
+                delete cartProd.UserId;
+            }).catch(err => res.status(400).json('Error: ' + err));
+    }
     const newOrder = new Order({
         SaleTotal, SaleCoin, PaymentMethod,
         PaymentSuccess, SaleProducts,
         UserId: res.locals.id, TransactionId, BuyerId
     });
     newOrder.save()
-        .then(() => res.json('Orden agregada'))
+        .then(ord=> res.json(ord))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

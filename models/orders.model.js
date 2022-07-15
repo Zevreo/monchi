@@ -7,10 +7,10 @@ const orderProductsSchema = new Schema({
     Quantity:
     {type: Number, required: true},
     ProductOptions:
-    {type: Array, required: false},
+    {type: String, required: false},
     SaleCoin:
     {type: String, required: true},
-    ProductPrice:
+    SalePrice:
     {type: Number, required: true}
 });
 

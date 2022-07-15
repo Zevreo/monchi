@@ -26,6 +26,7 @@ export default function Paypal(props) {
                 }}
                 onApprove={async function (data, actions) {
                     await actions.order.capture();
+                    props.setCapture(data);
                 }} />
         </PayPalScriptProvider>
     )

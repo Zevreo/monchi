@@ -4,15 +4,22 @@ import axios from 'axios';
 import { Converter, ConverterMultiply } from '../utilities/converter';
 import { Link } from "react-router-dom";
 import Paypal from "../utilities/paypal";
+import CartToOrder from "../utilities/cartToOrder";
 
 export function ShoppingCart(props) {
     const { user } = props.auth;
     const [Products, setProducts] = useState([]);
     const [Total, setTotal] = useState(0);
+    const [Capture, setCapture] = useState();
 
     useEffect(() => {
         GetCart();
     }, []);
+
+    useEffect(() => {
+        CartToOrder(props.auth, Total, Capture, Products);
+        console.log(props.auth);
+    }, [Capture]);
 
     function GetCart() {
         axios.get(`/api/cart/${user._id}`)
@@ -116,7 +123,7 @@ export function ShoppingCart(props) {
                                     </tr>
                                 </tbody>
                             </table>
-                            <Paypal user={user} Total={Total} />
+                            <Paypal setCapture={setCapture} user={user} Total={Total} />
                         </div>
                         <a href="shop-4columns.html" class="highlight mt20">Continue Shopping</a>
                     </div>

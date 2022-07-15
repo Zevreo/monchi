@@ -73,4 +73,10 @@ router.delete('/:id', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
+router.delete('/user/:id', (req, res) => {
+    Cart.deleteMany({ UserId: req.params.id })
+        .then(() => res.json("Removed cart succesfully"))
+        .catch(err => res.status(400).json('Error: ' + err));
+})
+
 module.exports = router;
