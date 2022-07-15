@@ -8,8 +8,6 @@ const cartSchema = new Schema({
     {type: String, required: true},
     Quantity:
     {type: Number, required: true},
-    ProductSpecs:
-    {type: Object, required: false},
     ProductOptions:
     {type: Array, required: false}
 }, {

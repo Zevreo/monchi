@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 const orderProductsSchema = new Schema({
     ProductId:
     {type: String, required: true},
-    SalePrice:
+    Quantity:
     {type: Number, required: true},
+    ProductOptions:
+    {type: Array, required: false},
     SaleCoin:
+    {type: String, required: true},
+    ProductPrice:
     {type: Number, required: true}
 });
 
@@ -22,7 +26,11 @@ const orderSchema = new Schema({
     PaymentMethod:
     {type: String, required: true},
     PaymentSuccess:
-    {type: Boolean}
+    {type: Boolean},
+    TransactionId:
+    {type: String, required: true},
+    BuyerId:
+    {type: String, required: true}
 }, {
     timestamps: true
 });

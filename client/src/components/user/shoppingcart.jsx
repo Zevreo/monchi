@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Converter, ConverterMultiply } from '../utilities/converter';
 import { Link } from "react-router-dom";
+import Paypal from "../utilities/paypal";
 
 export function ShoppingCart(props) {
     const { user } = props.auth;
@@ -114,9 +115,7 @@ export function ShoppingCart(props) {
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="wc-proceed-to-checkout">
-                                <a href="#" class="btn btn-primary btn-md btn-appear"><span>Cheeckout <i class="ion-bag"></i></span></a>
-                            </div>
+                            <Paypal user={user} Total={Total}/>
                         </div>
                         <a href="shop-4columns.html" class="highlight mt20">Continue Shopping</a>
                     </div>
