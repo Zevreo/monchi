@@ -12,22 +12,28 @@ router.get('/:UserId', async (req, res) => {
         .then(async prods => {
             for (var product of prods) {
                 await Product.findById(product.ProductId)
-                    .then(prod => {
+                    .then(async prod => {
                         if (prod.Stock < product.Quantity) {
                             product.Quantity = prod.Stock;
                             product.save()
                                 .catch(err => res.status(400).json('Error: ' + err));
                         }
-                        products.push({
-                            CartId: product._id,
-                            ProductId: prod._id,
-                            ProductName: prod.ProductName,
-                            ProductPrice: prod.ProductPrice,
-                            PriceCoin: prod.PriceCoin,
-                            Quantity: product.Quantity,
-                            ProductImages: prod.ProductImages,
-                            CartOptions: product.ProductOptions.join('/')
-                        })
+                        if (product.Quantity == 0) {
+                            Cart.deleteOne({ _id: product._id })
+                                .catch(err => res.status(400).json('Error: ' + err));
+                        }
+                        else{
+                            products.push({
+                                CartId: product._id,
+                                ProductId: prod._id,
+                                ProductName: prod.ProductName,
+                                ProductPrice: prod.ProductPrice,
+                                PriceCoin: prod.PriceCoin,
+                                Quantity: product.Quantity,
+                                ProductImages: prod.ProductImages,
+                                CartOptions: product.ProductOptions.join('/')
+                            })
+                        }
                     })
                     .catch(err => res.status(400).json('Error: ' + err));
             }

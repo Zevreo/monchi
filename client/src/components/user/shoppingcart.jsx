@@ -125,7 +125,7 @@ export function ShoppingCart(props) {
                             </table>
                             <Paypal setCapture={setCapture} user={user} Total={Total} />
                         </div>
-                        <a href="shop-4columns.html" class="highlight mt20">Continue Shopping</a>
+                        <Link to="/" class="highlight mt20">Seguir comprando</Link>
                     </div>
                 </div>
             </div>
