@@ -51,7 +51,7 @@ export class App extends Component {
             <Route path="/results/search=:search" element={<Results />}/>
             <Route path="/shoppingcart" element={<ShoppingCart/>} />
             <Route path="/editProduct/:id" element={<EditProduct />} />
-            <Route path="/paginater" element={<PaginateProducts/>} />x
+            <Route path="/paginater" element={<PaginateProducts/>} />
           </Routes>
           <Footer />
         </Provider>
