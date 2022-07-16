@@ -3,23 +3,15 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Converter, ConverterMultiply } from '../utilities/converter';
 import { Link } from "react-router-dom";
-import Paypal from "../utilities/paypal";
-import CartToOrder from "../utilities/cartToOrder";
 
 export function ShoppingCart(props) {
     const { user } = props.auth;
     const [Products, setProducts] = useState([]);
     const [Total, setTotal] = useState(0);
-    const [Capture, setCapture] = useState();
 
     useEffect(() => {
         GetCart();
     }, []);
-
-    useEffect(() => {
-        CartToOrder(props.auth, Total, Capture, Products);
-        console.log(props.auth);
-    }, [Capture]);
 
     function GetCart() {
         axios.get(`/api/cart/${user._id}`)
@@ -49,8 +41,7 @@ export function ShoppingCart(props) {
             conv = await ConverterMultiply(prod.PriceCoin, user.DefaultCoin, prod.ProductPrice, prod.Quantity);
             Subtotal = Subtotal + conv;
         }
-        if (user.DefaultCoin == "JPY") setTotal(Subtotal.toFixed(0));
-        else setTotal(Subtotal.toFixed(2));
+        setTotal(Subtotal);
     }
 
     return (
@@ -123,9 +114,11 @@ export function ShoppingCart(props) {
                                     </tr>
                                 </tbody>
                             </table>
-                            <Paypal setCapture={setCapture} user={user} Total={Total} />
+                            <div class="wc-proceed-to-checkout">
+                                <a href="#" class="btn btn-primary btn-md btn-appear"><span>Cheeckout <i class="ion-bag"></i></span></a>
+                            </div>
                         </div>
-                        <Link to="/" class="highlight mt20">Seguir comprando</Link>
+                        <a href="shop-4columns.html" class="highlight mt20">Continue Shopping</a>
                     </div>
                 </div>
             </div>

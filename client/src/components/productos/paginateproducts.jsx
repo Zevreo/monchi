@@ -55,17 +55,6 @@ export class PaginateProducts extends Component {
               </div>
             </div>
           </div>
-          <section class="shop bg-grey-1">
-            <div class="container">
-              <div class="row white-bg">
-                <ul class="shop-items portfolioContainer col-md-12 height-auto margin row">
-                  {currentProducts.map((d, i) => (
-                    <ProductCard Key={i} Product={d} />
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
         </div>
       </section>
     );

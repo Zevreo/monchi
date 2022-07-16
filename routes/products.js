@@ -16,18 +16,12 @@ router.get('/', async (req, res) => {
     if (page < 1) page = 1;
     if (limit < 1) limit = 12;
     if (sort != "updatedAt" && sort != "ProductPrice") sort = "updatedAt";
-    const count = await Product.find({
-        $or: [{ Status: { $regex: new RegExp('Active', 'i') } },
-        { Status: { $regex: new RegExp('Paused', 'i') } }]
-    }).countDocuments();
+    const count = await Product.find().countDocuments();
     res.set({
         'x-page': page, 'x-count': count,
         'x-limit': limit, 'x-sort': sort
     })
-    await Product.find({
-        $or: [{ Status: { $regex: new RegExp('Active', 'i') } },
-        { Status: { $regex: new RegExp('Paused', 'i') } }]
-    }).sort({ [sort]: order })
+    await Product.find().sort({ [sort]: order })
         .limit(limit * 1).skip((page - 1) * limit)
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -61,23 +55,17 @@ router.get('/search/:search', async (req, res) => {
 // GET Related Products by Price
 router.get('/searchbyprecio/:precio', async (req, res) => {
     const { precio } = req.params;
-    await Product.find({
-        $or: [
-            {
-                $and: [
-                    { ProductPrice: { $lte: parseInt(precio) * 1.10 } },
-                    { ProductPrice: { $gt: precio } }
-                ]
-            },
-            {
-                $and: [
-                    { ProductPrice: { $gte: parseInt(precio) * .90 } },
-                    { ProductPrice: { $lt: precio } }
-                ]
-            },
-            { ProductPrice: { $eq: precio } }
-        ]
-    })
+    await Product.find({$or:[
+        {$and:[
+            {ProductPrice:{$lte:parseInt(precio)*1.10}},
+            {ProductPrice:{$gt:precio}}
+        ]},
+        {$and:[
+            {ProductPrice:{$gte:parseInt(precio)*.90}},
+            {ProductPrice:{$lt:precio}}
+        ]},
+        {ProductPrice:{$eq:precio}}
+    ] }) 
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });

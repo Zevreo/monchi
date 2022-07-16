@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import Perfil from "./perfil";
 import MyAddress from "./direcciones/myAddress";
-import MyOrders from "./ordenes";
 import { Link } from "react-router-dom";
 
 export class Dashboard extends Component {
@@ -27,7 +26,7 @@ export class Dashboard extends Component {
                                         <MyAddress/>
                                     </div>
                                     <div class="tab-pane fade" id="tab-c3">
-                                        <MyOrders/>
+                                        <></>
                                     </div>
                                 </div>
                             </div>

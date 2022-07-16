@@ -29,7 +29,7 @@ export function SingleProduct(props) {
         console.log(e);
         const optionsCount = product.Options.length;
         var ProductOptions = [];
-        for (var i = 1; i <= optionsCount; i++) {
+        for(var i = 1; i <= optionsCount; i++){
             ProductOptions.push(e.target[i].value);
         }
         const { user } = props.auth;
@@ -81,7 +81,6 @@ export function SingleProduct(props) {
                                     <div class="quantity mb20 mt20">
                                         <input type="number" step="1" min="1" defaultValue="1" name="quantity" title="Qty" class="input-text qty text" size="4" />
                                     </div>
-                                    <p>Stock: {product.Stock}</p>
                                     {product.Options.length > 0 ?
                                         <>
                                             <h4>Opciones</h4>
@@ -98,11 +97,7 @@ export function SingleProduct(props) {
                                             ))}
                                         </>
                                         : ''}
-                                    {product.Status == "Active" ?
-                                        <button className="btn btn-lg" type="submit">Agregar al carrito</button>
-                                        :
-                                        `Publication is ${product.Status}`
-                                    }
+                                    <button className="btn btn-lg" type="submit">Agregar al carrito</button>
                                 </form>
                             </div>
                         </div>
@@ -120,8 +115,8 @@ export function SingleProduct(props) {
                         </div>
 
                         <div class="pt80 pb20">
-                            {product ? <Gallery precio={product.ProductPrice} /> : <Loader />}
-
+                        { product ? <Gallery precio={product.ProductPrice}/> : <Loader/>}
+                          
 
                         </div>
 

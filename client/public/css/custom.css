@@ -16,10 +16,6 @@ section {
     margin-top: 67px;
 }
 
-.w100 {
-    max-width: 100%;
-}
-
 .center-100{
     align-items: middle;
     min-height: 100vh;
@@ -36,15 +32,17 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+  }
 
-@keyframes spin {
-    0% { transform: rotate(0deg);
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
     }
 
-    100% { transform: rotate(360deg);
-    } 
-}
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
 .relative {
     position: relative !important;
