@@ -33,3 +33,4 @@ app.use('/api/address', require('./routes/adressess'));
 app.use('/api/product', require('./routes/products'));
 app.use('/api/fixed', require('./routes/fixed'));
 app.use('/api/cart', require('./routes/cart'));
+app.use('/api/order', require('./routes/orders'));

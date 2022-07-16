@@ -105,6 +105,11 @@ export function Allproducts(props) {
                                                 {user && d.Options.length<1 ?
                                                     <button className="btn btn-grey1 btn-sm" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
                                                     : <p>Ver para elegir opciones</p>}
+                                                {d.Status == "Active" &&
+                                                    (user && d.Options.length < 1 ?
+                                                        <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
+                                                        : <p>Ver para elegir opciones</p>)
+                                                }
                                             </div>
                                         </div>
                                     </Link>
