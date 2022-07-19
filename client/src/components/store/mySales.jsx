@@ -8,8 +8,16 @@ import PropTypes from 'prop-types';
 export function MySales(props) {
     const { user } = props.auth;
     const { token } = props.auth;
+
     const [Sales, setSales] = useState([]);
     const [Store, setStore] = useState();
+
+    const [Page, setPage] = useState(1)
+    const [limit, setLimit] = useState(3);
+    const [count, setCount] = useState(0);
+    const [maxPage, setMax] = useState(1);
+
+    const [disable, setDisable] = useState(false);
 
     async function getStore() {
         if (user) {
@@ -27,10 +35,19 @@ export function MySales(props) {
         getSales();
     }, [Store]);
 
+    useEffect(() => {
+        setMax(Math.ceil(count / limit));
+    }, [Sales]);
+
+    useEffect(() => {
+        getSales();
+    }, [Page]);
+
     async function getSales() {
         const config = {
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
+                "page": Page
             }
         }
         if (token) {
@@ -39,13 +56,21 @@ export function MySales(props) {
         console.log(Store._id);
         if (user && Store) {
             await axios.get(`/api/order/store/${Store._id}`, config)
-                .then(res => setSales(res.data))
+                .then(res => {
+                    setSales(res.data);
+                    setPage(Number(res.headers['x-page']));
+                    setCount(Number(res.headers['x-count']));
+                    setDisable(false);
+                })
                 .catch(err => console.error(err));
         }
     }
 
+    let floor = ((limit * (Page - 1)) + 1);
+    let ceil = (limit * Page) > count ? count : (limit * Page);
+
     return (
-        <div class="row">
+        <section class="row">
             <div class="col-md-12 text-center mb40">
                 <h4 class="mb0">Ordenes</h4>
             </div>
@@ -97,7 +122,10 @@ export function MySales(props) {
                     </table>
                 </div>
             </div>
-        </div>
+            <div class="col-md-12 text-center">
+                <Pagination Page={Page} maxPage={maxPage} disable={disable} setDisable={setDisable} setPage={setPage} />
+            </div>
+        </section>
     )
 }
 const mapStateToProps = (state) => ({

@@ -51,6 +51,8 @@ router.get('/', auth, async (req, res) => {
 
 //GET Store Orders
 router.get('/store/:id', auth, async (req, res) => {
+    const { page = 1 } = req.headers;
+    if (page < 1) page = 1;
     if (res.locals.Role == "Owner") {
         let SoldProducts = [];
         await Order.find().sort({ updatedAt: -1 })
@@ -79,7 +81,8 @@ router.get('/store/:id', auth, async (req, res) => {
                             });
                     }
                 }
-                res.json(SoldProducts);
+                res.set({ 'x-page': page, 'x-count': SoldProducts.length });
+                res.json(SoldProducts.slice(((page-1)*3), (((page-1)*3)+3)));
             })
             .catch(err => res.status(400).json('Error: ' + err));
     }
