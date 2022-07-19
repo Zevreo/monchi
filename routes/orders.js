@@ -53,17 +53,14 @@ router.get('/', auth, async (req, res) => {
 router.get('/store/:id', auth, async (req, res) => {
     if (res.locals.Role == "Owner") {
         let SoldProducts = [];
-        await Order.find().sort({ updatedAt: 1 })
+        await Order.find().sort({ updatedAt: -1 })
             .then(async orders => {
                 for (var order of orders) {
                     for (var prod of order.SaleProducts) {
-                        console.log(prod.id, req.params.id);
                         await Product.find({ ProductId: prod.id, StoreId: req.params.id })
                             .then(async pds => {
                                 for (var pd of pds) {
-                                    
                                     if(pd.id == prod.ProductId){
-                                        console.log(pd);
                                         SP = {
                                             UserId: order.UserId,
                                             Method: order.PaymentMethod,
@@ -82,7 +79,6 @@ router.get('/store/:id', auth, async (req, res) => {
                             });
                     }
                 }
-                console.log(SoldProducts);
                 res.json(SoldProducts);
             })
             .catch(err => res.status(400).json('Error: ' + err));

@@ -45,7 +45,7 @@ router.get('/:UserId', async (req, res) => {
 //POST Add product to cart
 router.post('/', auth, async (req, res) => {
     let { UserId, ProductId, Quantity, ProductOptions } = req.body;
-    if (ProductOptions == "") ProductOptions = "N/A";
+    if (ProductOptions == "" || ProductOptions == null) ProductOptions = "N/A";
     let Stock;
     await Product.findById(ProductId)
         .then(prod => {
