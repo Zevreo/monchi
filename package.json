@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Backend side for Monchi development",
   "main": "server.js",
+  "engines": {
+    "node": "16.15.1"
+  },
   "scripts": {
-    "start": "concurrently \"nodemon server.js\" \"cd client && npm start\""
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
     "type": "git",

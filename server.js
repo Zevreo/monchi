@@ -21,6 +21,11 @@ connection.once('open', () =>{
     console.log('MongoDB se ha conectado');
 });
 
+//Make Express serve Client
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
+
 app.listen(port, () =>{
     console.log(`Server is running on port: ${port}`);
 });

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import 'react-devtools';
 
 //Redux
 import { loadUser } from './actions/authActions';
