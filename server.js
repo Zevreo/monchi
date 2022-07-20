@@ -12,7 +12,7 @@ const port = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
-app.use(express.static(path.resolve(__dirname, "./client/build")))
+app.use(express.static(path.join(__dirname, "client", "build","public")))
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -23,7 +23,7 @@ connection.once('open', () =>{
 
 //Make Express serve Client
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 app.listen(port, () =>{
