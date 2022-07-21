@@ -5,6 +5,7 @@ import { Converter, ConverterMultiply } from '../utilities/converter';
 import { Link } from "react-router-dom";
 import Paypal from "../utilities/paypal";
 import CartToOrder from "../utilities/cartToOrder";
+import Swal from 'sweetalert2';
 
 export function ShoppingCart(props) {
     const { user } = props.auth;
@@ -29,12 +30,28 @@ export function ShoppingCart(props) {
     async function QtyChange(cart, qty) {
         let body = { Quantity: qty }
         axios.patch(`/api/cart/quantity/${cart}`, body)
-            .then(() => GetCart())
+            .then(() => GetCart());
+        Swal.fire({
+            title: 'Cantidad agregada',
+            icon: 'success',
+            showConfirmButton: false,
+            toast: true,
+            position: "bottom-right",
+            timer: 1500
+        });
     }
 
     function RemoveItem(cart) {
         axios.delete(`/api/cart/${cart}`)
             .then(() => GetCart());
+        Swal.fire({
+            title: 'Eliminado',
+            icon: 'success',
+            showConfirmButton: false,
+            toast: true,
+            position: "bottom-right",
+            timer: 1500
+        });
     }
 
     useEffect(() => {
