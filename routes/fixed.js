@@ -45,9 +45,28 @@ router.post('/currency/convert', async (req, res) => {
     res.json({ Target, Value: output.toFixed(2) });
 });
 
+
+
+//ruta massiva de country
+
+
+router.post('/countrymass', (request, res) => {
+    for(var req of request.body){
+        const { CountryName , CountryCode} = req;
+        const newCountry = new Country({ CountryName, CountryCode});
+        newCountry.save()
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+    res.json("Done");
+});
+
+
+
+
+
 //GET All Country
 router.get('/country', (req, res) => {
-    Country.find().sort('Uses')
+    Country.find().sort('CountryName')
         .then(countries => res.json(countries))
         .catch(err => res.status(400).json('Error: ' + err));;
 });
