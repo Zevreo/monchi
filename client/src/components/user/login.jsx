@@ -75,6 +75,7 @@ export class Login extends Component {
                   </form>
                 </div>
                 <p>¿No tienes una cuenta? <Link to="/register">Registrate</Link></p>
+                { this.state.msg !== null && <p><Link to="/forgotPassword">Olvidaste tu contraseña</Link></p>}
                 <p class="terms">Al iniciar sesión accedes a nuestros <Link to="#">Terminos de Servicio</Link> y <Link to="#">Política de Privacidad</Link>.</p>
               </div>
             </div>
