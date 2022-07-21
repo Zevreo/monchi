@@ -90,7 +90,7 @@ export function ShoppingCart(props) {
                             </thead>
                             <tbody>
                                 {Products.map((d, i) => (
-                                    <tr class="cart_item">
+                                    <tr class="cart_item" key={i}>
                                         <td class="product-thumbnail">
                                             <Link to={`/product/${d.ProductId}`}>
                                                 <img src={d.ProductImages[0]} alt="#" />

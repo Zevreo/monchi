@@ -20,11 +20,13 @@ export class Navigation extends Component {
     e.preventDefault();
     window.location = `/results/search=${this.state.search}`;
   }
-  componentDidMount() {
+  componentDidUpdate() {
     const { user } = this.props.auth;
-    if(user){
-      axios.get(`/api/cart/${user._id}`)
-      .then(prod => this.setState({cart: prod.data }));
+    if (user) {
+      setTimeout(() => {
+        axios.get(`/api/cart/${user._id}`)
+          .then(prod => this.setState({ cart: prod.data }));
+      }, 2000);
     }
   }
   render() {
@@ -54,7 +56,7 @@ export class Navigation extends Component {
           <form onSubmit={this.Search}>
             <div class="subscribe-form-input">
               <input type="text" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off"
-              onChange={this.onChange} name="search"/>
+                onChange={this.onChange} name="search" />
             </div>
           </form>
         </li>
@@ -72,8 +74,8 @@ export class Navigation extends Component {
         <li style={{ lineHeight: "0px" }}>
           <form onSubmit={this.Search}>
             <div class="subscribe-form-input">
-              <input type="text" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off" 
-              onChange={this.onChange} name="search"/>
+              <input type="text" class="footer-subscribe-input" placeholder="Buscar..." autoComplete="off"
+                onChange={this.onChange} name="search" />
             </div>
           </form>
         </li>
