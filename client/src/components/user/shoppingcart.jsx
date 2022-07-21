@@ -38,14 +38,39 @@ export function ShoppingCart(props) {
   }
  async function getAddres() {
     const { user } = props.auth;
-    const { token } = props.auth;
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-    if (token) {
-      config.headers["x-auth-token"] = token;
+    const [Products, setProducts] = useState([]);
+    const [Total, setTotal] = useState(0);
+    const [Capture, setCapture] = useState();
+    const [Address, setAddress] = useState();
+
+    useEffect(() => {
+        GetCart();
+        GetAddress();
+    }, []);
+
+    function GetAddress() {
+        axios.get(`/api/address/default/${user._id}`)
+            .then(res => setAddress(res.data));
+    }
+
+    useEffect(() => {
+        CartToOrder(props.auth, Total, Capture, Products)
+            .then(() => {
+                GetCart();
+                Swal.fire({
+                    title: 'Compra exitosa',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    toast: true,
+                    position: "bottom-right",
+                    timer: 1500
+                });
+            });
+    }, [Capture]);
+
+    function GetCart() {
+        axios.get(`/api/cart/${user._id}`)
+            .then(prod => setProducts(prod.data));
     }
     if (user) {
       await axios.get(`/api/address/mydefault/${user._id}`, config).then((res) => {
@@ -143,125 +168,85 @@ export function ShoppingCart(props) {
     else setTotal(Subtotal.toFixed(2));
   }
 
-  return (
-    <section class="cart pt60 pb60">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-9 mt40 mb40">
-            <h4 class="bag-summary mb20">Your Items</h4>
-            <table class="shop_table cart" cellspacing="0">
-              <thead>
-                <tr>
-                  <th class="product-thumbnail">Producto</th>
-                  <th class="product-name pr10">Nombre</th>
-                  <th class="product-name pr10">Opciones</th>
-                  <th class="product-price pr10">Precio</th>
-                  <th class="product-quantity">Cantidad</th>
-                  <th class="product-subtotal">Subtotal</th>
-                  <th class="product-remove">&nbsp;</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Products.map((d, i) => (
-                  <tr class="cart_item" key={i}>
-                    <td class="product-thumbnail">
-                      <Link to={`/product/${d.ProductId}`}>
-                        <img src={d.ProductImages[0]} alt="#" />
-                      </Link>
-                    </td>
-                    <td class="product-name pr10">
-                      <Link to={`/product/${d.ProductId}`}>
-                        {d.ProductName}
-                      </Link>
-                    </td>
-                    <td class="product-name pr10">{d.CartOptions}</td>
-                    <td class="product-price pr10">
-                      <span class="amount">
-                        {user.DefaultCoin}$
-                        {
-                          <Converter
-                            Current={d.PriceCoin}
-                            Value={d.ProductPrice}
-                            Target={user.DefaultCoin}
-                          />
-                        }
-                      </span>
-                    </td>
-                    <td class="product-quantity">
-                      <div class="quantity">
-                        <input
-                          type="number"
-                          step="1"
-                          min="1"
-                          title="Qty"
-                          class="input-text qty text"
-                          size="4"
-                          name="cart-qty"
-                          value={d.Quantity}
-                          onChange={(e) => QtyChange(d.CartId, e.target.value)}
-                        />
-                      </div>
-                    </td>
-                    <td class="product-subtotal">
-                      <span class="amount">
-                        {user.DefaultCoin}$
-                        {
-                          <Converter
-                            Current={d.PriceCoin}
-                            Value={d.ProductPrice}
-                            Target={user.DefaultCoin}
-                            Multiplier={d.Quantity}
-                          />
-                        }
-                      </span>
-                    </td>
-                    <td class="product-remove">
-                      <button
-                        type="button"
-                        onClick={(e) => RemoveItem(d.CartId)}
-                        class="remove btn shadow-none"
-                        title="Remove this item"
-                      >
-                        ×
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div class="col-sm-3 mt40 mb40">
-            <h4 class="bag-totals mb20">Cart Totals</h4>
-            <div class="cart_totals">
-              <table cellspacing="0">
-                <tbody>
-                  <tr class="cart-subtotal">
-                    <th>Subtotal</th>
-                    <td>
-                      <span class="amount">
-                        {user.DefaultCoin}${Total}
-                      </span>
-                    </td>
-                  </tr>
-                  <tr class="shipping">
-                    <th>Shipping</th>
-                    <td>
-                      <p>Free</p>
-                    </td>
-                  </tr>
-                  <tr class="order-total">
-                    <th>Total</th>
-                    <td>
-                      <strong>
-                        <span class="amount">
-                          {user.DefaultCoin}${Total}
-                        </span>
-                      </strong>{" "}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <Paypal setCapture={setCapture} user={user} Total={Total} />
+    return (
+        <section class="cart pt60 pb60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9 mt40 mb40">
+                        <h4 class="bag-summary mb20">Your Items</h4>
+                        <table class="shop_table cart" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Producto</th>
+                                    <th class="product-name pr10">Nombre</th>
+                                    <th class="product-name pr10">Opciones</th>
+                                    <th class="product-price pr10">Precio</th>
+                                    <th class="product-quantity">Cantidad</th>
+                                    <th class="product-subtotal">Subtotal</th>
+                                    <th class="product-remove">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Products.map((d, i) => (
+                                    <tr class="cart_item" key={i}>
+                                        <td class="product-thumbnail">
+                                            <Link to={`/product/${d.ProductId}`}>
+                                                <img src={d.ProductImages[0]} alt="#" />
+                                            </Link>
+                                        </td>
+                                        <td class="product-name pr10">
+                                            <Link to={`/product/${d.ProductId}`}>{d.ProductName}</Link>
+                                        </td>
+                                        <td class="product-name pr10">
+                                            {d.CartOptions}
+                                        </td>
+                                        <td class="product-price pr10">
+                                            <span class="amount">{user.DefaultCoin}${<Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} />}</span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <div class="quantity">
+                                                <input type="number" step="1" min="1" title="Qty" class="input-text qty text" size="4" name="cart-qty" value={d.Quantity} onChange={e => QtyChange(d.CartId, e.target.value)} />
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <span class="amount">{user.DefaultCoin}${<Converter Current={d.PriceCoin} Value={d.ProductPrice} Target={user.DefaultCoin} Multiplier={d.Quantity} />}</span>
+                                        </td>
+                                        <td class="product-remove">
+                                            <button type="button" onClick={e => RemoveItem(d.CartId)} class="remove btn shadow-none" title="Remove this item">×</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-3 mt40 mb40">
+                        <h4 class="bag-totals mb20">Cart Totals</h4>
+                        <div class="cart_totals">
+                            <table cellspacing="0">
+                                <tbody>
+                                    <tr class="cart-subtotal">
+                                        <th>Subtotal</th>
+                                        <td><span class="amount">{user.DefaultCoin}${Total}</span></td>
+                                    </tr>
+                                    <tr class="shipping">
+                                        <th>Shipping</th>
+                                        <td><p>Free</p></td>
+                                    </tr>
+                                    <tr class="shipping">
+                                        <th>Address</th>
+                                        <td><strong>{ Address ? Address.Surname : "No tienes direccion" }</strong></td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>Total</th>
+                                        <td><strong><span class="amount">{user.DefaultCoin}${Total}</span></strong> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            { (Products.length > 0 && Address) && <Paypal setCapture={setCapture} user={user} Total={Total} /> }
+                        </div>
+                        <Link to="/" class="highlight mt20">Seguir comprando</Link>
+                    </div>
+                </div>
             </div>
             <Link to="/" class="highlight mt20">
               Seguir comprando

@@ -68,8 +68,11 @@ router.post('/', auth, (req, res) => {
 });
 
 //GET ById Address
-router.get('/:id', (req, res) => {
-    Address.findById(req.params.id)
+router.get('/default/:id', (req, res) => {
+    Address.findOne({
+        $and: [{ UserId: req.params.id },
+        { Default: true }]
+    })
         .then(address => res.json(address))
         .catch(err => res.status(400).json('Error: ' + err));
 });

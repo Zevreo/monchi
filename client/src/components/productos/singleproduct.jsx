@@ -50,7 +50,7 @@ export function SingleProduct(props) {
                 ProductOptions
             };
             await axios.post('/api/cart', CartProduct, config)
-                .then(res => {
+                .then(() => {
                     Swal.fire({
                         title: 'Agregado',
                         icon: 'success',
