@@ -2,14 +2,11 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
-import { logout } from '../../actions/authActions';
 
-export class MakeStore extends Component {
+export class EditStore extends Component {
     static propTypes = {
-        auth: PropTypes.object.isRequired,
-        logout: PropTypes.func.isRequired
+        auth: PropTypes.object.isRequired
     };
     constructor(props) {
         super(props);
@@ -53,6 +50,28 @@ export class MakeStore extends Component {
             ImageUrl: e.target.value
         })
     }
+    componentDidMount() {
+        const { user } = this.props.auth;
+        const { token } = this.props.auth;
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        if (token) {
+            config.headers['x-auth-token'] = token;
+        }
+        if (user) {
+            axios.get(`/api/store/owner/${user._id}`, config)
+                .then(res => this.setState({
+                    StoreId: res.data._id,
+                    Name: res.data.Name,
+                    Country: res.data.Country,
+                    Description: res.data.Description,
+                    ImageUrl: res.data.StoreImage
+                }))
+        }
+    }
     async onSubmit(e) {
         e.preventDefault();
         let image = this.state.StoreImage;
@@ -89,11 +108,11 @@ export class MakeStore extends Component {
                 Description: this.state.Description,
                 StoreImage: this.state.ImageUrl
             };
-            await axios.post('/api/store', store, config)
+            await axios.put(`/api/store/${this.state.StoreId}`, store, config)
                 .then(res => {
                     Swal.fire({
                         title: 'Enviado',
-                        text: 'Se creo la tienda con exito',
+                        text: 'Se edito la tienda con exito',
                         icon: 'success',
                         showConfirmButton: false,
                         toast: true,
@@ -101,9 +120,8 @@ export class MakeStore extends Component {
                         timer: 900
                     });
                     setTimeout(() => {
-                        logout();
                         window.location = '/myStore';
-                    }, 1000)
+                    }, 1000);
                 });
         }
     }
@@ -147,10 +165,7 @@ export class MakeStore extends Component {
                                         <textarea class="sign-up-last-name bg-white" type="text" placeholder="Descripcion" value={this.state.Description} onChange={this.onChangeDescription}></textarea>
                                         <p className="help-block text-danger"></p>
                                     </div>
-                                    <div class="actions">
-                                        <p class="dark-grey">Al crear una tienda accedes a nuestros <Link to="#">Terminos de Servicio</Link>.</p>
-                                    </div>
-                                    <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
+                                    <input class="btn btn-sm btn-sign-up" type="submit" value="Enviar" />
                                 </form>
                             </div>
                         </div>
@@ -164,4 +179,4 @@ export class MakeStore extends Component {
 const mapStateToProps = (state) => ({
     auth: state.auth
 })
-export default connect(mapStateToProps, null)(MakeStore);
+export default connect(mapStateToProps, null)(EditStore);

@@ -45,6 +45,7 @@ export class MyStore extends Component {
                                 <p>{this.state.store ? this.state.store.Description : "loading"}</p>
                                 <Link to="/createProduct" class="btn btn-dark btn-lg btn-appear mt20"><span>Agregar un producto <i class="ion-android-arrow-forward"></i></span></Link>
                                 <Link to="/mySales" class="btn btn-dark btn-lg btn-appear mt20"><span>Ver mis ventas <i class="ion-android-arrow-forward"></i></span></Link>
+                                <Link to="/editStore" class="btn btn-dark btn-lg btn-appear mt20"><span>Editar tienda <i class="ion-android-arrow-forward"></i></span></Link>
                             </div>
                         </div>
                     </div>

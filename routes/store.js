@@ -60,7 +60,7 @@ router.get('/owner/:OwnerId', (req, res) => {
 router.put('/:id', auth, (req, res) => {
     Store.findById(req.params.id)
         .then(store => {
-            if (req.params.OwnerId == res.locals.id || res.locals.Role == "Administrator") {
+            if (store.OwnerId == res.locals.id || res.locals.Role == "Administrator") {
                 store.OwnerId = (req.body.OwnerId ? req.body.OwnerId : store.OwnerId);
                 store.Name = (req.body.Name ? req.body.Name : store.Name);
                 store.Description = (req.body.Description ? req.body.Description : store.Description);

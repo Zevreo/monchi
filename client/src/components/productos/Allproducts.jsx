@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import Pagination from "../utilities/Pagination";
 import Filters from "../utilities/Filters";
+import Swal from 'sweetalert2';
 
 export function Allproducts(props) {
     const navigate = useNavigate();
@@ -37,6 +38,12 @@ export function Allproducts(props) {
             };
             await axios.post('/api/cart', product, config)
                 .then(res => console.log(res.data));
+            Swal.fire({
+                title: 'Agregado',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 900
+            });
             navigate('/shoppingcart');
         }
     };
