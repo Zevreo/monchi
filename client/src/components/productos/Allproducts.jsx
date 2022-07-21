@@ -37,17 +37,18 @@ export function Allproducts(props) {
                 Quantity: 1
             };
             await axios.post('/api/cart', product, config)
-                .then(res => console.log(res.data));
-            Swal.fire({
-                title: 'Agregado',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 900
-            });
-            navigate('/shoppingcart');
+                .then(() => {
+                    Swal.fire({
+                        title: 'Agregado',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 900
+                    });
+                    navigate('/shoppingcart');
+                });
         }
     };
-
+    
     function getProducts() {
         const config = {
             headers: {

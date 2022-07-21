@@ -12,10 +12,17 @@ export function ShoppingCart(props) {
     const [Products, setProducts] = useState([]);
     const [Total, setTotal] = useState(0);
     const [Capture, setCapture] = useState();
+    const [Address, setAddress] = useState();
 
     useEffect(() => {
         GetCart();
+        GetAddress();
     }, []);
+
+    function GetAddress() {
+        axios.get(`/api/address/default/${user._id}`)
+            .then(res => setAddress(res.data));
+    }
 
     useEffect(() => {
         CartToOrder(props.auth, Total, Capture, Products)
@@ -144,13 +151,17 @@ export function ShoppingCart(props) {
                                         <th>Shipping</th>
                                         <td><p>Free</p></td>
                                     </tr>
+                                    <tr class="shipping">
+                                        <th>Address</th>
+                                        <td><strong>{ Address ? Address.Surname : "No tienes direccion" }</strong></td>
+                                    </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
                                         <td><strong><span class="amount">{user.DefaultCoin}${Total}</span></strong> </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <Paypal setCapture={setCapture} user={user} Total={Total} />
+                            { (Products.length > 0 && Address) && <Paypal setCapture={setCapture} user={user} Total={Total} /> }
                         </div>
                         <Link to="/" class="highlight mt20">Seguir comprando</Link>
                     </div>
