@@ -26,6 +26,7 @@ import PaginateProducts from './components/productos/paginateproducts';
 import ShoppingCart from './components/user/shoppingcart';
 import MySales from './components/store/mySales';
 import EditUser from './components/user/editUser';
+import EditStore from './components/store/editStore';
 
 export class App extends Component {
   componentDidMount() {
@@ -56,6 +57,7 @@ export class App extends Component {
             <Route path="/paginater" element={<PaginateProducts />} />
             <Route path="/mySales" element={<MySales />} />
             <Route path="/editUser" element={<EditUser />} />
+            <Route path="/editStore" element={<EditStore />} />
           </Routes>
           <Footer />
         </Provider>
