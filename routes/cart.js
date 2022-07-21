@@ -55,7 +55,7 @@ router.post('/', auth, async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
     const newProductCar = new Cart({ UserId, ProductId, Quantity, ProductOptions });
     if (res.locals.id == req.body.UserId) {
-        await Cart.findOne({ UserId, ProductId })
+        await Cart.findOne({ UserId, ProductId, ProductOptions })
             .then(existingProdCart => {
                 if (existingProdCart == null) {
                     newProductCar.save()
