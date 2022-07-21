@@ -25,6 +25,13 @@ router.get('/my/:UserId', auth, async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.get('/mydefault/:UserId', auth, async (req, res) => {
+    const UserId = req.params.UserId;
+    await Address.findOne({ UserId, Default:true })
+        .then(addressess => res.json(addressess))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 //POST Add store
 router.post('/', auth, (req, res) => {
     const UserId = res.locals.id;

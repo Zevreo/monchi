@@ -21,7 +21,13 @@ export default async function CartToOrder(auth, Total, Capture, Cart) {
         TransactionId: Capture.orderID,
         BuyerId: Capture.payerID
     }
-    await axios.post('/api/order', body, config)
+    const shipment={
+        api_key:"",
+        carrier:""
+    }
+
+    await axios.post('https://enviaya.com.mx/api/v1/shipments',)
+    .then(()=> axios.post('/api/order', body, config)
         .then(res => {
             axios.delete(`/api/cart/user/${auth.user._id}`)
                 .then(() => {
@@ -30,6 +36,6 @@ export default async function CartToOrder(auth, Total, Capture, Cart) {
                 })
                 .catch(err => console.error(err));
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err)));
     return response;
 }

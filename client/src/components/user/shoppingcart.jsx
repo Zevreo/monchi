@@ -11,7 +11,7 @@ export function ShoppingCart(props) {
     const [Products, setProducts] = useState([]);
     const [Total, setTotal] = useState(0);
     const [Capture, setCapture] = useState();
-
+    const [address, setAddress] = useState();
     useEffect(() => {
         GetCart();
     }, []);
@@ -25,7 +25,24 @@ export function ShoppingCart(props) {
         axios.get(`/api/cart/${user._id}`)
             .then(prod => setProducts(prod.data));
     }
-
+    function getAddres() {
+        const { user } = props.auth;
+        const { token } = props.auth;
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        }
+        if (token) {
+            config.headers['x-auth-token'] = token;
+        }
+        if (user) {
+            axios.get(`/api/address/mydefault/${user._id}`, config)
+                .then(res => {
+                    setAddress(res.data);
+                });
+        }
+    }
     async function QtyChange(cart, qty) {
         let body = { Quantity: qty }
         axios.patch(`/api/cart/quantity/${cart}`, body)
@@ -36,11 +53,39 @@ export function ShoppingCart(props) {
         axios.delete(`/api/cart/${cart}`)
             .then(() => GetCart());
     }
-
+    async function getRates() {
+        let body = {
+            api_key: "3dcc73a0b395c7310345fa0bcd6d804d",
+            shipment: {
+                shipment_type: "Package",
+                parcels: [
+                    {
+                        quantity: "1",
+                        weight: "3",
+                        weight_unit: "kg",
+                        length: "10",
+                        height: "20",
+                        width: "30",
+                        dimension_unit: "cm"
+                    }
+                ]
+            },
+            destination_direction:{
+                country_code:"MX",
+                postal_code: address.Postcode
+              },
+        }
+        axios.post(`https://enviaya.com.mx/api/v1/rates`, body)
+    }
     useEffect(() => {
         CalcTotal();
     }, [Products]);
-
+    useEffect(() => {
+        getAddres();
+    }, [])
+    useEffect(() => {
+        getRates();
+    }, [address])
     async function CalcTotal() {
         let conv = 0;
         let Subtotal = 0;
