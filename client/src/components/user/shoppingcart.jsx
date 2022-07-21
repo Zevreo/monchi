@@ -18,8 +18,18 @@ export function ShoppingCart(props) {
     }, []);
 
     useEffect(() => {
-        CartToOrder(props.auth, Total, Capture, Products);
-        console.log(props.auth);
+        CartToOrder(props.auth, Total, Capture, Products)
+            .then(() => {
+                GetCart();
+                Swal.fire({
+                    title: 'Compra exitosa',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    toast: true,
+                    position: "bottom-right",
+                    timer: 1500
+                });
+            });
     }, [Capture]);
 
     function GetCart() {
