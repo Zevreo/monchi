@@ -49,6 +49,46 @@ router.get('/', auth, async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//GET Store Orders
+router.get('/store/:id', auth, async (req, res) => {
+    const { page = 1 } = req.headers;
+    if (page < 1) page = 1;
+    if (res.locals.Role == "Owner") {
+        let SoldProducts = [];
+        await Order.find().sort({ updatedAt: -1 })
+            .then(async orders => {
+                for (var order of orders) {
+                    for (var prod of order.SaleProducts) {
+                        await Product.find({ ProductId: prod.id, StoreId: req.params.id })
+                            .then(async pds => {
+                                for (var pd of pds) {
+                                    if(pd.id == prod.ProductId){
+                                        SP = {
+                                            UserId: order.UserId,
+                                            Method: order.PaymentMethod,
+                                            TransactionId: order.TransactionId,
+                                            ProductId: prod.ProductId,
+                                            ProductOptions: prod.ProductOptions,
+                                            Quantity: prod.Quantity,
+                                            SalePrice: prod.SalePrice,
+                                            SaleCoin: prod.SaleCoin,
+                                            Image: prod.ProductImage,
+                                            Name: prod.ProductName
+                                        }
+                                        SoldProducts.push(SP);
+                                    }
+                                }
+                            });
+                    }
+                }
+                res.set({ 'x-page': page, 'x-count': SoldProducts.length });
+                res.json(SoldProducts.slice(((page-1)*3), (((page-1)*3)+3)));
+            })
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+    else res.status(400).json("No tienes permiso para hacer eso");
+});
+
 //POST New order
 router.post('/', auth, async (req, res) => {
     const { SaleTotal, SaleCoin, PaymentMethod,

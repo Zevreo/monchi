@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import Converter from "../utilities/converter";
 import Gallery from "./relatedprods";
+import Swal from 'sweetalert2';
 
 export function SingleProduct(props) {
     const { user } = props.auth;
-    const [search, setSearch] = useState(null);
     const navigate = useNavigate();
     let { id } = useParams();
     const [product, setProduct] = useState()
@@ -46,19 +46,23 @@ export function SingleProduct(props) {
             const CartProduct = {
                 UserId: user._id,
                 ProductId: id,
-                Quantity: e.target[0].value,
+                Quantity: Number(e.target[0].value),
                 ProductOptions
             };
             await axios.post('/api/cart', CartProduct, config)
-                .then(res => console.log(res.data));
-            navigate('/shoppingcart');
+                .then(res => {
+                    Swal.fire({
+                        title: 'Agregado',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 900
+                    });
+                    navigate('/shoppingcart');
+                });
         }
     };
-
     return (
-
         <div class="site-wrapper">
-
             <section class="shop-product pt10 pb40">
                 <div class="container">
                     {product ?
@@ -109,34 +113,22 @@ export function SingleProduct(props) {
                         : <Loader />}
                 </div>
             </section>
-
             <section class="pb40">
                 <div class="container">
                     <div class="row white-bg">
-
                         <div class="col-md-12 section-heading">
                             <h5>You May Also Like</h5>
                             <h3>Related Products</h3>
                         </div>
-
                         <div class="pt80 pb20">
                             {product ? <Gallery precio={product.ProductPrice} /> : <Loader />}
-
-
                         </div>
-
                     </div>
                 </div>
             </section>
-
             <a id="back-to-top"><i class="icon ion-chevron-up"></i></a>
-
-
         </div>
     )
-
-
-
 }
 
 const mapStateToProps = (state) => ({

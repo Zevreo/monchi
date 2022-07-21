@@ -31,7 +31,7 @@ export default async function CartToOrder(auth, Total, Capture, Cart) {
         .then(res => {
             axios.delete(`/api/cart/user/${auth.user._id}`)
                 .then(() => {
-                    response = "Carrito borrado y orden agregada";
+                    response = "Success";
                     console.log(response);
                 })
                 .catch(err => console.error(err));

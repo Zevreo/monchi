@@ -45,7 +45,7 @@ router.get('/:UserId', async (req, res) => {
 //POST Add product to cart
 router.post('/', auth, async (req, res) => {
     let { UserId, ProductId, Quantity, ProductOptions } = req.body;
-    if (ProductOptions == "") ProductOptions = "N/A";
+    if (ProductOptions == "" || ProductOptions == null) ProductOptions = "N/A";
     let Stock;
     await Product.findById(ProductId)
         .then(prod => {
@@ -55,7 +55,7 @@ router.post('/', auth, async (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
     const newProductCar = new Cart({ UserId, ProductId, Quantity, ProductOptions });
     if (res.locals.id == req.body.UserId) {
-        await Cart.findOne({ UserId, ProductId })
+        await Cart.findOne({ UserId, ProductId, ProductOptions })
             .then(existingProdCart => {
                 if (existingProdCart == null) {
                     newProductCar.save()

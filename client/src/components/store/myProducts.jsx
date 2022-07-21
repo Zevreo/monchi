@@ -13,6 +13,7 @@ export function MyProducts(props) {
     const [products, setProducts] = useState([]);
     const [maxPage, setMax] = useState(1);
     const [disable, setDisable] = useState(false);
+    const [status, setStatus] = useState("");
 
     function getProducts() {
         const { Store } = props;
@@ -21,7 +22,8 @@ export function MyProducts(props) {
                 "page": Page,
                 "limit": limit,
                 "sort": sort,
-                "order": order
+                "order": order,
+                "status": status
             }
         }
         axios.get(`/api/product/store/${Store._id}`, config)
@@ -50,7 +52,7 @@ export function MyProducts(props) {
         else {
             setPage(1);
         }
-    }, [limit, sort, order]);
+    }, [limit, sort, order, status]);
 
     let floor = ((limit * (Page - 1)) + 1);
     let ceil = (limit * Page) > count ? count : (limit * Page);
@@ -60,6 +62,12 @@ export function MyProducts(props) {
             <div class="row white-bg">
                 <p class="shop-result-count">Showing {floor} to {ceil} of {count} results</p>
                 <Filters setSort={setSort} setLimit={setLimit} setOrder={setOrder} disable={disable} />
+                <select class="shop-sorting" onChange={(e) => setStatus(e.target.value)} disabled={disable}>
+                    <option value="">Todos</option>
+                    <option value="Active">Activos</option>
+                    <option value="Paused">Pausados</option>
+                    <option value="Removed">Removidos</option>
+                </select>
                 <ul class="shop-items portfolioContainer col-md-12 height-auto margin row">
                     {products.map((d, i) => (
                         <li class="relative col-lg-3 col-md-4 col-sm-6" style={{ padding: '15px' }} key={i}>

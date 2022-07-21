@@ -85,16 +85,22 @@ router.get('/searchbyprecio/:precio', async (req, res) => {
 //GET All ByStore
 router.get('/store/:StoreId', async (req, res) => {
     const StoreId = req.params.StoreId;
-    const { page = 1, limit = 12, sort = "updatedAt", order = -1 } = req.headers;
+    const { page = 1, limit = 12, sort = "updatedAt", order = -1, status = "" } = req.headers;
     if (page < 1) page = 1;
     if (limit < 1) limit = 12;
     if (sort != "updatedAt" && sort != "ProductPrice") sort = "updatedAt";
-    const count = await Product.find({ StoreId: StoreId }).countDocuments();
+    const count = await Product.find({
+        $and: [{ StoreId: { $regex: new RegExp(StoreId, 'i') } },
+        { Status: { $regex: new RegExp(status, 'i') } }]
+    }).countDocuments();
     res.set({
         'x-page': page, 'x-count': count,
         'x-limit': limit, 'x-sort': sort
     })
-    await Product.find({ StoreId: StoreId }).sort({ [sort]: order })
+    await Product.find({
+        $and: [{ StoreId: { $regex: new RegExp(StoreId, 'i') } },
+        { Status: { $regex: new RegExp(status, 'i') } }]
+    }).sort({ [sort]: order })
         .limit(limit * 1).skip((page - 1) * limit)
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
