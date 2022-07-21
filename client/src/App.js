@@ -27,6 +27,8 @@ import ShoppingCart from './components/user/shoppingcart';
 import MySales from './components/store/mySales';
 import EditUser from './components/user/editUser';
 import EditStore from './components/store/editStore';
+import SendForgotPassword from './components/user/forgot';
+import ChangeForgotPassword from './components/user/changeForgot';
 
 export class App extends Component {
   componentDidMount() {
@@ -58,6 +60,8 @@ export class App extends Component {
             <Route path="/mySales" element={<MySales />} />
             <Route path="/editUser" element={<EditUser />} />
             <Route path="/editStore" element={<EditStore />} />
+            <Route path="/forgotPassword" element={<SendForgotPassword />} />
+            <Route path="/changeForgot/:token" element={<ChangeForgotPassword />} />
           </Routes>
           <Footer />
         </Provider>
