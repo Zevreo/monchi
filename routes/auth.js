@@ -80,4 +80,22 @@ router.post('/forgot', (req, res) => {
         })
 })
 
+router.post('/spam', (req, res) => {
+    const { Email } = req.body;
+    var mailOptions = {
+        from: 'newsletter@monchi.com',
+        to: Email,
+        subject: 'Monchi Newsletter',
+        text: 'Has sido añadido a la lista de noticias de Monchi'
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.json("Mail sent to: " + EmailAddress);
+        }
+    });
+})
+
 module.exports = router;

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { connect } from 'react-redux';
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import Swal from 'sweetalert2';
@@ -55,7 +54,4 @@ export function ChangeForgotPassword(props) {
     );
 };
 
-const mapStateToProps = (state) => ({
-    auth: state.auth
-});
-export default connect(mapStateToProps, null)(ChangeForgotPassword);
+export default ChangeForgotPassword;

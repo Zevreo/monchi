@@ -109,4 +109,22 @@ router.patch('/password', forgot, (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.patch('/credentials/:id', auth, (req, res) => {
+    if (req.params.id == res.locals.id) {
+        const { newPassword, newEmail } = req.body;
+        User.findById(req.params.id)
+            .then(user => {
+                user.EmailAddress = newEmail;
+                user.Password = bcrypt.hashSync(newPassword);
+                user.save()
+                    .then(() => res.json("Credenciales cambiadas"))
+                    .catch(err => res.status(400).json('Error: ' + err));
+            })
+            .catch(err => res.status(400).json('Error: ' + err));
+    }
+    else {
+        return res.status(401).json('No tienes permiso para hacer eso');
+    }
+})
+
 module.exports = router;
