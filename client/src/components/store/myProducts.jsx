@@ -62,7 +62,7 @@ export function MyProducts(props) {
             <div class="row white-bg">
                 <p class="shop-result-count">Showing {floor} to {ceil} of {count} results</p>
                 <Filters setSort={setSort} setLimit={setLimit} setOrder={setOrder} disable={disable} />
-                <select class="shop-sorting" onChange={(e) => setStatus(e.target.value)} disabled={disable}>
+                <select class="shop-sorting bg-dark-2" onChange={(e) => setStatus(e.target.value)} disabled={disable}>
                     <option value="">Todos</option>
                     <option value="Active">Activos</option>
                     <option value="Paused">Pausados</option>

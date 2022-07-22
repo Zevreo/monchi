@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Converter, ConverterMultiply } from '../utilities/converter';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Paypal from "../utilities/paypal";
 import CartToOrder from "../utilities/cartToOrder";
 import Swal from 'sweetalert2';
 
 export function ShoppingCart(props) {
+    let navigate = useNavigate();
     const { user } = props.auth;
     const [Products, setProducts] = useState([]);
     const [Total, setTotal] = useState(0);
@@ -32,10 +33,11 @@ export function ShoppingCart(props) {
                     title: 'Compra exitosa',
                     icon: 'success',
                     showConfirmButton: false,
-                    toast: true,
-                    position: "bottom-right",
                     timer: 1500
                 });
+                setTimeout(() => {
+                    navigate('/orders')
+                }, 1600)
             });
     }, [Capture]);
 
@@ -148,12 +150,12 @@ export function ShoppingCart(props) {
                                         <td><span class="amount">{user.DefaultCoin}${Total}</span></td>
                                     </tr>
                                     <tr class="shipping">
-                                        <th>Shipping</th>
+                                        <th>Envío</th>
                                         <td><p>Free</p></td>
                                     </tr>
                                     <tr class="shipping">
-                                        <th>Address</th>
-                                        <td><strong>{ Address ? Address.Surname : "No tienes direccion" }</strong></td>
+                                        <th>Direccion</th>
+                                        <td><strong>{ Address ? Address.Surname : <Link to="/newAddress">Agregar direccion</Link> }</strong></td>
                                     </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
@@ -162,8 +164,9 @@ export function ShoppingCart(props) {
                                 </tbody>
                             </table>
                             { (Products.length > 0 && Address) && <Paypal setCapture={setCapture} user={user} Total={Total} /> }
+                            <Link to="/" class="highlight mt20 btn btn-dark">Seguir comprando</Link>
                         </div>
-                        <Link to="/" class="highlight mt20">Seguir comprando</Link>
+                        
                     </div>
                 </div>
             </div>

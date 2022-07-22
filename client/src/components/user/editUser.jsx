@@ -139,12 +139,23 @@ export class EditUser extends Component {
                                         <label>Nombre</label>
                                         <input class="sign-up-first-name bg-white" type="text" value={this.state.FirstName} onChange={this.onChangeFirstName} required />
                                         <p className="help-block text-danger"></p>
-                                        <label>Correo electronico</label>
-                                        <input class="sign-up-email bg-white" type="text" value={this.state.EmailAddress} onChange={this.onChangeEmailAddress} required />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Apellidos</label>
+                                        <input class="sign-up-last-name bg-white" type="text" value={this.state.LastName} onChange={this.onChangeLastName} required />
                                         <p className="help-block text-danger"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Telefono</label>
+                                        <input class="bg-white" type="tel" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
+                                        <p className="help-block text-danger"></p>
+                                    </div>
+                                    <div class="col-md-6">
                                         <label>Fecha de nacimiento</label>
                                         <input class="bg-white" type="date" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
                                         <p className="help-block text-danger"></p>
+                                    </div>
+                                    <div class="col-md-6">
                                         <label>Pais</label>
                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
                                             <option default disabled value=''>Seleccione su pais</option>
@@ -165,12 +176,6 @@ export class EditUser extends Component {
                                         <p className="help-block text-danger"></p>
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Apellidos</label>
-                                        <input class="sign-up-last-name bg-white" type="text" value={this.state.LastName} onChange={this.onChangeLastName} required />
-                                        <p className="help-block text-danger"></p>
-                                        <label>Telefono</label>
-                                        <input class="bg-white" type="tel" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
-                                        <p className="help-block text-danger"></p>
                                         <label>Moneda preferida</label>
                                         <select class="bg-white" type="text" value={this.state.DefaultCoin} onChange={this.onChangeDefaultCoin} required>
                                             <option default disabled value=''>Seleccione su moneda preferida</option>
@@ -180,7 +185,14 @@ export class EditUser extends Component {
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>
-                                    <input class="btn btn-sm btn-sign-up" type="submit" value="Enviar" />
+                                    <div class="col-md-12">
+                                        <label>Correo electronico</label>
+                                        <input class="sign-up-email bg-white" type="text" value={this.state.EmailAddress} onChange={this.onChangeEmailAddress} required />
+                                        <p className="help-block text-danger"></p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input class="btn btn-sm btn-sign-up" type="submit" value="Enviar" />
+                                    </div>
                                 </form>
                             </div>
                         </div>

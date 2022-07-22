@@ -7,36 +7,30 @@ export class Perfil extends Component {
     render() {
         const { user } = this.props.auth;
         return (
-            <div class="checkout">
-                <div class="row text-center ">
+            <div class="checkout ">
+                <div class="row text-center">
                     <h3 class="mb20">Tu informacion</h3>
-                    <div class="half-left col-sm-6">
-                        <label for="exampleFormControlSelect1">Nombre</label>
-                        <input type="text" class="input-text" name="billing_first_name" value={user ? user.FirstName : "loading"} />
+                    <div class="col-sm-6 mb30">
+                        <span>Nombre: <h4 class="input-text">{user && user.FirstName}</h4></span>
                     </div>
-                    <div class="half-right col-sm-6">
-                        <label for="exampleFormControlSelect1">Apellido</label>
-                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.LastName : "loading"} />
+                    <div class="col-sm-6 mb30">
+                        <span>Apellidos: <h4 class="input-text">{user && user.LastName}</h4></span>
                     </div>
-                    <div class="half-left col-sm-6">
-                        <label for="exampleFormControlSelect1">Fecha de nacimiento</label>
-                        <input type="text" class="input-text" name="billing_first_name" value={user ? user.BirthDate : "loading"} />
+                    <div class="col-sm-6 mb30">
+                        <span>Fecha de nacimiento: <h4 class="input-text">{user && user.BirthDate}</h4></span>
                     </div>
-                    <div class="half-right col-sm-6">
-                        <label for="exampleFormControlSelect1">Pais</label>
-                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.Country : "loading"} />
+                    <div class="col-sm-6 mb30">
+                        <span>Pais: <h4 class="input-text">{user && user.Country}</h4></span>
                     </div>
-                    <div class="half-left col-sm-6">
-                        <label for="exampleFormControlSelect1">Telefono</label>
-                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.PhoneNumber : "loading"} />
+                    <div class="col-sm-6 mb30">
+                        <span>Telefono: <h4 class="input-text">{user && user.PhoneNumber}</h4></span>
                     </div>
-                    <div class="half-right col-sm-6">
-                        <label for="exampleFormControlSelect1">Moneda predeterminada</label>
-                        <input type="text" class="input-text" name="billing_last_name" value={user ? user.DefaultCoin : "loading"} />
+                    <div class="col-sm-6 mb30">
+                        <span>Moneda preferida: <h4 class="input-text">{user && user.DefaultCoin}</h4></span>
                     </div>
                 </div>
                 <Link to="/editUser" class="btn btn-dark btn-lg btn-appear mt20">Editar</Link>
-                <Link to="/editUser" class="btn btn-dark btn-lg btn-appear mt20">Cambiar contraseña</Link>
+                <Link to="/changeCredentials" class="btn btn-dark btn-lg btn-appear mt20">Cambiar email/password</Link>
             </div>
         )
     }

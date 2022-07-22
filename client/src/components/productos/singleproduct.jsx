@@ -69,7 +69,7 @@ export function SingleProduct(props) {
                         <div class="row">
                             <div class="col-sm-5 mt40 mb40">
                                 <div class=" navigation-thin ">
-                                    <div>{product ? <img src={product.ProductImages} class="img-responsive width100" alt="#" /> : <Loader />}</div>
+                                    <div>{product ? <img src={product.ProductImages[0]} class="img-responsive width100" alt="#" /> : <Loader />}</div>
                                 </div>
                             </div>
                             <div class="col-sm-7 mt40 mb40 product-details">
@@ -102,11 +102,15 @@ export function SingleProduct(props) {
                                             ))}
                                         </>
                                         : ''}
-                                    {product.Status == "Active" ?
-                                        <button className="btn btn-lg" type="submit">Agregar al carrito</button>
+                                    {props.isAuthenticated ? 
+                                        (product.Status == "Active" ?
+                                            <button className="btn btn-lg" type="submit">Agregar al carrito</button>
+                                            :
+                                            `Publication is ${product.Status}`)
                                         :
-                                        `Publication is ${product.Status}`
+                                        <strong><Link to="/login">Inicia sesion para comprar</Link></strong>
                                     }
+
                                 </form>
                             </div>
                         </div>
@@ -132,6 +136,7 @@ export function SingleProduct(props) {
 }
 
 const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
     auth: state.auth
 })
 export default connect(mapStateToProps, null)(SingleProduct);

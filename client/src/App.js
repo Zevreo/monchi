@@ -29,6 +29,9 @@ import EditUser from './components/user/editUser';
 import EditStore from './components/store/editStore';
 import SendForgotPassword from './components/user/forgot';
 import ChangeForgotPassword from './components/user/changeForgot';
+import DashOrders from './components/user/dashOrders';
+import DashAddress from './components/user/dashAddress';
+import ChangeCredentials from './components/user/changeCredentials';
 
 export class App extends Component {
   componentDidMount() {
@@ -44,6 +47,8 @@ export class App extends Component {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/perfil" element={<Dashboard />} />
+            <Route path="/orders" element={<DashOrders />} />
+            <Route path="/address" element={<DashAddress />} />
             <Route path="/makeStore" element={<MakeStore />} />
             <Route path="/myStore" element={<MyStore />} />
             <Route path="/newAddress" element={<NewAddress />} />
@@ -62,6 +67,7 @@ export class App extends Component {
             <Route path="/editStore" element={<EditStore />} />
             <Route path="/forgotPassword" element={<SendForgotPassword />} />
             <Route path="/changeForgot/:token" element={<ChangeForgotPassword />} />
+            <Route path="/changeCredentials" element={<ChangeCredentials />} />
           </Routes>
           <Footer />
         </Provider>
