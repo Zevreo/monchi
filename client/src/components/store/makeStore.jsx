@@ -90,6 +90,15 @@ export class MakeStore extends Component {
             window.location = '/myStore';
         }
     }
+    componentDidMount() {
+        if (this.state.Updated === false) {
+                axios.get('/api/fixed/country')
+                .then(res => {
+                    this.setState({Countries: res.data});
+                    this.setState({Updated: true});
+                }); 
+        }
+    }
     render() {
         return (
             <section id="login" class="bg-grey-1">
@@ -108,21 +117,10 @@ export class MakeStore extends Component {
                                         <p className="help-block text-danger"></p>
                                         <input class="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={this.state.ImageUrl} 
                                             onChange={this.onChangeImageUrl} tooltip="La imagen cargada toma prioridad"  />
-                                        <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
-                                            <option default disabled value=''>Seleccione su pais</option>
-                                            <option value='Estados Unidos de América'>Estados Unidos de América</option>
-                                            <option value='Europa'>Europa</option>
-                                            <option value='Inglaterra'>Inglaterra</option>
-                                            <option value='India'>India</option>
-                                            <option value='Australia'>Australia</option>
-                                            <option value='Canada'>Canada</option>
-                                            <option value='Singapur'>Singapur</option>
-                                            <option value='Suiza'>Suiza</option>
-                                            <option value='Malasia'>Malasia</option>
-                                            <option value='Japón'>Japón</option>
-                                            <option value='China'>China</option>
-                                            <option value='México'>México</option>
-                                            <option value='Other'>Otro</option>
+                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
+                                                 { this.state.Updated===true ? this.state.Countries.map((d, i) => (
+                                                <option key={i} value={d.CountryName}>{d.CountryName}</option>
+                                            )) : ''}                             
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>
