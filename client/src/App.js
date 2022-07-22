@@ -17,13 +17,18 @@ import MyStore from './components/store/myStore';
 import NewAddress from './components/user/direcciones/newAddress';
 import ParamsTest from './components/paramsTest';
 import Footer from './components/footer';
-import ShoppingCart from './components/user/shoppingcart';
 import CreateProduct from './components/productos/createProductHook';
 import EditProduct from './components/productos/editProduct';
 import AllProducts from './components/productos/Allproducts';
 import SingleProduct from './components/productos/singleproduct';
 import Results from './components/results';
-import PaginateProducts from './components/productos/paginateproducts'
+import PaginateProducts from './components/productos/paginateproducts';
+import ShoppingCart from './components/user/shoppingcart';
+import MySales from './components/store/mySales';
+import EditUser from './components/user/editUser';
+import EditStore from './components/store/editStore';
+import SendForgotPassword from './components/user/forgot';
+import ChangeForgotPassword from './components/user/changeForgot';
 
 export class App extends Component {
   componentDidMount() {
@@ -48,10 +53,15 @@ export class App extends Component {
             <Route path="/paramstest" element={<ParamsTest />} />
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/product/:id" element={<SingleProduct />} />
-            <Route path="/results/search=:search" element={<Results />}/>
-            <Route path="/shoppingcart" element={<ShoppingCart/>} />
+            <Route path="/results/search=:search" element={<Results />} />
+            <Route path="/shoppingcart" element={<ShoppingCart />} />
             <Route path="/editProduct/:id" element={<EditProduct />} />
-            <Route path="/paginater" element={<PaginateProducts/>} />
+            <Route path="/paginater" element={<PaginateProducts />} />
+            <Route path="/mySales" element={<MySales />} />
+            <Route path="/editUser" element={<EditUser />} />
+            <Route path="/editStore" element={<EditStore />} />
+            <Route path="/forgotPassword" element={<SendForgotPassword />} />
+            <Route path="/changeForgot/:token" element={<ChangeForgotPassword />} />
           </Routes>
           <Footer />
         </Provider>

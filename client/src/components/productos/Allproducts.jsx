@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import Pagination from "../utilities/Pagination";
 import Filters from "../utilities/Filters";
+import Swal from 'sweetalert2';
 
 export function Allproducts(props) {
     const navigate = useNavigate();
@@ -36,11 +37,18 @@ export function Allproducts(props) {
                 Quantity: 1
             };
             await axios.post('/api/cart', product, config)
-                .then(res => console.log(res.data));
-            navigate('/shoppingcart');
+                .then(() => {
+                    Swal.fire({
+                        title: 'Agregado',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 900
+                    });
+                    navigate('/shoppingcart');
+                });
         }
     };
-
+    
     function getProducts() {
         const config = {
             headers: {
@@ -102,9 +110,11 @@ export function Allproducts(props) {
                                             <div class="info hover-bottom">
                                                 <h4>{d.ProductName}</h4>
                                                 <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
-                                                {user && d.Options.length<1 ?
-                                                    <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
-                                                    : <p>Ver para elegir opciones</p>}
+                                                {d.Status == "Active" &&
+                                                    (user && d.Options.length < 1 ?
+                                                        <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
+                                                        : <p>Ver para elegir opciones</p>)
+                                                }
                                             </div>
                                         </div>
                                     </Link>

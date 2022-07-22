@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 export class Perfil extends Component {
@@ -34,6 +35,8 @@ export class Perfil extends Component {
                         <input type="text" class="input-text" name="billing_last_name" value={user ? user.DefaultCoin : "loading"} />
                     </div>
                 </div>
+                <Link to="/editUser" class="btn btn-dark btn-lg btn-appear mt20">Editar</Link>
+                <Link to="/editUser" class="btn btn-dark btn-lg btn-appear mt20">Cambiar contraseña</Link>
             </div>
         )
     }

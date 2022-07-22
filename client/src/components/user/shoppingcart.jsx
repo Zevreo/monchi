@@ -3,15 +3,41 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Converter, ConverterMultiply } from '../utilities/converter';
 import { Link } from "react-router-dom";
+import Paypal from "../utilities/paypal";
+import CartToOrder from "../utilities/cartToOrder";
+import Swal from 'sweetalert2';
 
 export function ShoppingCart(props) {
     const { user } = props.auth;
     const [Products, setProducts] = useState([]);
     const [Total, setTotal] = useState(0);
+    const [Capture, setCapture] = useState();
+    const [Address, setAddress] = useState();
 
     useEffect(() => {
         GetCart();
+        GetAddress();
     }, []);
+
+    function GetAddress() {
+        axios.get(`/api/address/default/${user._id}`)
+            .then(res => setAddress(res.data));
+    }
+
+    useEffect(() => {
+        CartToOrder(props.auth, Total, Capture, Products)
+            .then(() => {
+                GetCart();
+                Swal.fire({
+                    title: 'Compra exitosa',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    toast: true,
+                    position: "bottom-right",
+                    timer: 1500
+                });
+            });
+    }, [Capture]);
 
     function GetCart() {
         axios.get(`/api/cart/${user._id}`)
@@ -21,12 +47,28 @@ export function ShoppingCart(props) {
     async function QtyChange(cart, qty) {
         let body = { Quantity: qty }
         axios.patch(`/api/cart/quantity/${cart}`, body)
-            .then(() => GetCart())
+            .then(() => GetCart());
+        Swal.fire({
+            title: 'Cantidad agregada',
+            icon: 'success',
+            showConfirmButton: false,
+            toast: true,
+            position: "bottom-right",
+            timer: 1500
+        });
     }
 
     function RemoveItem(cart) {
         axios.delete(`/api/cart/${cart}`)
             .then(() => GetCart());
+        Swal.fire({
+            title: 'Eliminado',
+            icon: 'success',
+            showConfirmButton: false,
+            toast: true,
+            position: "bottom-right",
+            timer: 1500
+        });
     }
 
     useEffect(() => {
@@ -41,7 +83,8 @@ export function ShoppingCart(props) {
             conv = await ConverterMultiply(prod.PriceCoin, user.DefaultCoin, prod.ProductPrice, prod.Quantity);
             Subtotal = Subtotal + conv;
         }
-        setTotal(Subtotal);
+        if (user.DefaultCoin == "JPY") setTotal(Subtotal.toFixed(0));
+        else setTotal(Subtotal.toFixed(2));
     }
 
     return (
@@ -64,7 +107,7 @@ export function ShoppingCart(props) {
                             </thead>
                             <tbody>
                                 {Products.map((d, i) => (
-                                    <tr class="cart_item">
+                                    <tr class="cart_item" key={i}>
                                         <td class="product-thumbnail">
                                             <Link to={`/product/${d.ProductId}`}>
                                                 <img src={d.ProductImages[0]} alt="#" />
@@ -108,17 +151,19 @@ export function ShoppingCart(props) {
                                         <th>Shipping</th>
                                         <td><p>Free</p></td>
                                     </tr>
+                                    <tr class="shipping">
+                                        <th>Address</th>
+                                        <td><strong>{ Address ? Address.Surname : "No tienes direccion" }</strong></td>
+                                    </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
                                         <td><strong><span class="amount">{user.DefaultCoin}${Total}</span></strong> </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="wc-proceed-to-checkout">
-                                <a href="#" class="btn btn-primary btn-md btn-appear"><span>Cheeckout <i class="ion-bag"></i></span></a>
-                            </div>
+                            { (Products.length > 0 && Address) && <Paypal setCapture={setCapture} user={user} Total={Total} /> }
                         </div>
-                        <a href="shop-4columns.html" class="highlight mt20">Continue Shopping</a>
+                        <Link to="/" class="highlight mt20">Seguir comprando</Link>
                     </div>
                 </div>
             </div>
