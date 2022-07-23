@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -16,7 +15,6 @@ export function ShoppingCart(props) {
   const [Address, setAddress] = useState();
   const [Shipment, setShipment] = useState();
   const [Carrier, setCarrier] = useState();
-  const [Carriercode, setCarriercode] = useState();
 
   useEffect(() => {
     GetCart();
@@ -116,17 +114,6 @@ export function ShoppingCart(props) {
     CalcTotal();
   }, [Products]);
 
-useEffect(()=>{
-if(Carrier==="ups"){
-  setCarriercode("07")
-}
-if(Carrier==="dhl"){
-  setCarriercode("8")
-}
-else{
-  setCarriercode("2")
-}
-},[Carrier])
   async function CalcTotal() {
     let conv = 0;
     let Subtotal = 0;
@@ -247,7 +234,20 @@ else{
                   <tr class="shipping">
                     <th>Shipping</th>
                     <td>
-
+                      {Shipment && (
+                        <select
+                          class="bg-white half-left"
+                          type="text"
+                          placeholder="Status"
+                          onChange={e=>setCarrier(e.target.value)}
+                        >
+                              
+                          <option default>elige la opcion</option>
+                          <option value='{carrier:"UPS", carriercode:"07"}'>UPS-{Shipment.UPS[0].currency}${Shipment.UPS[0].total_amount}</option>
+                          <option value='{carrier:"Estafeta", carriercode:"07"}'>Estafeta-{Shipment.Estafeta[0].currency}${Shipment.Estafeta[0].total_amount}</option>
+                          <option value="Removed">Removido</option>
+                        </select>
+                      )}
                     </td>
                   </tr>
                   <tr class="shipping">
