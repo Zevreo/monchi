@@ -3,7 +3,7 @@ import React from "react";
 export function Filters(props) {
     return (
         <>
-            <select class="shop-sorting" onChange={(e) => props.setSort(e.target.value)} disabled={props.disable}>
+            <select class="shop-sorting bg-dark-2" onChange={(e) => props.setSort(e.target.value)} disabled={props.disable}>
                 <option value="updatedAt">Date</option>
                 <option value="ProductPrice">Price</option>
             </select>
