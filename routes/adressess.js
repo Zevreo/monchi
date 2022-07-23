@@ -48,7 +48,7 @@ router.post('/', auth, (req, res) => {
             const State = req.body.State;
             const City = req.body.City;
             const Postcode = req.body.Postcode;
-            const References = ( req.body.References ? req.body.References : "N/A" );
+            const References = req.body.References;
             const Surname = req.body.Surname;
             const newAddress = new Address({
                 UserId, Street, ExternalNum, InternalNum,

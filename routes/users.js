@@ -2,7 +2,6 @@ const router = require('express').Router();
 let User = require('../models/users.model');
 const bcrypt = require('bcryptjs');
 const auth = require('../middleware/auth');
-const forgot = require('../middleware/forgot');
 
 //GET All auth
 router.get('/', auth, (req, res) => {
@@ -57,6 +56,25 @@ router.get('/:id', auth, (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//POST Auth Test
+/*
+router.post('/auth', (req, res) =>{
+    const { EmailAddress, Password } = req.body;
+    if( !EmailAddress || !Password ) {
+        return res.status(400).json('Introduzca todos los campos');
+    }
+    User.findOne({ EmailAddress })
+    .then(user => {
+        if(!user) return res.status(400).json('No se encontro el usuario');
+        bcrypt.compare(Password, user.Password)
+        .then(isMatch => {
+            if(!isMatch) return res.status(400).json('Contraseña incorrecta');
+            res.json('Todo correcto')
+        })
+    })
+});
+*/
+
 //PUT Update ById auth
 router.put('/:id', auth, (req, res) => {
     User.findById(req.params.id)
@@ -95,36 +113,5 @@ router.delete('/:id', auth, (req, res) => {
         return res.status(401).json('No tienes permiso para hacer eso');
     }
 });
-
-router.patch('/password', forgot, (req, res) => {
-    const { id, EmailAddress } = res.locals;
-    const { newPassword } = req.body;
-    User.findById(id)
-        .then(user => {
-            user.Password = bcrypt.hashSync(newPassword);
-            user.save()
-                .then(() => res.json("Password cambiada"))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.patch('/credentials/:id', auth, (req, res) => {
-    if (req.params.id == res.locals.id) {
-        const { newPassword, newEmail } = req.body;
-        User.findById(req.params.id)
-            .then(user => {
-                user.EmailAddress = newEmail;
-                user.Password = bcrypt.hashSync(newPassword);
-                user.save()
-                    .then(() => res.json("Credenciales cambiadas"))
-                    .catch(err => res.status(400).json('Error: ' + err));
-            })
-            .catch(err => res.status(400).json('Error: ' + err));
-    }
-    else {
-        return res.status(401).json('No tienes permiso para hacer eso');
-    }
-})
 
 module.exports = router;

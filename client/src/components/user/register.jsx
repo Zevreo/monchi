@@ -89,8 +89,8 @@ export class Registro extends Component {
         if (this.state.Updated === false) {
             axios.get('/api/fixed/currency')
                 .then(res => {
-                    this.setState({ Currency: res.data });
-                    this.setState({ Updated: true });
+                    this.setState({Currency: res.data});
+                    this.setState({Updated: true});
                 });
         }
     }
@@ -107,20 +107,10 @@ export class Registro extends Component {
                                     <div class="col-md-6">
                                         <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.FirstName} onChange={this.onChangeFirstName} required />
                                         <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="sign-up-last-name bg-white" type="text" placeholder="Apellidos" value={this.state.LastName} onChange={this.onChangeLastName} required />
-                                        <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div class="col-md-6">
                                         <input class="sign-up-email bg-white" type="text" placeholder="Correo Electrónico" value={this.state.EmailAddress} onChange={this.onChangeEmailAddress} required />
                                         <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="sign-up-password bg-white" type="password" placeholder="Contraseña" value={this.state.Password} onChange={this.onChangePassword} required />
+                                        <input class="bg-white" type="date" placeholder="Fecha de nacimiento" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
                                         <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div class="col-md-6">
                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
                                             <option default disabled value=''>Seleccione su pais</option>
                                             <option value='Estados Unidos de América'>Estados Unidos de América</option>
@@ -140,31 +130,27 @@ export class Registro extends Component {
                                         <p className="help-block text-danger"></p>
                                     </div>
                                     <div class="col-md-6">
+                                        <input class="sign-up-last-name bg-white" type="text" placeholder="Apellidos" value={this.state.LastName} onChange={this.onChangeLastName} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="sign-up-password bg-white" type="password" placeholder="Contraseña" value={this.state.Password} onChange={this.onChangePassword} required />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="bg-white" type="tel" placeholder="Teléfono" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
+                                        <p className="help-block text-danger"></p>
                                         <select class="bg-white" type="text" placeholder="Moneda" value={this.state.DefaultCoin} onChange={this.onChangeDefaultCoin} required>
                                             <option default disabled value=''>Seleccione su moneda preferida</option>
-                                            {this.state.Updated === true ? this.state.Currency.map((d, i) => (
+                                            { this.state.Updated===true ? this.state.Currency.map((d, i) => (
                                                 <option key={i} value={d.CodeName}>{d.Name}</option>
                                             )) : ''}
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input class="bg-white" type="date" placeholder="Fecha de nacimiento" value={this.state.BirthDate} onChange={this.onChangeBirthDate} required />
-                                        <p className="help-block text-danger"></p>
+                                    <div class="actions">
+                                        <p class="dark-grey">Al crear una cuenta accedes a nuestros <Link to="#">Terminos de Servicio</Link>.</p>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input class="bg-white" type="tel" placeholder="Teléfono" value={this.state.PhoneNumber} onChange={this.onChangePhoneNumber} required />
-                                        <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="actions">
-                                            <p class="dark-grey">Al crear una cuenta accedes a nuestros <Link to="#">Terminos de Servicio</Link>.</p>
-                                        </div>
-                                        <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
-                                    </div>
+                                    <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
                                 </form>
                             </div>
-                            <p>O <Link to="/login"><strong>inicia sesión</strong></Link> usando una cuenta existente</p>
+                            <p>O <Link to="/login">inicia sesión</Link> usando una cuenta existente</p>
                         </div>
                     </div>
                 </div>

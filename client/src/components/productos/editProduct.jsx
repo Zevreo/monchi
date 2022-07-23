@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router";
 import { EditTags } from "./editTags";
 import { EditImages } from "./editImages";
 import { EditOptions } from "./editOptions";
-import Swal from 'sweetalert2';
 
 export function EditProduct(props) {
     let navigate = useNavigate();
@@ -17,6 +16,8 @@ export function EditProduct(props) {
     const [Stock, setStock] = useState();
     const [CurrentStock, setCurrentStock] = useState();
     const [Status, setStatus] = useState();
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
     const [currency, setCurrency] = useState();
     async function Submit(e) {
         e.preventDefault();
@@ -40,23 +41,12 @@ export function EditProduct(props) {
             };
             await axios.put(`/api/product/${id}`, body, config)
                 .then(res => {
-                    Swal.fire({
-                        title: 'Producto modificado',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 900
-                    });
+                    setSuccess('Producto modificado exitosamente');
                     setTimeout(() => {
                         navigate("/myStore");
                     }, 1000);
                 })
-                .catch(err => Swal.fire({
-                    title: 'Hubo un error',
-                    icon: 'error',
-                    text: err,
-                    showConfirmButton: false,
-                    timer: 900
-                }))
+                .catch(err => setError(err))
         }
     };
     useEffect(() => {
@@ -77,9 +67,31 @@ export function EditProduct(props) {
                 });
         }
     }, []);
+    const errorMessage = (
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="ion-ios-close"></i></button>
+                    <i class="ion-android-alert"></i><strong>{error}</strong>
+                </div>
+            </div>
+        </div>
+    )
+    const successMessage = (
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-success fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="ion-ios-close"></i></button>
+                    <i class="ion-android-alert"></i><strong>{success}</strong>
+                </div>
+            </div>
+        </div>
+    )
     return (
         <section id="login" class="bg-grey-1">
             <div class="login-container">
+                {error !== null ? errorMessage : ''}
+                {success !== null ? successMessage : ''}
                 <div class="container text-center">
                     <div class="col-md-12">
                         <h3 class="mb5">Editar producto</h3>

@@ -35,6 +35,8 @@ export function Results(props) {
         axios.get(`/api/product/search/${Search}`, config)
             .then(prods => {
                 setProducts(prods.data);
+                setPage(Number(prods.headers['x-page']));
+                setLimit(Number(prods.headers['x-limit']));
                 setCount(Number(prods.headers['x-count']));
                 setDisable(false);
             });
@@ -70,10 +72,6 @@ export function Results(props) {
         }
     };
 
-    useEffect(() => {
-        setSearch(search);
-    }, [search]);
-
     useEffect(() =>{
         GetResults();
     }, [Search, Page]);
@@ -98,9 +96,8 @@ export function Results(props) {
     return (
         <section class="shop bg-grey-1">
             <div class="container">
-                <h3 class="text-center">Mostrando resultados para "{search}"</h3>
                 <div class="row white-bg">
-                    <p class="shop-result-count">Mostrando {floor} a {ceil} de {count} resultados</p>
+                    <p class="shop-result-count">Showing {floor} to {ceil} of {count} results</p>
                     <Filters setSort={setSort} setLimit={setLimit} setOrder={setOrder} disable={disable} />
                     <ul class="shop-items portfolioContainer col-md-12 height-auto margin row">
                         {Products.map((d, i) => (
@@ -115,12 +112,10 @@ export function Results(props) {
                                             </h4>
                                             <div class="info hover-bottom">
                                                 <h4>{d.ProductName}</h4>
-                                                <p>Tags:{d.Tags.map((d, i) => <Link to={`/results/search=${d}`}><i> {d} </i></Link>)}</p>
-                                                {d.Status == "Active" &&
-                                                    (user ? (d.Options.length < 1 ?
-                                                        <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
-                                                        : <p>Ver para elegir opciones</p>) : <p><Link style={{color: "black"}} to="/login">Inicia sesion para comprar</Link></p>)
-                                                }
+                                                <p>Tags:{d.Tags.map((d, i) => <i> {d} </i>)}</p>
+                                                {user ?
+                                                    <button className="btn btn-dark btn-md" type="button" onClick={() => AddCart(d._id)}>Agregar</button>
+                                                    : ''}
                                             </div>
                                         </div>
                                     </Link>

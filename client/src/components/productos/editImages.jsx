@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
 
 export function EditImages(props) {
     const [UploadImage, setUploadImage] = useState();
     const [ProductImage, setProductImage] = useState();
     const [ProductImages, setProductImages] = useState([]);
+    const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null);
     var formData = new FormData();
     const [dataform, setDataForm] = useState();
     useEffect(() => {
@@ -22,21 +23,9 @@ export function EditImages(props) {
             .then(res => {
                 setProductImage(res.data.url);
                 setUploadImage('');
-                Swal.fire({
-                    title: 'Imagen cargada correctamente',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 900,
-                    imageUrl: res.data.url
-                });
+                setSuccess("Imagen cargada correctamente")
             })
-            .catch(err => Swal.fire({
-                title: 'Hubo un error',
-                icon: 'error',
-                text: err,
-                showConfirmButton: false,
-                timer: 900
-            }));
+            .catch(err => setError(err));
     };
     useEffect(() => {
         Init();
@@ -53,13 +42,7 @@ export function EditImages(props) {
                 Init();
                 setProductImage('');
             })
-            .catch(err => Swal.fire({
-                title: 'Hubo un error',
-                icon: 'error',
-                text: err,
-                showConfirmButton: false,
-                timer: 900
-            }));
+            .catch(err => setError(err));
         const imageInput = document.getElementById('imageUpload');
         imageInput.value = '';
     };
@@ -67,13 +50,7 @@ export function EditImages(props) {
         const body = { imageIndex: e };
         await axios.put(`/api/product/removeImage/${props.id}`, body)
             .then(() => Init())
-            .catch(err => Swal.fire({
-                title: 'Hubo un error',
-                icon: 'error',
-                text: err,
-                showConfirmButton: false,
-                timer: 900
-            }))
+            .catch(err => setError(err))
     }
     return (
         <div id="login" class="bg-grey-1">

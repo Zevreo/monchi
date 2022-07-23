@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { useNavigate } from "react-router";
-import Swal from 'sweetalert2';
 
 export function NewAddress(props) {
     let navigate = useNavigate();
+    const [msg, setMsg] = useState();
     const [Street, setStreet] = useState();
     const [Ext, setExt] = useState();
     const [Int, setInt] = useState();
@@ -15,7 +15,6 @@ export function NewAddress(props) {
     const [Postcode, sePostcode] = useState();
     const [References, setReferences] = useState();
     const [Surname, setSurname] = useState();
-
     async function onSubmit(e) {
         e.preventDefault();
         const { user, token } = props.auth;
@@ -39,23 +38,27 @@ export function NewAddress(props) {
                 Surname: Surname
             };
             await axios.post('/api/address', address, config)
-                .then(() => {
-                    Swal.fire({
-                        title: 'Direccion agregada',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    setTimeout(() => {
-                        navigate('/address');
-                    }, 1600);
-                });
+                .then(res => setMsg("Direccion agregada exitosamente"));
+
+            setTimeout(() => {
+                navigate('/perfil');
+            }, 3000);
         }
     }
-
+    const Message = (
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-success fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="ion-ios-close"></i></button>
+                    <i class="ion-android-alert"></i><strong>{msg}</strong>
+                </div>
+            </div>
+        </div>
+    )
     return (
         <section class="bg-grey-1">
-            <div class="container mt80 mb80">
+            <div class="container">
+                { msg ? Message : ''}
                 <div class="checkout">
                     <form class="row text-center" onSubmit={onSubmit}>
                         <div class="half-left col-sm-6">
@@ -99,18 +102,16 @@ export function NewAddress(props) {
                             <p className="help-block text-danger"></p>
                         </div>
                         <label for="exampleFormControlSelect1">Referencias</label>
-                        <textarea type="text" class="input-text bg-grey" onChange={e => setReferences(e.target.value)} value={References} name="References" />
+                        <textarea type="text" class="input-text" onChange={e => setReferences(e.target.value)} value={References} name="References" required />
                         <p className="help-block text-danger"></p>
-                        <input class="btn btn-md btn-primary" type="submit" value="Registrar" />
+                        <input class="btn btn-sm btn-sign-up" type="submit" value="Registrar" />
                     </form>
                 </div>
             </div>
         </section>
     );
 }
-
 const mapStateToProps = (state) => ({
     auth: state.auth
 });
-
 export default connect(mapStateToProps, null)(NewAddress);

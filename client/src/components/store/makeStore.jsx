@@ -120,8 +120,11 @@ export class MakeStore extends Component {
                                     <div className="col-md-6">
                                         <input class="sign-up-first-name bg-white" type="text" placeholder="Nombre" value={this.state.Name} onChange={this.onChangeName} required feedbackToolTip />
                                         <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div className="col-md-6">
+                                        <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
+                                            onChange={this.onChangeStoreImage} id="imageUpload" title="La imagen cargada toma prioridad" />
+                                        <p className="help-block text-danger"></p>
+                                        <input class="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={this.state.ImageUrl}
+                                            onChange={this.onChangeImageUrl} tooltip="La imagen cargada toma prioridad" />
                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
                                             <option default disabled value=''>Seleccione su pais</option>
                                             <option value='Estados Unidos de América'>Estados Unidos de América</option>
@@ -140,16 +143,7 @@ export class MakeStore extends Component {
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>
-                                    <div className="col-md-6">
-                                        <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
-                                            onChange={this.onChangeStoreImage} id="imageUpload" title="La imagen cargada toma prioridad" />
-                                        <p className="help-block text-danger"></p>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <input class="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={this.state.ImageUrl}
-                                            onChange={this.onChangeImageUrl} tooltip="La imagen cargada toma prioridad" />
-                                    </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <textarea class="sign-up-last-name bg-white" type="text" placeholder="Descripcion" value={this.state.Description} onChange={this.onChangeDescription}></textarea>
                                         <p className="help-block text-danger"></p>
                                     </div>

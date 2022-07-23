@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from "axios";
 import { useNavigate } from "react-router";
-import Swal from 'sweetalert2';
 
 export function CreateProduct(props) {
     let navigate = useNavigate();
@@ -15,6 +14,8 @@ export function CreateProduct(props) {
     const [Stock, setStock] = useState();
     const [tags, setTags] = useState();
     const [store, setStore] = useState();
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
     const [currency, setCurrency] = useState();
     var formData = new FormData();
     const [dataform, setDataForm] = useState();
@@ -29,23 +30,9 @@ export function CreateProduct(props) {
         await axios.post('https://api.cloudinary.com/v1_1/dvticou1l/image/upload', dataform)
             .then(res => {
                 setProductImage(res.data.url);
-                Swal.fire({
-                    title: 'Imagen cargada correctamente',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 900,
-                    imageUrl: res.data.url
-                });
+                setSuccess("Imagen cargada correctamente")
             })
-            .catch(err => 
-                Swal.fire({
-                    title: 'Hubo un error',
-                    icon: 'error',
-                    text: err,
-                    showConfirmButton: false,
-                    timer: 900
-                })
-                );
+            .catch(err => setError(err));
     };
     async function Submit(e) {
         e.preventDefault();
@@ -72,25 +59,12 @@ export function CreateProduct(props) {
             };
             await axios.post('/api/product', body, config)
                 .then(res => {
-                    Swal.fire({
-                        title: 'Producto agregado',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 900
-                    });
+                    setSuccess('Producto agregado exitosamente');
                     setTimeout(() => {
                         navigate("/myStore");
                     }, 1000);
                 })
-                .catch(err => 
-                    Swal.fire({
-                        title: 'Hubo un error',
-                        icon: 'error',
-                        text: err,
-                        showConfirmButton: false,
-                        timer: 900
-                    })
-                    )
+                .catch(err => setError(err))
         }
     };
     useEffect(() => {
@@ -106,59 +80,62 @@ export function CreateProduct(props) {
                 });
         }
     }, []);
+    const errorMessage = (
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="ion-ios-close"></i></button>
+                    <i class="ion-android-alert"></i><strong>{error}</strong>
+                </div>
+            </div>
+        </div>
+    )
+    const successMessage = (
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-success fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="ion-ios-close"></i></button>
+                    <i class="ion-android-alert"></i><strong>{success}</strong>
+                </div>
+            </div>
+        </div>
+    )
     return (
         <section id="login" class="bg-grey-1">
             <div class="login-container">
+                {error !== null ? errorMessage : ''}
+                {success !== null ? successMessage : ''}
                 <div class="container text-center">
                     <div class="col-md-12">
                         <h3 class="mb5">Crear producto</h3>
                         <p class="subheading">Agregue su producto a su tienda</p>
-                        <div class="pt30 pb30">
-                            <form onSubmit={Submit} className="row">
-                                <div class="col-md-6">
-                                    <input class="input-text" type="text" placeholder="Nombre del producto" value={ProductName} onChange={e => setProductName(e.target.value)} required />
-                                    <p className="help-block text-danger"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="input-text" type="number" placeholder="Inventario" value={Stock} onChange={e => setStock(e.target.value)} required />
-                                    <p className="help-block text-danger"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="input-text" type="number" placeholder="Precio" value={ProductPrice} onChange={e => setProductPrice(e.target.value)} required />
-                                    <p className="help-block text-danger"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="bg-white half-left" type="text" placeholder="Moneda" value={PriceCoin} onChange={e => setPriceCoin(e.target.value)} name="PriceCoin" required>
-                                        <option default value='USD'>Elija la moneda (predeterminado: USD)</option>
-                                        {currency ? currency.map((d, i) => (
-                                            <option key={i} value={d.CodeName}>{d.Name}</option>
-                                        )) : ''}
-                                    </select>
-                                    <p className="help-block text-danger"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="input-text" type="text" placeholder="Descripcion" value={ProductDescription} onChange={e => setProductDescription(e.target.value)} required />
-                                    <p className="help-block text-danger"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="input-text" type="text" placeholder="Tags separados por commas" value={tags} onChange={e => setTags(e.target.value)} required />
-                                    <p className="help-block text-danger"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
-                                        onChange={e => setUploadImage(e.target.files[0])} id="imageUpload" title="La imagen cargada toma prioridad" />
-                                </div>
-                                <div class="col-md-6">
-                                    {UploadImage ?
-                                        <button class="btn btn-sm btn-login mb10" type="button" onClick={Upload}>Cargar</button>
-                                        :
-                                        <input class="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={ProductImage}
-                                            onChange={e => setProductImage(e.target.value)} tooltip="La imagen cargada toma prioridad" />
-                                    }
-                                </div>
-                                <div class="col-md-12 mt20">
-                                    <input class="btn btn-sm btn-login" type="submit" value="Enviar" />
-                                </div>
+                        <div class="login-form pt30 pb30">
+                            <form onSubmit={Submit}>
+                                <input class="input-text" type="text" placeholder="Nombre del producto" value={ProductName} onChange={e => setProductName(e.target.value)} required />
+                                <p className="help-block text-danger"></p>
+                                <input class="input-text" type="number" placeholder="Inventario" value={Stock} onChange={e => setStock(e.target.value)} required />
+                                <p className="help-block text-danger"></p>
+                                <input class="input-text" type="number" placeholder="Precio" value={ProductPrice} onChange={e => setProductPrice(e.target.value)} required />
+                                <p className="help-block text-danger"></p>
+                                <select class="bg-white half-left" type="text" placeholder="Moneda" value={PriceCoin} onChange={e => setPriceCoin(e.target.value)} name="PriceCoin" required>
+                                    <option default value='USD'>Elija la moneda (predeterminado: USD)</option>
+                                    { currency ? currency.map((d, i) => (
+                                        <option key={i} value={d.CodeName}>{d.Name}</option>
+                                    )) : ''}
+                                </select>
+                                <p className="help-block text-danger"></p>
+                                <input class="input-text" type="text" placeholder="Descripcion" value={ProductDescription} onChange={e => setProductDescription(e.target.value)} required />
+                                <p className="help-block text-danger"></p>
+                                <input className="sign-up-email bg-white" type="file" name="file" accept="image/png, image/jpeg"
+                                    onChange={e => setUploadImage(e.target.files[0])} id="imageUpload" title="La imagen cargada toma prioridad" />
+                                {UploadImage ?
+                                    <button class="btn btn-sm btn-login mb10" type="button" onClick={Upload}>Cargar</button>
+                                    :
+                                    <input class="sign-up-first-name bg-white" type="text" placeholder="URL de la imagen" value={ProductImage}
+                                        onChange={e => setProductImage(e.target.value)} tooltip="La imagen cargada toma prioridad" />}
+                                <input class="input-text" type="text" placeholder="Tags separados por commas" value={tags} onChange={e => setTags(e.target.value)} required />
+                                <p className="help-block text-danger"></p>
+                                <input class="btn btn-sm btn-login" type="submit" value="Enviar" />
                             </form>
                         </div>
                     </div>
