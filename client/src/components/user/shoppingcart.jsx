@@ -15,7 +15,7 @@ export function ShoppingCart(props) {
   const [Address, setAddress] = useState();
   const [Shipment, setShipment] = useState();
   const [Carrier, setCarrier] = useState();
-
+  const [Carriercode, setCarriercode] = useState();
   useEffect(() => {
     GetCart();
     GetAddress();
@@ -46,7 +46,7 @@ export function ShoppingCart(props) {
   }
   async function getRates() {
     let body = {
-      api_key: "3dcc73a0b395c7310345fa0bcd6d804d",
+      api_key:"ab59616e1bbc0a846c08b30f2eb7fc8d",
       shipment: {
         shipment_type: "Package",
         parcels: [
@@ -114,6 +114,15 @@ export function ShoppingCart(props) {
   useEffect(() => {
     CalcTotal();
   }, [Products]);
+
+  useEffect(()=>{
+    if(Carrier==="ups"){
+      setCarriercode("07")
+    }
+    if(Carrier==="redpack"){
+      setCarriercode("2")
+    }
+    },[Carrier]);
 
   async function CalcTotal() {
     let conv = 0;
@@ -244,9 +253,8 @@ export function ShoppingCart(props) {
                         >
                               
                           <option default>elige la opcion</option>
-                          <option value='{carrier:"UPS", carriercode:"07"}'>UPS-{Shipment.UPS[0].currency}${Shipment.UPS[0].total_amount}</option>
-                          <option value='{carrier:"Estafeta", carriercode:"07"}'>Estafeta-{Shipment.Estafeta[0].currency}${Shipment.Estafeta[0].total_amount}</option>
-                          <option value="Removed">Removido</option>
+                          <option value="ups">UPS-{Shipment.UPS[0].currency}${Shipment.UPS[0].total_amount}</option>
+                          <option value="redpack">REDPACK-{Shipment.Redpack[0].currency}${Shipment.Redpack[0].total_amount} </option>
                         </select>
                       )}
                     </td>
