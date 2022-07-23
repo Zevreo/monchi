@@ -12,10 +12,10 @@ const auth = require('../middleware/auth');
 
 //GET All products with tags
 router.get('/', async (req, res) => {
-    const { page = 1, limit = 12, sort = "updatedAt", order = -1 } = req.headers;
+    var { page = 1, limit = 12, sort = "Stock", order = -1 } = req.headers;
     if (page < 1) page = 1;
     if (limit < 1) limit = 12;
-    if (sort != "updatedAt" && sort != "ProductPrice") sort = "updatedAt";
+    if (sort != "updatedAt" && sort != "ProductPrice") sort = "Stock";
     const count = await Product.find({
         $or: [{ Status: { $regex: new RegExp('Active', 'i') } },
         { Status: { $regex: new RegExp('Paused', 'i') } }]
@@ -59,25 +59,10 @@ router.get('/search/:search', async (req, res) => {
 });
 
 // GET Related Products by Price
-router.get('/searchbyprecio/:precio', async (req, res) => {
-    const { precio } = req.params;
-    await Product.find({
-        $or: [
-            {
-                $and: [
-                    { ProductPrice: { $lte: parseInt(precio) * 1.10 } },
-                    { ProductPrice: { $gt: precio } }
-                ]
-            },
-            {
-                $and: [
-                    { ProductPrice: { $gte: parseInt(precio) * .90 } },
-                    { ProductPrice: { $lt: precio } }
-                ]
-            },
-            { ProductPrice: { $eq: precio } }
-        ]
-    })
+router.get('/searchbyprecio/:StoreId', async (req, res) => {
+    var count = await Product.find({StoreId: req.params.StoreId }).countDocuments();
+    var random = Math.floor(Math.random() * count);
+    await Product.find({StoreId: req.params.StoreId }).limit(24).skip(random)
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -140,6 +125,13 @@ router.post('/mass', auth, (request, res) => {
     }
     res.json("Added succesfully");
 });
+
+//DELETE Mass
+router.delete('/mass/:StoreId', auth, (req, res) => {
+    Product.deleteMany({StoreId: req.params.StoreId})
+        .then(() => res.json("Deleted all from store"))
+        .catch(err => res.status(400).json('Error: ' + err));
+})
 
 //PUT Edit base product
 router.put('/:id', auth, (req, res) => {

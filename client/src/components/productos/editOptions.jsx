@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 export function EditOptions(props) {
     const [options, setOptions] = useState();
     const [OptionName, setOptionName] = useState();
     const [OptionTypes, setOptionTypes] = useState();
-    const [newOption, setNewOption] = useState();
-    const [error, setError] = useState(null);
     useEffect(() => {
         Init();
     }, []);
@@ -24,19 +23,37 @@ export function EditOptions(props) {
                 setOptionName('');
                 setOptionTypes('');
             })
-            .catch(err => setError(err))
+            .catch(err => Swal.fire({
+                title: 'Hubo un error',
+                icon: 'error',
+                text: err,
+                showConfirmButton: false,
+                timer: 900
+            }))
     };
     async function DeleteParent(e) {
         const body = { optionIndex: e };
         await axios.put(`/api/product/removeOption/${props.id}`, body)
             .then(() => Init())
-            .catch(err => setError(err))
+            .catch(err => Swal.fire({
+                title: 'Hubo un error',
+                icon: 'error',
+                text: err,
+                showConfirmButton: false,
+                timer: 900
+            }))
     }
     async function DeleteChild(a, b) {
         const body = { indexParent: b, indexChild: a };
         await axios.put(`/api/product/removeOptionSingle/${props.id}`, body)
             .then(() => Init())
-            .catch(err => setError(err))
+            .catch(err => Swal.fire({
+                title: 'Hubo un error',
+                icon: 'error',
+                text: err,
+                showConfirmButton: false,
+                timer: 900
+            }))
     }
     async function AddChild(e) {
         e.preventDefault();
@@ -47,7 +64,13 @@ export function EditOptions(props) {
                 Init();
                 e.target[1].value = '';
             })
-            .catch(err => setError(err))
+            .catch(err => Swal.fire({
+                title: 'Hubo un error',
+                icon: 'error',
+                text: err,
+                showConfirmButton: false,
+                timer: 900
+            }))
     }
     return (
         <div class="bg-grey-1">
