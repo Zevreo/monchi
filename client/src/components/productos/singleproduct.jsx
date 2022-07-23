@@ -125,7 +125,7 @@ export function SingleProduct(props) {
                             <h3>Related Products</h3>
                         </div>
                         <div class="pt80 pb20">
-                            {product ? <Gallery precio={product.ProductPrice} /> : <Loader />}
+                            {product ? <Gallery precio={product.StoreId} /> : <Loader />}
                         </div>
                     </div>
                 </div>

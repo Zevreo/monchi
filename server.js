@@ -9,8 +9,10 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5001;
 
+const maxRequestBodySize = '2mb';
+app.use(express.json({limit: maxRequestBodySize}));
+
 app.use(cors());
-app.use(express.json());
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "client", "build","public")))
 
