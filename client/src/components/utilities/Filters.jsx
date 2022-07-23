@@ -4,6 +4,7 @@ export function Filters(props) {
     return (
         <>
             <select class="shop-sorting bg-dark-2" onChange={(e) => props.setSort(e.target.value)} disabled={props.disable}>
+                <option value="Stock">Monchi's Choice</option>
                 <option value="updatedAt">Date</option>
                 <option value="ProductPrice">Price</option>
             </select>

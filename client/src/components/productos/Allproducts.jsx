@@ -13,7 +13,7 @@ export function Allproducts(props) {
     const [Products, setProducts] = useState([]);
     const [Page, setPage] = useState(1)
     const [limit, setLimit] = useState(12);
-    const [sort, setSort] = useState("updatedAt");
+    const [sort, setSort] = useState("Stock");
     const [order, setOrder] = useState(-1)
     const [count, setCount] = useState();
     const [maxPage, setMax] = useState(1);
