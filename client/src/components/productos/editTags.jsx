@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 export function EditTags(props) {
     const [tags, setTags] = useState();
     const [tag, setTag] = useState();
-    const [error, setError] = useState(null);
     useEffect(() => {
         Init();
     }, []);
@@ -21,13 +21,25 @@ export function EditTags(props) {
                 Init();
                 setTag('');
             })
-            .catch(err => setError(err))
+            .catch(err => Swal.fire({
+                title: 'Hubo un error',
+                icon: 'error',
+                text: err,
+                showConfirmButton: false,
+                timer: 900
+            }))
     };
     async function Delete(e) {
         const body = { tagIndex: e };
         await axios.put(`/api/product/removeTag/${props.id}`, body)
             .then(() => Init())
-            .catch(err => setError(err))
+            .catch(err => Swal.fire({
+                title: 'Hubo un error',
+                icon: 'error',
+                text: err,
+                showConfirmButton: false,
+                timer: 900
+            }))
     }
     return (
         <div class="bg-grey-1">

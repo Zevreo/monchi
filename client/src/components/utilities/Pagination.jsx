@@ -17,46 +17,46 @@ export function Pagination(props) {
     }
     return (
         <ul class="pagination">
-            {props.Page > 1 ? <li>
-                <a type="button" onClick={(e) => Paginate(1)} hidden={props.disable}>
+            {props.Page > 1 && <li>
+                <button type="button" onClick={(e) => Paginate(1)} disabled={props.disable}>
                     <span aria-hidden="true"><i class="ion-chevron-left"></i></span>
-                </a>
-            </li> : ''}
-            {props.Page > 1 ? <li>
-                <a type="button" onClick={(e) => Paginate("minus")} aria-label="Previous" hidden={props.disable}>
+                </button>
+            </li> }
+            {props.Page > 1 && <li>
+                <button type="button" onClick={(e) => Paginate("minus")} aria-label="Previous" disabled={props.disable}>
                     <span aria-hidden="true"><i class="ion-ios-arrow-back"></i></span>
-                </a>
-            </li> : ''}
-            {props.Page > 2 ?
+                </button>
+            </li> }
+            {props.Page > 2 &&
                 <li>
-                    <a type="button" onClick={(e) => Paginate(props.Page - 2)} hidden={props.disable}>{props.Page ? props.Page - 2 : "loading"}</a>
-                </li> : ''}
-            {props.Page > 1 ?
+                    <button type="button" onClick={(e) => Paginate(props.Page - 2)} disabled={props.disable}>{props.Page && props.Page - 2 }</button>
+                </li> }
+            {props.Page > 1 &&
                 <li>
-                    <a type="button" onClick={(e) => Paginate(props.Page - 1)} hidden={props.disable}>{props.Page ? props.Page - 1 : "loading"}</a>
-                </li> : ''}
+                    <button type="button" onClick={(e) => Paginate(props.Page - 1)} disabled={props.disable}>{props.Page && props.Page - 1 }</button>
+                </li> }
             <li class="active">
-                <a type="button" disabled>{props.Page ? props.Page : "loading"}</a>
+                <button type="button" onClick={(e) => Paginate(props.Page)} disabled={props.disable}>{props.Page && props.Page }</button>
             </li>
-            {props.Page < props.maxPage ?
+            {props.Page < props.maxPage &&
                 <li>
-                    <a type="button" onClick={(e) => Paginate(props.Page + 1)} hidden={props.disable}>{props.Page ? props.Page + 1 : "loading"}</a>
-                </li> : ''}
-            {props.Page < (props.maxPage - 1) ?
+                    <button type="button" onClick={(e) => Paginate(props.Page + 1)} disabled={props.disable}>{props.Page && props.Page + 1 }</button>
+                </li> }
+            {props.Page < (props.maxPage - 1) &&
                 <li>
-                    <a type="button" onClick={(e) => Paginate(props.Page + 2)} hidden={props.disable}>{props.Page ? props.Page + 2 : "loading"}</a>
-                </li> : ''}
-            {props.Page < props.maxPage ? <li>
-                <a type="button" onClick={(e) => Paginate("plus")} aria-label="Next" hidden={props.disable}>
+                    <button type="button" onClick={(e) => Paginate(props.Page + 2)} disabled={props.disable}>{props.Page && props.Page + 2 }</button>
+                </li> }
+            {props.Page < props.maxPage && <li>
+                <button type="button" onClick={(e) => Paginate("plus")} aria-label="Next" disabled={props.disable}>
                     <span aria-hidden="true"><i class="ion-ios-arrow-forward"></i></span>
-                </a>
-            </li> : ''}
+                </button>
+            </li> }
 
-            {props.Page < props.maxPage ? <li>
-                <a type="button" onClick={(e) => Paginate(props.maxPage)} aria-label="Next" hidden={props.disable}>
+            {props.Page < props.maxPage && <li>
+                <button type="button" onClick={(e) => Paginate(props.maxPage)} aria-label="Next" disabled={props.disable}>
                     <span aria-hidden="true"><i class="ion-chevron-right"></i></span>
-                </a>
-            </li> : ''}
+                </button>
+            </li> }
 
         </ul>
     )

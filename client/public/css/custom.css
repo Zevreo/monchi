@@ -20,6 +20,24 @@ section {
     max-width: 100%;
 }
 
+.w50 {
+    max-width: 50%;
+}
+
+.w75 {
+    max-width: 75%;
+}
+
+.ps25 {
+    padding-left: 12.5%;
+    padding-right: 12.5%;
+}
+
+.ps50 {
+    padding-left: 25%;
+    padding-right: 25%;
+}
+
 .center-100{
     align-items: middle;
     min-height: 100vh;

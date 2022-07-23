@@ -106,6 +106,7 @@ export function ShoppingCart(props) {
       timer: 1500,
     });
   }
+
   useEffect(() => {
     getRates();
   }, [Address]);
