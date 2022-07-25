@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import Converter from "../utilities/converter";
 import Gallery from "./relatedprods";
 import Swal from 'sweetalert2';
+import parse from 'html-react-parser';
 
 export function SingleProduct(props) {
     const { user } = props.auth;
@@ -80,7 +81,7 @@ export function SingleProduct(props) {
                                 <h3>{product ? product.ProductName : "loading..."}</h3>
                                 <h4 class="price"><span class="currency">{user ? user.DefaultCoin : product.PriceCoin}</span>${user ? <Converter Current={product.PriceCoin}
                                     Value={product.ProductPrice} Target={user.DefaultCoin} /> : product.ProductPrice}</h4>
-                                <p>{product ? product.ProductDescription : "loading..."}</p>
+                                <p>{product && parse(product.ProductDescription)}</p>
                                 <form onSubmit={AddCart}>
                                     <div class="quantity mb20 mt20">
                                         <input type="number" step="1" min="1" defaultValue="1" name="quantity" title="Qty" class="input-text qty text" size="4" />
