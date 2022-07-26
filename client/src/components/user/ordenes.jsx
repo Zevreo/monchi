@@ -63,6 +63,7 @@ export function MyOrders(props) {
                                 <button class={`panel-title ${i > 0 ? 'collapsed' : ''}`} data-toggle="collapse" data-target={`#collapse${i}`}>
                                     <h4>Order: #{d._id}</h4>
                                     <h5>Total: {d.SaleCoin}${d.SaleTotal}</h5>
+                                    <h5>Tracking #: { d.TrackingNumber ? d.TrackingNumber : "N/A"}</h5>
                                     Date: { new Intl.DateTimeFormat('es-MX', {dateStyle: 'full', timeStyle: 'short'}).format(new Date(d.createdAt)) }
                                 </button>
                             </div>

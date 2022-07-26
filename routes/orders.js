@@ -3,40 +3,6 @@ const auth = require('../middleware/auth');
 let Order = require('../models/orders.model');
 let Product = require('../models/products.model');
 
-/* const orderProductsSchema = new Schema({
-    ProductId:
-    {type: String, required: true},
-    Quantity:
-    {type: Number, required: true},
-    ProductOptions:
-    {type: Array, required: false},
-    SaleCoin:
-    {type: String, required: true},
-    SalePrice:
-    {type: Number, required: true}
-});
-
-const orderSchema = new Schema({
-    UserId: 
-    {type: String, required: true },
-    SaleTotal:
-    {type: Number, required: true},
-    SaleCoin:
-    {type: String, required: true},
-    SaleProducts:
-    {type: [orderProductsSchema], required: true},
-    PaymentMethod:
-    {type: String, required: true},
-    PaymentSuccess:
-    {type: Boolean},
-    TransactionId:
-    {type: String, required: true},
-    BuyerId:
-    {type: String, required: true}
-}, {
-    timestamps: true
-}); */
-
 //GET User Orders
 router.get('/', auth, async (req, res) => {
     const { page = 1 } = req.headers;
@@ -93,7 +59,7 @@ router.get('/store/:id', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
     const { SaleTotal, SaleCoin, PaymentMethod,
         PaymentSuccess, SaleProducts,
-        TransactionId, BuyerId } = req.body;
+        TransactionId, BuyerId, TrackingNumber } = req.body;
     for (var cartProd of SaleProducts) {
         await Product.findById(cartProd.ProductId)
             .then(async prod => {
@@ -112,7 +78,7 @@ router.post('/', auth, async (req, res) => {
     }
     const newOrder = new Order({
         SaleTotal, SaleCoin, PaymentMethod,
-        PaymentSuccess, SaleProducts,
+        PaymentSuccess, SaleProducts, TrackingNumber,
         UserId: res.locals.id, TransactionId, BuyerId
     });
     await newOrder.save()

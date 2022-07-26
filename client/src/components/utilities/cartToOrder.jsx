@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default async function CartToOrder(auth, Total, Capture, Cart) {
+export default async function CartToOrder(auth, Total, Capture, Cart, Tracking) {
     let response = null;
     const { token, user } = auth;
     const config = {
@@ -19,7 +19,8 @@ export default async function CartToOrder(auth, Total, Capture, Cart) {
         PaymentSuccess: true,
         SaleProducts: Cart,
         TransactionId: Capture.orderID,
-        BuyerId: Capture.payerID
+        BuyerId: Capture.payerID,
+        TrackingNumber: Tracking
     }
     await axios.post('/api/order', body, config)
         .then(res => {
