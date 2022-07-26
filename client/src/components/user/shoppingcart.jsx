@@ -302,7 +302,6 @@ export function ShoppingCart(props) {
               </table>
               {(Products.length > 0 && Address) && <Paypal setCapture={setCapture} user={user} Total={Total} />}
               <Link to="/" class="highlight mt20 btn btn-dark">Seguir comprando</Link>
-              <button type="button" onClick={SendShipment} class="highlight mt20 btn btn-dark">Test shipment</button>
             </div>
           </div>
         </div>
