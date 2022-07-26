@@ -17,7 +17,6 @@ router.post('/', (req, res) => {
             bcrypt.compare(Password, user.Password)
                 .then(isMatch => {
                     if (!isMatch) return res.status(400).json({ msg: 'Contraseña incorrecta' });
-                    console.log(user.Status);
                     if (user.Status == "Pending") return res.status(401).json({ msg: 'Confirma tu correo electronico' });
                     else {
                         jwt.sign(
