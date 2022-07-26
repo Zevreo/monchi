@@ -47,6 +47,7 @@ router.post('/', auth, async (req, res) => {
     let { UserId, ProductId, Quantity, ProductOptions } = req.body;
     if (ProductOptions == "" || ProductOptions == null) ProductOptions = "N/A";
     let Stock;
+    
     await Product.findById(ProductId)
         .then(prod => {
             if (Quantity > prod.Stock) Quantity = prod.Stock;

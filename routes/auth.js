@@ -17,24 +17,29 @@ router.post('/', (req, res) => {
             bcrypt.compare(Password, user.Password)
                 .then(isMatch => {
                     if (!isMatch) return res.status(400).json({ msg: 'Contraseña incorrecta' });
-                    jwt.sign(
-                        { id: user.id, Role: user.Role },
-                        config.jwtSecret,
-                        { expiresIn: 86400 },
-                        (err, token) => {
-                            if (err) throw err;
-                            res.json({
-                                token,
-                                user: {
-                                    id: user.id,
-                                    Role: user.Role
-                                }
-                            })
-                        }
-                    )
+                    console.log(user.Status);
+                    if (user.Status == "Pending") return res.status(401).json({ msg: 'Confirma tu correo electronico' });
+                    else {
+                        jwt.sign(
+                            { id: user.id, Role: user.Role },
+                            config.jwtSecret,
+                            { expiresIn: 86400 },
+                            (err, token) => {
+                                if (err) throw err;
+                                res.json({
+                                    token,
+                                    user: {
+                                        id: user.id,
+                                        Role: user.Role
+                                    }
+                                })
+                            }
+                        )
+                    }
                 })
         })
 });
+
 router.get('/', auth, (req, res) => {
     User.findById(req.user.id)
         .select('-Password')
@@ -63,7 +68,7 @@ router.post('/forgot', (req, res) => {
                     if (err) throw err;
                     var mailOptions = {
                         from: 'zevreo.dev@gmail.com',
-                        to: 'bleended@gmail.com',
+                        to: '19393060@utcancun.edu.mx',
                         subject: 'Forgot your password',
                         text: `Hello ${user.FirstName} ${user.LastName}\nTo change your password go to:\nhttps://monchi-mern.herokuapp.com/changeForgot/${token}\nYou have 30 minutes until the token expires.`
                     };
