@@ -31,6 +31,7 @@ import ChangeForgotPassword from './components/user/changeForgot';
 import DashOrders from './components/user/dashOrders';
 import DashAddress from './components/user/dashAddress';
 import ChangeCredentials from './components/user/changeCredentials';
+import ConfirmMail from './components/user/confirmMail';
 
 export class App extends Component {
   componentDidMount() {
@@ -67,6 +68,7 @@ export class App extends Component {
             <Route path="/forgotPassword" element={<SendForgotPassword />} />
             <Route path="/changeForgot/:token" element={<ChangeForgotPassword />} />
             <Route path="/changeCredentials" element={<ChangeCredentials />} />
+            <Route path="/confirmMail/:token" element={<ConfirmMail />} />
           </Routes>
           <Footer />
         </Provider>

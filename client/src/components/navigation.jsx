@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Logout from "./user/logout";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export function Navigation(props) {
   const [cart, setCart] = useState([]);
@@ -11,6 +12,17 @@ export function Navigation(props) {
 
   const { isAuthenticated } = props.auth;
   const { user } = props.auth;
+
+  useEffect(() => {
+    if(user){
+      if(user.Status === "Pending"){
+        Swal.fire({
+          title: 'Confirmacion de correo pendiente',
+          icon: 'warning'
+        });
+      }
+    }
+  }, [])
 
   function DoSearch(e) {
     e.preventDefault();
@@ -35,13 +47,9 @@ export function Navigation(props) {
 
   const authLinks = (
     <ul class="nav navbar-nav menu-right">
-      <li class="dropdown"><Link className="dropdown-toggle" to="/perfil">Cuenta<i class="fa fa-chevron-down"></i></Link>
-        <ul class="dropdown-menu">
-          <li><Link to="/shoppingcart">Carrito de compras ({cart.length})</Link></li>
-          {ownerLinks}
-          <Logout />
-        </ul>
-      </li>
+      <li><Link to="/perfil">Cuenta</Link></li>
+      {ownerLinks}
+      <Logout />
       <li class="header-divider"></li>
       <li><Link to="/shoppingcart"><span class="ion-ios-cart-outline"> {cart.length}</span></Link></li>
       <li class="header-divider"></li>
@@ -58,11 +66,8 @@ export function Navigation(props) {
 
   const guestLinks = (
     <ul class="nav navbar-nav menu-right">
-      <li class="dropdown"><Link className="dropdown-toggle" to="/login">Iniciar sesión<i class="fa fa-chevron-down"></i></Link>
-        <ul class="dropdown-menu">
-          <li><Link to="/register">Registrarse</Link></li>
-        </ul>
-      </li>
+      <li><Link to="/login">Iniciar sesión</Link></li>
+      <li><Link to="/register">Registrarse</Link></li>
       <li class="header-divider"></li>
       <li style={{ lineHeight: "0px" }}>
         <form onSubmit={DoSearch}>

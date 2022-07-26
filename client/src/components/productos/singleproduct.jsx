@@ -59,7 +59,13 @@ export function SingleProduct(props) {
                         timer: 900
                     });
                     navigate('/shoppingcart');
-                });
+                }).catch(err => Swal.fire({
+                    title: 'Hubo un error',
+                    icon: 'error',
+                    text: err,
+                    showConfirmButton: false,
+                    timer: 900
+                }));
         }
     };
     return (

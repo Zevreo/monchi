@@ -9,6 +9,33 @@ const auth = require('../middleware/auth');
     ProductPrice:
     PriceCoin:
 */
+//GET Generate most common tags
+router.get('/tags', async (req, res) => {
+    var Common = {};
+    var AllTags = [];
+    await Product.find()
+        .then(prods => {
+            for(var prod of prods){
+                for(var tag of prod.Tags){
+                    AllTags.push(tag);
+                }
+            }
+        })
+    for(var tag of AllTags.sort()){
+        if(Common[`${tag}`] > 0){
+            Common[`${tag}`] = 1+Common[`${tag}`];
+        }
+        else{
+            Common[`${tag}`] = 1;
+        }
+    }
+    const sortable = Object.entries(Common).sort(([,a],[,b]) => b-a);
+    const Final = [];
+    for(let i = 0; i < 10; i++){
+        Final.push(sortable[i]);
+    }
+    res.json(Final);
+});
 
 //GET All products with tags
 router.get('/', async (req, res) => {
