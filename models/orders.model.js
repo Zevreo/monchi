@@ -34,6 +34,8 @@ const orderSchema = new Schema({
     TransactionId:
     {type: String, required: true},
     BuyerId:
+    {type: String, required: true},
+    TrackingNumber:
     {type: String, required: true}
 }, {
     timestamps: true
