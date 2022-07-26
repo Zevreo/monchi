@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import Converter from "../utilities/converter";
 import Gallery from "./relatedprods";
 import Swal from 'sweetalert2';
+import parse from 'html-react-parser';
 
 export function SingleProduct(props) {
     const { user } = props.auth;
@@ -58,7 +59,13 @@ export function SingleProduct(props) {
                         timer: 900
                     });
                     navigate('/shoppingcart');
-                });
+                }).catch(err => Swal.fire({
+                    title: 'Hubo un error',
+                    icon: 'error',
+                    text: err,
+                    showConfirmButton: false,
+                    timer: 900
+                }));
         }
     };
     return (
@@ -69,7 +76,7 @@ export function SingleProduct(props) {
                         <div class="row">
                             <div class="col-sm-5 mt40 mb40">
                                 <div class=" navigation-thin ">
-                                    <div>{product ? <img src={product.ProductImages} class="img-responsive width100" alt="#" /> : <Loader />}</div>
+                                    <div>{product ? <img src={product.ProductImages[0]} class="img-responsive width100" alt="#" /> : <Loader />}</div>
                                 </div>
                             </div>
                             <div class="col-sm-7 mt40 mb40 product-details">
@@ -80,7 +87,7 @@ export function SingleProduct(props) {
                                 <h3>{product ? product.ProductName : "loading..."}</h3>
                                 <h4 class="price"><span class="currency">{user ? user.DefaultCoin : product.PriceCoin}</span>${user ? <Converter Current={product.PriceCoin}
                                     Value={product.ProductPrice} Target={user.DefaultCoin} /> : product.ProductPrice}</h4>
-                                <p>{product ? product.ProductDescription : "loading..."}</p>
+                                <p>{product && parse(product.ProductDescription)}</p>
                                 <form onSubmit={AddCart}>
                                     <div class="quantity mb20 mt20">
                                         <input type="number" step="1" min="1" defaultValue="1" name="quantity" title="Qty" class="input-text qty text" size="4" />
@@ -102,11 +109,15 @@ export function SingleProduct(props) {
                                             ))}
                                         </>
                                         : ''}
-                                    {product.Status == "Active" ?
-                                        <button className="btn btn-lg" type="submit">Agregar al carrito</button>
+                                    {props.isAuthenticated ? 
+                                        (product.Status == "Active" ?
+                                            <button className="btn btn-lg" type="submit">Agregar al carrito</button>
+                                            :
+                                            `Publication is ${product.Status}`)
                                         :
-                                        `Publication is ${product.Status}`
+                                        <strong><Link to="/login">Inicia sesion para comprar</Link></strong>
                                     }
+
                                 </form>
                             </div>
                         </div>
@@ -121,7 +132,7 @@ export function SingleProduct(props) {
                             <h3>Related Products</h3>
                         </div>
                         <div class="pt80 pb20">
-                            {product ? <Gallery precio={product.ProductPrice} /> : <Loader />}
+                            {product ? <Gallery precio={product.StoreId} /> : <Loader />}
                         </div>
                     </div>
                 </div>
@@ -132,6 +143,7 @@ export function SingleProduct(props) {
 }
 
 const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
     auth: state.auth
 })
 export default connect(mapStateToProps, null)(SingleProduct);
