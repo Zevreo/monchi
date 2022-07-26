@@ -60,41 +60,49 @@ export function NewAddress(props) {
                     <form class="row text-center" onSubmit={onSubmit}>
                         <div class="half-left col-sm-6">
                             <label for="exampleFormControlSelect1">Sobrenombre</label>
+                            <p>*required</p>
                             <input type="text" class="input-text" onChange={e => setSurname(e.target.value)} value={Surname} name="Surname" required />
                             <p className="help-block text-danger"></p>
                         </div>
                         <div class="half-left col-sm-6">
                             <label for="exampleFormControlSelect1">Calle</label>
+                            <p>*required</p>
                             <input type="text" class="input-text" onChange={e => setStreet(e.target.value)} value={Street} name="Street" required />
                             <p className="help-block text-danger"></p>
                         </div>
                         <div class="half-left col-sm-6">
                             <label for="exampleFormControlSelect1">Numero exterior</label>
+                            <p>*required</p>
                             <input type="number" class="input-text" onChange={e => setExt(e.target.value)} value={Ext} name="ExternalNum" required />
                             <p className="help-block text-danger"></p>
                         </div>
                         <div class="half-right col-sm-6">
                             <label for="exampleFormControlSelect1">Numero interior</label>
+                            <p>*required</p>
                             <input type="number" class="input-text" onChange={e => setInt(e.target.value)} value={Int} name="InternalNum" required />
                             <p className="help-block text-danger"></p>
                         </div>
                         <div class="half-left col-sm-6">
                             <label for="exampleFormControlSelect1">Codigo postal</label>
+                            <p>*required</p>
                             <input type="number" class="input-text" onChange={e => sePostcode(e.target.value)} value={Postcode} name="Postcode" required />
                             <p className="help-block text-danger"></p>
                         </div>
                         <div class="half-right col-sm-6">
                             <label for="exampleFormControlSelect1">Pais</label>
+                            <p>*required</p>
                             <input type="text" class="input-text" onChange={e => setCountry(e.target.value)} value={Country} name="Country" required />
                             <p className="help-block text-danger"></p>
                         </div>
                         <div class="half-left col-sm-6">
                             <label for="exampleFormControlSelect1">Estado</label>
+                            <p>*required</p>
                             <input type="text" class="input-text" onChange={e => setState(e.target.value)} value={State} name="State" required />
                             <p className="help-block text-danger"></p>
                         </div>
                         <div class="half-right col-sm-6">
                             <label for="exampleFormControlSelect1">Ciudad</label>
+                            <p>*required</p>
                             <input type="text" class="input-text" onChange={e => setCity(e.target.value)} value={City} name="City" required />
                             <p className="help-block text-danger"></p>
                         </div>
