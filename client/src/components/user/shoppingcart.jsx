@@ -213,6 +213,7 @@ export function ShoppingCart(props) {
         setCarriercode("FEDEX_EXPRESS_SAVER");
         break;
       default:
+        setCarriercode();
         break;
     }
   }, [Carrier]);
@@ -277,21 +278,22 @@ export function ShoppingCart(props) {
                     <th>Subtotal</th>
                     <td><span class="amount">{user.DefaultCoin}${Total}</span></td>
                   </tr>
-                  <tr class="shipping">
-                    <th>Envío</th>
-                    <td>
-                      {Shipment && (
-                        <select class="bg-dark-2" type="text" placeholder="Status" onChange={e => setCarrier(e.target.value)}>
+                  {Shipment && (
+                    <tr class="shipping">
+                      <th>Envío*</th>
+                      <td>
+                        <select class="bg-dark-2" type="text" placeholder="Status" onChange={e => setCarrier(e.target.value)} required>
+                          <option value="null" default>Selecciona una paqueteria</option>
                           <option value="redpack">Redpack - {Shipment.Redpack[0].currency}${Shipment.Redpack[0].total_amount}</option>
                           <option value="estafeta">Estafeta - {Shipment.Estafeta[1].currency}${Shipment.Estafeta[1].total_amount}</option>
                           <option value="fedex">Fedex - {Shipment.FedEx[0].currency}${Shipment.FedEx[0].total_amount}</option>
                           <option value="ups">UPS - {Shipment.UPS[0].currency}${Shipment.UPS[0].total_amount}</option>
                         </select>
-                      )}
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
+                  )}
                   <tr class="shipping">
-                    <th>Direccion</th>
+                    <th>Direccion*</th>
                     <td><strong>{Address ? Address.Surname : <Link to="/newAddress">Agregar direccion</Link>}</strong></td>
                   </tr>
                   <tr class="order-total">
@@ -300,7 +302,7 @@ export function ShoppingCart(props) {
                   </tr>
                 </tbody>
               </table>
-              {(Products.length > 0 && Address) && <Paypal setCapture={setCapture} user={user} Total={Total} />}
+              {(Products.length > 0 && Address && Carriercode) && <Paypal setCapture={setCapture} user={user} Total={Total} />}
               <Link to="/" class="highlight mt20 btn btn-dark">Seguir comprando</Link>
             </div>
           </div>
