@@ -16,7 +16,8 @@ export class Registro extends Component {
             PhoneNumber: '',
             DefaultCoin: '',
             Updated: false,
-            Currency: null
+            Currency: [],
+            Countries: []
         }
         this.onChangeFirstName = this.onChangeFirstName.bind(this);
         this.onChangeLastName = this.onChangeLastName.bind(this);
@@ -92,6 +93,12 @@ export class Registro extends Component {
                     this.setState({ Currency: res.data });
                     this.setState({ Updated: true });
                 });
+
+            axios.get('/api/fixed/country')
+                .then(res => {
+                    this.setState({Countries: res.data});
+                    this.setState({Updated: true});
+                }); 
         }
     }
     render() {
@@ -122,23 +129,14 @@ export class Registro extends Component {
                                     </div>
                                     <div class="col-md-6">
                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
-                                            <option default disabled value=''>Seleccione su pais</option>
-                                            <option value='Estados Unidos de América'>Estados Unidos de América</option>
-                                            <option value='Europa'>Europa</option>
-                                            <option value='Inglaterra'>Inglaterra</option>
-                                            <option value='India'>India</option>
-                                            <option value='Australia'>Australia</option>
-                                            <option value='Canada'>Canada</option>
-                                            <option value='Singapur'>Singapur</option>
-                                            <option value='Suiza'>Suiza</option>
-                                            <option value='Malasia'>Malasia</option>
-                                            <option value='Japón'>Japón</option>
-                                            <option value='China'>China</option>
-                                            <option value='México'>México</option>
-                                            <option value='Other'>Otro</option>
+                                                 { this.state.Updated===true ? this.state.Countries.map((d, i) => (
+                                                <option key={i} value={d.CountryName}>{d.CountryName}</option>
+                                            )) : ''}                             
                                         </select>
                                         <p className="help-block text-danger"></p>
                                     </div>
+
+                                    
                                     <div class="col-md-6">
                                         <select class="bg-white" type="text" placeholder="Moneda" value={this.state.DefaultCoin} onChange={this.onChangeDefaultCoin} required>
                                             <option default disabled value=''>Seleccione su moneda preferida</option>
