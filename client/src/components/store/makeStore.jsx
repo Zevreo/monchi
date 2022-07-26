@@ -19,7 +19,9 @@ export class MakeStore extends Component {
             Country: '',
             Description: '',
             ImageUrl: '',
-            StoreImage: ''
+            StoreImage: '',
+            Countries: [],
+            Updated: false
         }
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCountry = this.onChangeCountry.bind(this);
@@ -109,11 +111,11 @@ export class MakeStore extends Component {
     }
     componentDidMount() {
         if (this.state.Updated === false) {
-                axios.get('/api/fixed/country')
+            axios.get('/api/fixed/country')
                 .then(res => {
-                    this.setState({Countries: res.data});
-                    this.setState({Updated: true});
-                }); 
+                    this.setState({ Countries: res.data });
+                    this.setState({ Updated: true });
+                });
         }
     }
     render() {
@@ -132,9 +134,10 @@ export class MakeStore extends Component {
                                     </div>
                                     <div className="col-md-6">
                                         <select class="bg-white" type="text" value={this.state.Country} onChange={this.onChangeCountry} required>
-                                                 { this.state.Updated===true ? this.state.Countries.map((d, i) => (
+                                            {this.state.Updated === true ? this.state.Countries.map((d, i) => (
                                                 <option key={i} value={d.CountryName}>{d.CountryName}</option>
                                             )) : ''}
+                                        </select>
                                         <p className="help-block text-danger"></p>
                                     </div>
                                     <div className="col-md-6">
